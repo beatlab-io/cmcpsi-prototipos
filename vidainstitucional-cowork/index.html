@@ -196,7 +196,8 @@ button{font:inherit}
 .plans .lead p{color:var(--text-secondary)}
 .plan .what{color:var(--text-secondary);margin-bottom:2px}
 .plan small{display:block;font-size:12px;line-height:16px;color:var(--text-muted)}
-.price-note{margin-top:var(--sp-24);color:var(--text-secondary)}
+.cta-center{display:flex;flex-direction:column;align-items:center;gap:var(--sp-12);margin-top:var(--sp-48);text-align:center}
+.cta-center p{color:var(--text-secondary)}
 
 /* ---------- Servicios ---------- */
 .services{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-24) var(--sp-32)}
@@ -287,6 +288,8 @@ body.show-notes .notes-panel{display:block}
   .location{grid-template-columns:1fr;gap:var(--sp-32)}
   .contact-grid{grid-template-columns:1fr}
   .location .btn{width:100%}
+  .cta-center{margin-top:var(--sp-32)}
+  .cta-center .btn{width:100%}
   .ftr-grid{grid-template-columns:1fr 1fr;gap:var(--sp-32) var(--sp-24)}
   .ftr-brand,.ftr-legal{grid-column:1/-1}
   .ftr-col li a{display:inline-block;padding:6px 0;font-size:14px}
@@ -463,7 +466,10 @@ body.show-notes .notes-panel{display:block}
         </div>
         <a class="link" href="mailto:comunidadcmcpsi@gmail.com?subject=Consulta%20por%20planes%20del%20Cowork">Consultar por mail <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
       </div>
-      <p class="price-note t-small">Las reservas y los pagos se hacen en la <a class="link link-inline" href="https://comunidadcmcpsi.ar/landing" target="_blank" rel="noopener">web del Cowork<span class="sr-only"> (se abre en una pestaña nueva)</span></a>.<span class="note-pin">6</span></p>
+      <div class="cta-center">
+        <a class="btn btn-primary" href="https://comunidadcmcpsi.ar/landing" target="_blank" rel="noopener">Reservar en la web del Cowork<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+        <p class="t-small">Las reservas y los pagos se hacen en la web del Cowork.<span class="note-pin">6</span></p>
+      </div>
     </section>
   </div>
 

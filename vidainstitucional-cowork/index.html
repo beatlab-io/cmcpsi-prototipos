@@ -284,7 +284,10 @@ body.show-notes .notes-panel{display:block}
   .band{margin-top:var(--sp-64);padding:var(--sp-48) 0}
   .spaces{grid-template-columns:1fr;gap:var(--sp-16)}
   .plans{padding:var(--sp-24);gap:var(--sp-16) var(--sp-24)}
-  .services{grid-template-columns:1fr;gap:var(--sp-16)}
+  /* Servicios mobile: grilla 2 columnas en tarjetas, ícono arriba y etiqueta abajo */
+  .services{grid-template-columns:1fr 1fr;gap:var(--sp-12)}
+  .services li{flex-direction:column;align-items:flex-start;gap:var(--sp-12);background:var(--bg-default);border:var(--bw-default) solid var(--border-subtle);border-radius:var(--r-large);padding:var(--sp-16);font-size:14px;line-height:20px;font-weight:500;min-height:112px}
+  .services li .icon{width:36px;height:36px;padding:8px;border-radius:var(--r-medium);background:var(--bg-brand-soft);box-sizing:border-box}
   .location{grid-template-columns:1fr;gap:var(--sp-32)}
   .contact-grid{grid-template-columns:1fr}
   .location .btn{width:100%}

@@ -9,9 +9,77 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../_shared/cmcpsi.css">
+<style>
+.toc{display:flex;flex-wrap:wrap;gap:var(--sp-8);margin-top:var(--sp-24)}
+.toc a{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 var(--sp-16);border-radius:var(--r-full);border:var(--bw-default) solid var(--border-default);background:#fff;color:var(--brand-primary);font-size:14px;font-weight:600}
+.toc a:hover{background:var(--bg-brand-soft)}
+.block{margin-top:var(--sp-64);scroll-margin-top:var(--sp-24)}
+.block > h2{font-size:32px;font-weight:600;line-height:40px;margin-bottom:var(--sp-8)}
+.block > .lead{font-size:18px;line-height:28px;color:var(--text-secondary);max-width:760px;margin-bottom:var(--sp-24)}
+.deadline{display:flex;gap:var(--sp-12);background:#fff6dc;border:1px solid #e7c66b;border-radius:var(--r-input);padding:var(--sp-16);font-size:16px;line-height:24px;margin-bottom:var(--sp-24);max-width:760px}
+.deadline .icon{color:#8a5a00;flex:none;margin-top:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+.card{background:#fff;border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-12)}
+.card h3{font-size:20px;font-weight:600;line-height:28px}
+.card .meta{display:flex;flex-wrap:wrap;gap:var(--sp-8)}
+.card p{font-size:15px;line-height:22px;color:var(--text-secondary)}
+.checklist{list-style:none;display:grid;gap:var(--sp-8);border-top:var(--bw-default) solid var(--border-subtle);padding-top:var(--sp-12)}
+.checklist li{display:flex;gap:var(--sp-8);font-size:15px;line-height:22px}
+.checklist .icon{width:18px;height:18px;color:var(--success);flex:none;margin-top:2px}
+.small-note{font-size:14px;line-height:20px;color:var(--text-secondary);margin-top:var(--sp-16)}
+.steps{list-style:none;counter-reset:s;display:grid;gap:0;background:#fff;border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-24) var(--sp-32)}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:var(--sp-16);padding:var(--sp-12) 0;position:relative}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:var(--r-full);background:var(--bg-brand-soft);color:var(--brand-primary);font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center}
+.steps li:not(:last-child)::after{content:"";position:absolute;left:15px;top:48px;bottom:-8px;width:2px;background:var(--border-default)}
+.steps strong{display:block;font-size:16px;font-weight:600;line-height:24px}
+.steps span{font-size:15px;line-height:22px;color:var(--text-secondary)}
+.docs{background:#fff;border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);overflow:hidden}
+.doc{display:grid;grid-template-columns:1fr auto;gap:var(--sp-16);padding:var(--sp-16) var(--sp-24);border-bottom:var(--bw-default) solid var(--border-subtle);align-items:start}
+.doc:last-child{border-bottom:0}
+.doc strong{display:block;font-size:16px;font-weight:600;line-height:24px}
+.doc span{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.doc .link{font-size:14px;white-space:nowrap;min-height:0;margin-top:2px}
+.faq{background:#fff;border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large)}
+.faq details{border-bottom:var(--bw-default) solid var(--border-subtle)}
+.faq details:last-child{border-bottom:0}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:var(--sp-16);padding:var(--sp-16) var(--sp-24);font-size:16px;font-weight:600;line-height:24px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .icon{color:var(--brand-primary);transition:transform .15s;flex:none}
+.faq details[open] summary .icon{transform:rotate(180deg)}
+.faq summary:hover{background:var(--bg-institutional-panel)}
+.faq .a{padding:0 var(--sp-24) var(--sp-16);font-size:15px;line-height:24px;color:var(--text-secondary);max-width:820px}
+.faq .a a{color:var(--brand-primary);font-weight:500}
+.contact{display:flex;flex-wrap:wrap;gap:var(--sp-24);background:var(--bg-institutional-panel);border-radius:var(--r-large);padding:var(--sp-24);margin-top:var(--sp-64)}
+.contact h2{font-size:20px;font-weight:600;line-height:28px;width:100%}
+.contact div{display:flex;gap:var(--sp-8);align-items:center;font-size:15px}
+.contact .icon{color:var(--icon-brand)}
+.contact a{color:var(--brand-primary);font-weight:600}
+@media (max-width:760px){.two{grid-template-columns:1fr}.block > h2{font-size:26px;line-height:34px}.doc{grid-template-columns:1fr}.steps{padding:var(--sp-16)}}
+</style>
+<style>
+.link-list .row-btn{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:56px;padding:0 var(--sp-4);border:0;background:none;color:var(--brand-primary);font-size:15px;font-weight:600;text-align:left;cursor:pointer}
+.link-list .row-btn:hover{color:var(--brand-primary-hover);background:var(--bg-institutional-panel)}
+dialog.drawer{position:fixed;inset:0 0 0 auto;margin:0 0 0 auto;height:100%;max-height:100%;width:min(600px,100vw);border:0;padding:0;background:#fff;box-shadow:-12px 0 40px rgba(15,26,36,.18);display:flex;flex-direction:column}
+dialog.drawer:not([open]){display:none}
+dialog.drawer::backdrop{background:rgba(15,26,36,.45)}
+dialog.drawer[open]{animation:slide-in .22s ease-out}
+@keyframes slide-in{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){dialog.drawer[open]{animation:none}}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;gap:var(--sp-16);padding:var(--sp-24) var(--sp-24) var(--sp-16);border-bottom:1px solid var(--border-subtle)}
+.drawer-head h2{font-size:24px;font-weight:600;line-height:32px}
+.drawer-x{width:44px;height:44px;border:0;border-radius:var(--r-full);background:none;color:var(--text-primary);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.drawer-x:hover{background:var(--bg-subtle)}
+.drawer-body{flex:1;overflow:auto;padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-16)}
+.drawer-body > *{flex-shrink:0}
+.drawer-lead{font-size:16px;line-height:24px;color:var(--text-secondary)}
+.drawer-body .doc{grid-template-columns:1fr;padding:var(--sp-12) var(--sp-16)}
+.drawer-body .steps{padding:var(--sp-16) var(--sp-24)}
+.drawer-body .deadline{margin-bottom:0}
+.drawer-foot{padding:var(--sp-16) var(--sp-24);border-top:1px solid var(--border-subtle)}
+</style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0"/><path d="M16 19h6"/><path d="M19 16v6"/><path d="M6 21v-2a4 4 0 0 1 4-4h4"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/><path d="M15 19l2 2l4-4"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M10 9v6"/><path d="M14 9v6"/></symbol><symbol id="i-exchange" viewBox="0 0 24 24"><path d="M7 10h14l-4-4"/><path d="M17 14H3l4 4"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol><symbol id="i-report" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-5l-5 3v-3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h12z"/></symbol><symbol id="i-stamp" viewBox="0 0 24 24"><path d="M21 17.85h-18c0-1.66 1.34-3 3-3h3.43c.86 0 1.32-1.01.77-1.67a6.4 6.4 0 0 1-1.48-4.33c0-3.04 2.18-5.62 5.17-5.85a5.84 5.84 0 0 1 6.28 5.85c0 1.43-.52 2.74-1.38 3.75c-.6.7-.13 1.75.79 1.75h.42c1.66 0 3 1.34 3 3z"/><path d="M5 21h14"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol></defs></svg><div class="proto-bar" role="note">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0"/><path d="M16 19h6"/><path d="M19 16v6"/><path d="M6 21v-2a4 4 0 0 1 4-4h4"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/><path d="M15 19l2 2l4-4"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M10 9v6"/><path d="M14 9v6"/></symbol><symbol id="i-exchange" viewBox="0 0 24 24"><path d="M7 10h14l-4-4"/><path d="M17 14H3l4 4"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol><symbol id="i-report" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-5l-5 3v-3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h12z"/></symbol><symbol id="i-stamp" viewBox="0 0 24 24"><path d="M21 17.85h-18c0-1.66 1.34-3 3-3h3.43c.86 0 1.32-1.01.77-1.67a6.4 6.4 0 0 1-1.48-4.33c0-3.04 2.18-5.62 5.17-5.85a5.84 5.84 0 0 1 6.28 5.85c0 1.43-.52 2.74-1.38 3.75c-.6.7-.13 1.75.79 1.75h.42c1.66 0 3 1.34 3 3z"/><path d="M5 21h14"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol><symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6-6"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5-2.5l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol><symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></symbol></defs></svg><div class="proto-bar" role="note">
   <div class="container">
     <span><strong>Prototipo de diseño, Trámites v0.1.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
     <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
@@ -115,13 +183,37 @@
     </section>
 
     <section class="group" aria-labelledby="g3">
-      <h2 id="g3">Antes de iniciar<span class="note-pin">2</span></h2>
+      <h2 id="g3">Antes de iniciar</h2>
       <ul class="link-list">
-        <li><a href="antes-de-iniciar/#documentacion">Requisitos y documentación <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></li>
-        <li><a href="antes-de-iniciar/#proceso">Información para iniciar <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></li>
-        <li><a href="antes-de-iniciar/#preguntas">Preguntas frecuentes <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></li>
+        <li><button type="button" class="row-btn" data-drawer="d-req" aria-haspopup="dialog">Requisitos y documentación <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button></li>
+        <li><button type="button" class="row-btn" data-drawer="d-info" aria-haspopup="dialog">Información para iniciar <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button></li>
       </ul>
     </section>
+
+    <section class="group" aria-labelledby="g4">
+      <h2 id="g4">Preguntas frecuentes<span class="note-pin">2</span></h2>
+      <div class="faq"><details><summary>¿Iniciar el trámite me habilita para ejercer?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">No. El inicio del trámite no habilita el ejercicio profesional. Quedás habilitado o habilitada después de que el Consejo Directivo apruebe la solicitud y prestes juramento ante las autoridades del Colegio.</div></details><details><summary>¿Quiénes pueden ser mis avales?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">Dos matriculados activos con un mínimo de 10 años de antigüedad.</div></details><details><summary>¿Cuánto tiempo vale el certificado de domicilio?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">48 horas. Pedilo cerca de la fecha en que vas a presentar la documentación.</div></details><details><summary>¿Necesito el certificado de antecedentes penales si me traslado de otro Colegio?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">No. En los traslados no se pide. En los demás casos, tiene que tener menos de 30 días de emitido.</div></details><details><summary>¿Cuánto cuesta el trámite?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">El importe está en <a href="#">Valores vigentes</a>.</div></details><details><summary>¿Dónde se publican los edictos?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">En el Boletín Oficial de la Provincia de Buenos Aires y en la cartelera del Colegio.</div></details><details><summary>¿Se puede presentar una oposición a una matriculación?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">Sí. Se presenta en Rivadavia 573, San Isidro, de lunes a viernes de 8 a 13:30, dentro de los 15 días hábiles.</div></details><details><summary>¿Tengo que hacer algún curso?<svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg></summary><div class="a">Hay un curso de iniciación profesional a distancia de la UCSE. Consultá en el Colegio.</div></details></div>
+    </section>
+
+    <dialog class="drawer" id="d-req" aria-labelledby="d-req-t">
+      <div class="drawer-head"><h2 id="d-req-t">Requisitos y documentación</h2><button type="button" class="drawer-x" data-close aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+      <div class="drawer-body">
+        <p class="drawer-lead">La subís en el formulario online y después presentás los originales y una fotocopia en el Colegio.</p>
+        <div class="docs"><div class="doc"><div><strong>DNI</strong></div></div><div class="doc"><div><strong>Partida de nacimiento</strong></div></div><div class="doc"><div><strong>Constancia de estado civil</strong><span>Acta de matrimonio, certificación de estado civil, constancia de unión convivencial o certificación para soltero/a o divorciado/a. Vigencia: 30 días.</span></div><a class="link" href="https://tramitesadistancia.gob.ar/tramitesadistancia/detalle-tipo?id=5665" target="_blank" rel="noopener">Certificación de estado civil <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a></div><div class="doc"><div><strong>Certificado de domicilio</strong><span>Vale por 48 horas. Online o en el Registro Civil más cercano.</span></div><a class="link" href="https://www.gba.gob.ar/registrodelaspersonas/declaracion_jurada_de_domicilio_tramite_online" target="_blank" rel="noopener">Pedirlo online <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a></div><div class="doc"><div><strong>Servicio a tu nombre</strong><span>Con la misma dirección que tu domicilio profesional.</span></div></div><div class="doc"><div><strong>4 fotos carnet 4x4</strong></div></div><div class="doc"><div><strong>Informe de anotaciones personales, Registro de la Propiedad</strong></div><a class="link" href="https://www.rpba.gov.ar/guiaTramites/acto753" target="_blank" rel="noopener">Cómo pedirlo <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a></div><div class="doc"><div><strong>Informe de anotaciones personales, Registro Automotor</strong></div><a class="link" href="https://www.argentina.gob.ar/noticias/informe-de-anotaciones-personales-100-digital-1" target="_blank" rel="noopener">Cómo pedirlo <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a></div><div class="doc"><div><strong>Certificado de antecedentes penales (reincidencia)</strong><span>Con menos de 30 días de emitido. No hace falta para traslados.</span></div><a class="link" href="https://www.argentina.gob.ar/justicia/reincidencia/antecedentespenales" target="_blank" rel="noopener">Pedirlo online <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a></div><div class="doc"><div><strong>Fianza (seguro de caución)</strong><span>A tu nombre.</span></div><a class="link" href="../fianza/">Cómo conseguirla <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></div><div class="doc"><div><strong>Dos avales</strong><span>De matriculados activos con al menos 10 años de antigüedad.</span></div></div><div class="doc"><div><strong>Certificado de revisión psicofísica</strong><span>O el formulario de ficha médica de la Caja.</span></div><a class="link" href="https://cmcpsi.org.ar/sites/default/files/caja-ficha-medica.pdf" target="_blank" rel="noopener">Ficha médica (PDF) <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a></div><div class="doc"><div><strong>SAU, si corresponde</strong><span>Requisitos de objeto social y denominación.</span></div></div></div>
+        <p class="small-note">En la presentación en persona también se pide el informe de inhibición de bienes.</p>
+      </div>
+      <div class="drawer-foot"><a class="link" href="antes-de-iniciar/#documentacion">Ver en página completa <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></div>
+    </dialog>
+
+    <dialog class="drawer" id="d-info" aria-labelledby="d-info-t">
+      <div class="drawer-head"><h2 id="d-info-t">Información para iniciar</h2><button type="button" class="drawer-x" data-close aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+      <div class="drawer-body">
+        <p class="drawer-lead">Así es el proceso de matriculación, alta de pasividad o de suspensión. Son 7 pasos: los primeros los hacés vos y después interviene el Colegio.</p>
+        <div class="deadline" role="note"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span><strong>Iniciar el trámite no habilita el ejercicio profesional.</strong> Podés ejercer recién cuando se active tu matrícula.</span></div>
+        <ol class="steps"><li><div><strong>Completás la solicitud online</strong><span>Datos personales y familiares, datos profesionales, documentación y comprobante de pago.</span></div></li><li><div><strong>Presentás la documentación en persona</strong><span>Con turno, en el Colegio.</span></div></li><li><div><strong>Presentás los avales</strong><span>De dos matriculados activos con al menos 10 años de antigüedad.</span></div></li><li><div><strong>Se publican los edictos</strong><span>En el Boletín Oficial de la Provincia de Buenos Aires y en la cartelera del Colegio.</span></div></li><li><div><strong>El Consejo Directivo evalúa la solicitud</strong></div></li><li><div><strong>Si se aprueba, te notificamos la activación de la matrícula</strong></div></li><li><div><strong>Inspección del domicilio profesional</strong><span>Para fiscalizar los datos de tu declaración jurada.</span></div></li></ol>
+      </div>
+      <div class="drawer-foot"><a class="link" href="antes-de-iniciar/#proceso">Ver en página completa <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></div>
+    </dialog>
   </div>
 <footer class="site-footer after-content">
   <div class="container">
@@ -146,7 +238,8 @@
   <header>Notas de diseño, Trámites v0.1</header>
   <ol>
     <li><em>Estructura:</em> los grupos y trámites siguen la arquitectura aprobada (Gestiones frecuentes, Certificaciones y fiscalización, Antes de iniciar). “Todos los trámites” es esta misma página.</li>
-    <li><em>Antes de iniciar:</em> va al final como apoyo, pero cada trámite tiene su propia página con “Qué vas a necesitar”, así no hay que salir del recorrido.</li>
+    <li><em>Antes de iniciar:</em> Requisitos e Información se abren en un panel lateral (drawer) para no salir del hub. Se eligió panel y no modal centrado porque la documentación es larga. Se cierra con la X, Esc o tocando afuera, y el foco vuelve al enlace (elemento dialog nativo).</li>
+    <li><em>Preguntas frecuentes:</em> acordeón directo en el hub. Las preguntas son una propuesta; las respuestas salen del material del Colegio.</li>
     <li><em>Tarjetas:</em> patrón Card / Quick Action de Accesos principales. Toda la tarjeta es clickeable y el foco de teclado rodea la tarjeta completa.</li>
     <li><em>Solicitud de colegiación:</em> en el sitio real se entra con el link personal; la tarjeta explica eso. En el prototipo lleva directo al formulario para poder recorrerlo.</li>
     <li><em>Descripciones:</em> salen del material del Colegio y del sitio actual.</li>
@@ -163,6 +256,9 @@
   var l=document.querySelector('link[href$="_shared/cmcpsi.css"]');
   if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace('cmcpsi.css','proto-nav.js');document.body.appendChild(sc);}
 })();
+document.querySelectorAll('[data-drawer]').forEach(function(b){var d=document.getElementById(b.dataset.drawer);b.addEventListener('click',function(){d.showModal();});});
+document.querySelectorAll('dialog.drawer').forEach(function(d){d.querySelectorAll('[data-close]').forEach(function(x){x.addEventListener('click',function(){d.close();});});d.addEventListener('click',function(e){if(e.target===d)d.close();});});
+
 </script>
 </body>
 </html>

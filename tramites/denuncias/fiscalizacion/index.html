@@ -45,8 +45,6 @@ select.control:invalid{color:var(--text-muted)}
 .aside ol{padding-left:20px;display:grid;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-secondary)}
 .aside p{font-size:14px;line-height:20px;color:var(--text-secondary)}
 .aside a{color:var(--brand-primary);font-weight:500}
-.step-wrap{margin-bottom:var(--sp-32)}
-.stepper-mobile{display:none}
 .review-stack{display:flex;flex-direction:column;gap:var(--sp-16)}
 .done-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-40);display:flex;flex-direction:column;gap:var(--sp-16);max-width:680px}
 .done-icon{width:56px;height:56px;border-radius:var(--r-full);background:var(--success-bg);color:var(--success);display:inline-flex;align-items:center;justify-content:center}
@@ -56,17 +54,9 @@ select.control:invalid{color:var(--text-muted)}
 .done-card .sign{color:var(--text-primary)}
 .done-card .next{background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:14px;line-height:20px;color:var(--text-secondary)}
 @media (max-width:960px){.layout{grid-template-columns:1fr;gap:var(--sp-32)}.aside{position:static}}
-@media (max-width:760px){.stepper{display:none}.stepper-mobile{display:flex}}
 @media (max-width:640px){.row2{grid-template-columns:1fr}.row-num{grid-template-columns:1fr 1fr}.form-card,.need{padding:var(--sp-24) var(--sp-16)}.done-card{padding:var(--sp-24)}.start-actions .btn{width:100%}}
 </style>
 <style>
-.stepbar{display:flex;flex-direction:column;gap:var(--sp-8);margin-bottom:var(--sp-24)}
-.stepbar .top{display:flex;justify-content:space-between;gap:var(--sp-16);font-size:14px;line-height:20px}
-.stepbar .top span:first-child{font-weight:600}
-.stepbar .top span:last-child{color:var(--text-secondary);white-space:nowrap}
-.stepbar .track{height:4px;border-radius:var(--r-full);background:var(--border-default);overflow:hidden}
-.stepbar .track i{display:block;height:100%;background:var(--brand-primary);border-radius:var(--r-full)}
-.stepbar .next{font-size:12px;line-height:16px;color:var(--text-muted)}
 .sub{font-size:16px;font-weight:600;line-height:24px;padding-top:var(--sp-24);border-top:var(--bw-default) solid var(--border-subtle)}
 .sub.first{border-top:0;padding-top:0}
 .prefill{display:flex;gap:var(--sp-12);background:var(--success-bg);border-radius:var(--r-input);padding:var(--sp-12) var(--sp-16);font-size:14px;line-height:20px}
@@ -186,7 +176,10 @@ select.control:invalid{color:var(--text-muted)}
           <div class="start-actions"><button type="button" class="btn btn-primary" id="start">Empezar <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button></div>
         </section>
         <section class="view" id="v-1" aria-labelledby="t-1" hidden>
-          <div class="stepbar"><div class="top"><span>Tus datos</span><span>Paso 1 de 3</span></div><div class="track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Paso 1 de 3"><i style="width:33%"></i></div><div class="next">Sigue: La denuncia</div></div>
+          <div class="step-wrap">
+          <ol class="stepper" aria-label="Pasos del trámite, 3 en total"><li class="current" aria-current="step"><span class="bar"></span><span class="meta"><span class="num">1</span><span>Tus datos</span></span></li><li><span class="bar"></span><span class="meta"><span class="num">2</span><span>La denuncia</span></span></li><li><span class="bar"></span><span class="meta"><span class="num">3</span><span>Revisión</span></span></li></ol>
+          <div class="stepper-mobile"><div class="top"><span>Tus datos</span><span>Paso 1 de 3</span></div><div class="track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Paso 1 de 3"><i style="width:33%"></i></div><div class="next">Sigue: La denuncia</div></div>
+        </div>
           <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
           <form class="form-card" data-step="1" novalidate>
             <h1 class="t-h2" id="t-1" tabindex="-1" style="font-size:24px;line-height:32px">Tus datos</h1>
@@ -245,7 +238,10 @@ select.control:invalid{color:var(--text-muted)}
           </form>
         </section>
         <section class="view" id="v-2" aria-labelledby="t-2" hidden>
-          <div class="stepbar"><div class="top"><span>La denuncia</span><span>Paso 2 de 3</span></div><div class="track" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="3" aria-label="Paso 2 de 3"><i style="width:67%"></i></div><div class="next">Sigue: Revisión</div></div>
+          <div class="step-wrap">
+          <ol class="stepper" aria-label="Pasos del trámite, 3 en total"><li class="done"><span class="bar"></span><span class="meta"><span class="num"><svg class="icon" style="width:14px;height:14px;stroke-width:3" aria-hidden="true"><use href="#i-check"/></svg></span><span>Tus datos</span><span class="sr-only">, completado</span></span></li><li class="current" aria-current="step"><span class="bar"></span><span class="meta"><span class="num">2</span><span>La denuncia</span></span></li><li><span class="bar"></span><span class="meta"><span class="num">3</span><span>Revisión</span></span></li></ol>
+          <div class="stepper-mobile"><div class="top"><span>La denuncia</span><span>Paso 2 de 3</span></div><div class="track" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="3" aria-label="Paso 2 de 3"><i style="width:66%"></i></div><div class="next">Sigue: Revisión</div></div>
+        </div>
           <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
           <form class="form-card" data-step="2" novalidate>
             <h1 class="t-h2" id="t-2" tabindex="-1" style="font-size:24px;line-height:32px">La denuncia</h1>
@@ -290,7 +286,10 @@ select.control:invalid{color:var(--text-muted)}
           </form>
         </section>
         <section class="view" id="v-3" aria-labelledby="t-3" hidden>
-          <div class="stepbar"><div class="top"><span>Revisión</span><span>Paso 3 de 3</span></div><div class="track" role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="3" aria-label="Paso 3 de 3"><i style="width:100%"></i></div></div>
+          <div class="step-wrap">
+          <ol class="stepper" aria-label="Pasos del trámite, 3 en total"><li class="done"><span class="bar"></span><span class="meta"><span class="num"><svg class="icon" style="width:14px;height:14px;stroke-width:3" aria-hidden="true"><use href="#i-check"/></svg></span><span>Tus datos</span><span class="sr-only">, completado</span></span></li><li class="done"><span class="bar"></span><span class="meta"><span class="num"><svg class="icon" style="width:14px;height:14px;stroke-width:3" aria-hidden="true"><use href="#i-check"/></svg></span><span>La denuncia</span><span class="sr-only">, completado</span></span></li><li class="current" aria-current="step"><span class="bar"></span><span class="meta"><span class="num">3</span><span>Revisión</span></span></li></ol>
+          <div class="stepper-mobile"><div class="top"><span>Revisión</span><span>Paso 3 de 3</span></div><div class="track" role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="3" aria-label="Paso 3 de 3"><i style="width:100%"></i></div></div>
+        </div>
           <div class="page-head" style="margin-bottom:var(--sp-24)">
             <h1 class="t-h2" id="t-3" tabindex="-1">Revisá la denuncia</h1>
             <p class="t-lead" style="font-size:16px;line-height:24px">Si algo no está bien, cambialo antes de enviar.</p>

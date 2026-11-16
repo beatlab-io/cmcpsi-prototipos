@@ -45,8 +45,6 @@ select.control:invalid{color:var(--text-muted)}
 .aside ol{padding-left:20px;display:grid;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-secondary)}
 .aside p{font-size:14px;line-height:20px;color:var(--text-secondary)}
 .aside a{color:var(--brand-primary);font-weight:500}
-.step-wrap{margin-bottom:var(--sp-32)}
-.stepper-mobile{display:none}
 .review-stack{display:flex;flex-direction:column;gap:var(--sp-16)}
 .done-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-40);display:flex;flex-direction:column;gap:var(--sp-16);max-width:680px}
 .done-icon{width:56px;height:56px;border-radius:var(--r-full);background:var(--success-bg);color:var(--success);display:inline-flex;align-items:center;justify-content:center}
@@ -56,17 +54,9 @@ select.control:invalid{color:var(--text-muted)}
 .done-card .sign{color:var(--text-primary)}
 .done-card .next{background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:14px;line-height:20px;color:var(--text-secondary)}
 @media (max-width:960px){.layout{grid-template-columns:1fr;gap:var(--sp-32)}.aside{position:static}}
-@media (max-width:760px){.stepper{display:none}.stepper-mobile{display:flex}}
 @media (max-width:640px){.row2{grid-template-columns:1fr}.row-num{grid-template-columns:1fr 1fr}.form-card,.need{padding:var(--sp-24) var(--sp-16)}.done-card{padding:var(--sp-24)}.start-actions .btn{width:100%}}
 </style>
 <style>
-.stepbar{display:flex;flex-direction:column;gap:var(--sp-8);margin-bottom:var(--sp-24)}
-.stepbar .top{display:flex;justify-content:space-between;gap:var(--sp-16);font-size:14px;line-height:20px}
-.stepbar .top span:first-child{font-weight:600}
-.stepbar .top span:last-child{color:var(--text-secondary);white-space:nowrap}
-.stepbar .track{height:4px;border-radius:var(--r-full);background:var(--border-default);overflow:hidden}
-.stepbar .track i{display:block;height:100%;background:var(--brand-primary);border-radius:var(--r-full)}
-.stepbar .next{font-size:12px;line-height:16px;color:var(--text-muted)}
 .sub{font-size:16px;font-weight:600;line-height:24px;padding-top:var(--sp-24);border-top:var(--bw-default) solid var(--border-subtle)}
 .sub.first{border-top:0;padding-top:0}
 .prefill{display:flex;gap:var(--sp-12);background:var(--success-bg);border-radius:var(--r-input);padding:var(--sp-12) var(--sp-16);font-size:14px;line-height:20px}

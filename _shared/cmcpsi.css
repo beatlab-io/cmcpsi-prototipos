@@ -370,3 +370,10 @@ textarea.control{height:auto;min-height:168px;padding:12px var(--inset);resize:v
 /* Texto de ayuda debajo del campo (no entre la etiqueta y el campo). El error queda arriba del campo. */
 .field>.help{order:2;margin-top:-2px}
 .field>.disclose{order:3}
+/* Stepper único (patrón Matriculación). Escritorio: barras + número + nombre. Celular: barra de progreso. */
+.step-wrap{margin-bottom:var(--sp-32)}
+.stepper-mobile{display:none}
+.stepper.is-compact li{flex:1 1 0}
+.stepper.is-compact li.current{flex:3 1 0}
+.stepper .meta>span:not(.num){min-width:0}
+@media (max-width:760px){.stepper{display:none}.stepper-mobile{display:flex}}

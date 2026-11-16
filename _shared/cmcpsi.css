@@ -250,6 +250,7 @@ legend{font-size:14px;font-weight:500;line-height:20px;margin-bottom:var(--sp-8)
 
 /* 7. Form / Resumen de errores */
 .err-summary{border:1px solid var(--error);border-radius:var(--r-input);background:var(--error-bg);padding:var(--sp-16) var(--sp-24)}
+.err-summary:not([hidden]){margin-bottom:var(--sp-24)}
 .err-summary h3{font-size:16px;font-weight:600;line-height:24px;color:var(--error);margin-bottom:var(--sp-8)}
 .err-summary p{font-size:14px;line-height:20px;color:var(--text-primary);margin-bottom:var(--sp-8)}
 .err-summary ul{list-style:none;display:grid;gap:4px}

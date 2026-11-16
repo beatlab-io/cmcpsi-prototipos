@@ -60,22 +60,27 @@ select.control:invalid{color:var(--text-muted)}
 @media (max-width:640px){.row2{grid-template-columns:1fr}.row-num{grid-template-columns:1fr 1fr}.form-card,.need{padding:var(--sp-24) var(--sp-16)}.done-card{padding:var(--sp-24)}.start-actions .btn{width:100%}}
 </style>
 <style>
-.two-steps{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16);counter-reset:s}
-.two-steps li{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-8)}
-.two-steps .n{width:32px;height:32px;border-radius:var(--r-full);background:var(--brand-primary);color:#fff;font-size:14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;margin-bottom:var(--sp-4)}
-.two-steps .n.out{background:var(--bg-default);color:var(--brand-primary);border:2px solid var(--brand-primary)}
-.two-steps strong{font-size:16px;font-weight:600;line-height:24px}
-.two-steps p{font-size:14px;line-height:20px;color:var(--text-secondary)}
-.two-steps .link{margin-top:auto}
+.process{list-style:none;display:flex;flex-direction:column;background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-32)}
+.process > li{display:grid;grid-template-columns:40px 1fr;gap:var(--sp-16);position:relative;padding-bottom:var(--sp-32)}
+.process > li:last-child{padding-bottom:0}
+.process > li:not(:last-child)::before{content:"";position:absolute;left:19px;top:44px;bottom:8px;width:2px;background:var(--border-default)}
+.process .n{width:40px;height:40px;border-radius:var(--r-full);background:var(--bg-brand-soft);color:var(--brand-primary);font-size:16px;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
+.process h2{font-size:20px;font-weight:600;line-height:28px;margin:6px 0 var(--sp-4)}
+.process p{font-size:16px;line-height:24px;color:var(--text-secondary)}
+.process .link{margin-top:var(--sp-4)}
+.process .need-list{list-style:none;display:grid;gap:var(--sp-8);margin:var(--sp-16) 0 var(--sp-24);padding:var(--sp-16);background:var(--bg-institutional-panel);border-radius:var(--r-input)}
+.process .need-list li{display:flex;gap:var(--sp-12);align-items:center;font-size:15px;line-height:22px}
+.process .need-list .icon{color:var(--icon-brand);width:20px;height:20px}
+.process .need-list strong{font-weight:600}
 .sub{font-size:16px;font-weight:600;line-height:24px;padding-top:var(--sp-8);border-top:var(--bw-default) solid var(--border-subtle)}
 .sub:first-of-type{border-top:0;padding-top:0}
-@media (max-width:640px){.two-steps{grid-template-columns:1fr}}
+@media (max-width:640px){.process{padding:var(--sp-24) var(--sp-16)}.process .btn{width:100%}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M5 12l6 6"/><path d="M5 12l6-6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M9 12l2 2l4-4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol><symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M7 9l5-5l5 5"/><path d="M12 4v12"/></symbol></defs></svg><div class="proto-bar" role="note">
   <div class="container">
-    <span><strong>Prototipo de diseño, Fianza v0.1.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
+    <span><strong>Prototipo de diseño, Fianza v0.2.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
     <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
   </div>
 </div>
@@ -119,21 +124,28 @@ select.control:invalid{color:var(--text-muted)}
             <h1 class="t-h1" id="t-start" tabindex="-1">Fianza</h1>
             <p class="t-lead">Para nuevos colegiados, altas de pasividad y suspensión, y traslados. Se constituye con un seguro de caución a favor del Colegio.<span class="note-pin">1</span></p>
           </div>
-          <ol class="two-steps" aria-label="Cómo se hace">
-            <li><span class="n out" aria-hidden="true">1</span><strong>Generá la póliza</strong><p>Se tramita con la aseguradora, en un formulario externo.</p>
-              <a class="link" href="#">Ir al formulario de la póliza <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a><span class="note-pin">2</span></li>
-            <li><span class="n" aria-hidden="true">2</span><strong>Presentá la póliza acá</strong><p>Completás tus datos y subís el archivo de la póliza emitida.</p></li>
+          <ol class="process" aria-label="Cómo se hace">
+            <li>
+              <span class="n" aria-hidden="true">1</span>
+              <div>
+                <h2><span class="sr-only">Paso 1: </span>Generá la póliza con la aseguradora</h2>
+                <p>Se tramita fuera de este sitio. Cuando la aseguradora te la entregue, seguí con el paso 2.</p>
+                <a class="link" href="https://cmcpsi.org.ar/colegiados/tramites/fianza-nuevos-colegiados-altas-pasividad-y-suspension-traslados" target="_blank" rel="noopener">Ver cómo generar la póliza <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en una pestaña nueva)</span></a><span class="note-pin">2</span>
+              </div>
+            </li>
+            <li>
+              <span class="n" aria-hidden="true">2</span>
+              <div>
+                <h2><span class="sr-only">Paso 2: </span>Presentá la póliza acá</h2>
+                <p>Completás tus datos y subís el archivo. Te lleva unos minutos.</p>
+                <ul class="need-list" aria-label="Vas a necesitar">
+                  <li><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg><span><strong>El archivo de la póliza</strong> que emitió la aseguradora</span></li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#i-id"/></svg><span><strong>Tu número de matrícula</strong> y de documento<span class="note-pin">3</span></span></li>
+                </ul>
+                <button type="button" class="btn btn-primary" id="start">Presentar la póliza <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
+              </div>
+            </li>
           </ol>
-          <div class="need" style="margin-top:var(--sp-24)">
-            <h2>Para presentar la póliza vas a necesitar</h2>
-            <ul>
-              <li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span><div><strong>El archivo de la póliza</strong><span class="d">La que emitió la compañía de seguros.</span></div></li>
-              <li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-id"/></svg></span><div><strong>Tu número de matrícula y de documento</strong><span class="d">Para identificar tu legajo.<span class="note-pin">3</span></span></div></li>
-            </ul>
-            <div class="start-actions">
-              <button type="button" class="btn btn-primary" id="start">Presentar la póliza <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
-            </div>
-          </div>
         </section>
 
         <!-- Paso 1 -->
@@ -239,13 +251,9 @@ select.control:invalid{color:var(--text-muted)}
         </section>
       </div>
 
-      <aside class="aside" aria-label="Cómo sigue" id="aside">
-        <h2>Cómo sigue</h2>
-        <ol>
-          <li>Generás la póliza con la aseguradora.</li>
-          <li>La presentás acá con tus datos.</li>
-          <li>El área de Fianzas la revisa.</li>
-        </ol>
+      <aside class="aside" aria-label="Después de presentarla" id="aside">
+        <h2>Después de presentarla</h2>
+        <p>El área de Fianzas revisa la póliza. Si falta algo, te escribe al email que indiques.</p>
         <p>¿Dudas? Escribí a <a href="mailto:fianza@cmcpsi.org.ar">fianza@cmcpsi.org.ar</a>.</p>
       </aside>
     </div>
@@ -270,10 +278,10 @@ select.control:invalid{color:var(--text-muted)}
 </footer>
 </main>
 <aside class="notes-panel" aria-label="Notas de diseño">
-  <header>Notas de diseño, Fianza v0.1</header>
+  <header>Notas de diseño, Fianza v0.2</header>
   <ol>
     <li><em>A quién aplica:</em> nuevos colegiados, altas de pasividad y suspensión, y traslados (texto del Colegio). El formulario actual se titula “Fianza (2026)”: confirmar si la fianza se renueva cada año y si hay que mostrar el año.</li>
-    <li><em>Paso 1, formulario externo:</em> falta la dirección del formulario de la aseguradora. El enlace todavía no lleva a ningún lado.</li>
+    <li><em>Paso 1:</em> por ahora el enlace lleva a la página de Fianza del sitio actual del Colegio, que explica cómo generar la póliza. Falta la dirección directa del formulario de la aseguradora para enlazarla acá.</li>
     <li><em>Matrícula:</em> se pide como en el formulario actual. Confirmar qué pone un nuevo colegiado que todavía no tiene número.</li>
     <li><em>Botón final:</em> en el formulario actual dice “Adherir”, que no explica qué pasa. Se propone “Presentar póliza”. Confirmar.</li>
     <li><em>Confirmación:</em> el Colegio no mandó texto para esta pantalla. Es una propuesta. El aviso por mail va a gabrielaestrada@cmcpsi.org.ar, fianza@cmcpsi.org.ar y a quien presenta la póliza (servidor y panel admin; ver el cuadro sinóptico).</li>

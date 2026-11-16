@@ -345,7 +345,7 @@ body.show-notes .notes-panel{display:block}
 <header class="site-header">
   <div class="container">
     <div class="hdr-top">
-      <a href="#" class="logo" aria-label="CMCPSI, ir al inicio"><img src="assets/logo-cmcpsi.png" alt="CMCPSI, Colegio de Martilleros y Corredores Públicos de San Isidro"></a>
+      <a href="../" class="logo" aria-label="CMCPSI, ir al inicio"><img src="assets/logo-cmcpsi.png" alt="CMCPSI, Colegio de Martilleros y Corredores Públicos de San Isidro"></a>
       <label class="hdr-search">
         <svg class="icon icon-sm" aria-hidden="true"><use href="#i-search"/></svg>
         <span class="sr-only">Buscar en el sitio</span>
@@ -361,7 +361,7 @@ body.show-notes .notes-panel{display:block}
       </div>
     </div>
     <nav class="nav" id="nav" aria-label="Principal">
-      <a href="#">Trámites</a>
+      <a href="../tramites/">Trámites</a>
       <a href="#">Colegiados</a>
       <a href="#" aria-current="page">Comunidad</a>
       <a href="#">Actualidad</a>
@@ -374,7 +374,7 @@ body.show-notes .notes-panel{display:block}
   <div class="container">
     <nav class="breadcrumb" aria-label="Ruta de navegación">
       <ol>
-        <li><a href="#">Inicio</a></li>
+        <li><a href="../">Inicio</a></li>
         <li><a href="#">Comunidad</a></li>
         <li aria-current="page">Cowork</li>
       </ol>
@@ -547,7 +547,7 @@ body.show-notes .notes-panel{display:block}
         </div>
         <div class="ftr-col">
           <h2>Accesos rápidos</h2>
-          <ul><li><a href="#">Consultar padrón</a></li><li><a href="#">Trámites</a></li><li><a href="#">Valores y vencimientos</a></li><li><a href="#">Beneficios</a></li><li><a href="#">Calculadora</a></li></ul>
+          <ul><li><a href="#">Consultar padrón</a></li><li><a href="../tramites/">Trámites</a></li><li><a href="#">Valores y vencimientos</a></li><li><a href="#">Beneficios</a></li><li><a href="#">Calculadora</a></li></ul>
         </div>
         <div class="ftr-col">
           <h2>Información</h2>
@@ -612,7 +612,8 @@ body.show-notes .notes-panel{display:block}
       s.focus({preventScroll:true});
     });
   });
-  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+  var toast=document.createElement('div');toast.setAttribute('role','status');toast.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1b2430;color:#fff;font:500 14px/20px "Plus Jakarta Sans",system-ui,sans-serif;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(15,26,36,.25);z-index:80;opacity:0;transition:opacity .2s;pointer-events:none';document.body.appendChild(toast);var tt;
+  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();toast.textContent='Esta sección no forma parte del prototipo';toast.style.opacity='1';clearTimeout(tt);tt=setTimeout(function(){toast.style.opacity='0';},2200);});});
 
   /* Carrusel manual, sin autoplay · fotos de comunidadcmcpsi.ar */
   var photos=[

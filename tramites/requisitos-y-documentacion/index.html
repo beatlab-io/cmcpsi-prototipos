@@ -63,8 +63,7 @@ select.control:invalid{color:var(--text-muted)}
 .block{margin-top:var(--sp-64);scroll-margin-top:var(--sp-24)}
 .block > h2{font-size:32px;font-weight:600;line-height:40px;margin-bottom:var(--sp-8)}
 .block > .lead{font-size:18px;line-height:28px;color:var(--text-secondary);max-width:760px;margin-bottom:var(--sp-24)}
-.deadline{display:flex;gap:var(--sp-12);background:#fff6dc;border:1px solid #e7c66b;border-radius:var(--r-input);padding:var(--sp-16);font-size:16px;line-height:24px;margin-bottom:var(--sp-24);max-width:760px}
-.deadline .icon{color:#8a5a00;flex:none;margin-top:2px}
+.block .aviso{margin-bottom:var(--sp-24)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
 .card{background:#fff;border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-12)}
 .card h3{font-size:20px;font-weight:600;line-height:28px}
@@ -114,9 +113,6 @@ select.control:invalid{color:var(--text-muted)}
 .req .badge.warn{background:#fff6dc;color:#8a5a00}
 .req .act{grid-column:2;grid-row:1 / span 3;align-self:center}
 .req .act .btn{height:40px;font-size:14px;padding:0 18px}
-.expire{display:flex;gap:var(--sp-12);background:#fff6dc;border:1px solid #e7c66b;border-radius:var(--r-input);padding:var(--sp-16) var(--sp-24);font-size:16px;line-height:24px;max-width:820px;margin-top:var(--sp-24)}
-.expire .icon{color:#8a5a00;flex:none;margin-top:2px}
-.expire ul{margin:var(--sp-4) 0 0 18px;display:grid;gap:2px}
 .inperson{background:var(--bg-institutional-panel);border-radius:var(--r-large);padding:var(--sp-24);margin-top:var(--sp-48)}
 .inperson h2{font-size:20px;font-weight:600;line-height:28px;margin-bottom:var(--sp-8)}
 .inperson p{font-size:16px;line-height:24px;color:var(--text-secondary)}
@@ -165,8 +161,8 @@ select.control:invalid{color:var(--text-muted)}
     <div class="page-head" style="margin-bottom:0">
       <h1 class="t-h1">Requisitos y documentación</h1>
       <p class="t-lead">Para la matriculación, el alta de pasividad o de suspensión. Los subís en el formulario online y después presentás los originales y una fotocopia en el Colegio.<span class="note-pin">1</span></p>
-      <div class="expire" role="note"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><div><strong>Algunos documentos vencen rápido.</strong> Pedilos cerca de la fecha en que vas a presentarlos:<ul><li>Certificado de domicilio: 48 horas.</li><li>Constancia de estado civil: 30 días.</li><li>Antecedentes penales: menos de 30 días de emitido.</li></ul></div></div>
     </div>
+    <div class="aviso" style="margin-top:var(--sp-24)" role="note"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><div><strong>Algunos documentos vencen rápido.</strong> Pedilos cerca de la fecha en que vas a presentarlos:<ul><li>Certificado de domicilio: 48 horas.</li><li>Constancia de estado civil: 30 días.</li><li>Antecedentes penales: menos de 30 días de emitido.</li></ul></div></div>
 
     <section class="req-group" aria-labelledby="g-0">
       <h2 id="g-0">Identidad</h2>

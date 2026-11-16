@@ -377,3 +377,9 @@ textarea.control{height:auto;min-height:168px;padding:12px var(--inset);resize:v
 .stepper.is-compact li.current{flex:3 1 0}
 .stepper .meta>span:not(.num){min-width:0}
 @media (max-width:760px){.stepper{display:none}.stepper-mobile{display:flex}}
+/* Aviso (Notice / Warning): componente único para plazos y advertencias. Ocupa siempre el ancho completo de su columna. */
+.aviso{display:flex;gap:var(--sp-12);width:100%;box-sizing:border-box;background:#fff6dc;border:1px solid #e7c66b;border-radius:var(--r-input);padding:var(--sp-16) var(--sp-24);font-size:16px;line-height:24px;color:var(--text-primary)}
+.aviso>.icon{color:#8a5a00;flex:none;width:20px;height:20px;margin-top:2px}
+.aviso strong{font-weight:600}
+.aviso ul{margin:var(--sp-4) 0 0 18px;padding:0;display:grid;gap:4px}
+@media (max-width:640px){.aviso{padding:var(--sp-16)}}

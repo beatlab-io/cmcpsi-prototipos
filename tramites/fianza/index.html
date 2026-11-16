@@ -95,8 +95,7 @@ select.control:invalid{color:var(--text-muted)}
 .btn-copy:hover{background:var(--bg-brand-soft)}
 .btn-copy.copied{border-color:var(--success);color:var(--success);background:var(--success-bg)}
 .btn-copy .icon{width:16px;height:16px}
-.warn{display:flex;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-primary)!important;background:#fff6dc;border-radius:var(--r-medium);padding:var(--sp-12);margin-top:var(--sp-16)}
-.warn .icon{color:#8a5a00;width:18px;height:18px;flex:none;margin-top:1px}
+.process .aviso{margin-top:var(--sp-16)}
 @media (max-width:760px){.opt,.opt:not(.opt-b){grid-template-columns:1fr;padding:var(--sp-16)}.opt:not(.opt-b) .opt-body{align-items:flex-start}.cond{grid-template-columns:1fr}}
 @media (max-width:640px){.process{padding:var(--sp-24) var(--sp-16)}.process .btn{width:100%}}
 </style>
@@ -187,7 +186,7 @@ select.control:invalid{color:var(--text-muted)}
               <div>
                 <h2><span class="sr-only">Paso 2: </span>Presentá la póliza acá</h2>
                 <p>Completás tus datos y subís el archivo. Es obligatorio para todos, con cualquiera de las dos opciones.</p>
-                <p class="warn"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span><strong>Generar la póliza no es presentarla.</strong> El trámite termina recién con este paso.</span></p>
+                <div class="aviso" role="note"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span><strong>Generar la póliza no es presentarla.</strong> El trámite termina recién con este paso.</span></div>
                 <ul class="need-list" aria-label="Vas a necesitar">
                   <li><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg><span><strong>El archivo de la póliza</strong> que emitió la aseguradora</span></li>
                   <li><svg class="icon" aria-hidden="true"><use href="#i-id"/></svg><span><strong>Tu número de matrícula</strong> y de documento<span class="note-pin">3</span></span></li>

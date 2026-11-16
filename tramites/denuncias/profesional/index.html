@@ -115,10 +115,7 @@ select.control:invalid{color:var(--text-muted)}
 .choose .qcard li{display:flex;gap:var(--sp-8)}
 .choose .qcard li .icon{width:18px;height:18px;color:var(--icon-brand);flex:none;margin-top:1px}
 .choose .cta{display:inline-flex;align-items:center;gap:6px;color:var(--brand-primary);font-weight:600;font-size:15px;margin-top:auto}
-.ratify{display:flex;flex-direction:column;gap:var(--sp-12);background:#fff6dc;border:1px solid #e7c66b;border-radius:var(--r-input);padding:var(--sp-16) var(--sp-16) var(--sp-16) var(--sp-16)}
-.ratify h3{display:flex;gap:var(--sp-8);align-items:center;font-size:16px;font-weight:600;line-height:24px}
-.ratify h3 .icon{color:#8a5a00}
-.ratify ul{padding-left:20px;display:grid;gap:6px;font-size:15px;line-height:22px}
+.aviso h3{font-size:16px;font-weight:600;line-height:24px;margin-bottom:var(--sp-4)}
 .anon-note{display:flex;gap:var(--sp-12);background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:15px;line-height:22px}
 .anon-note .icon{color:var(--icon-brand);flex:none;margin-top:1px}
 @media (max-width:760px){.choose{grid-template-columns:1fr}}
@@ -339,15 +336,15 @@ select.control:invalid{color:var(--text-muted)}
           <form class="form-card" data-step="3" novalidate>
             <h1 class="t-h2" id="t-3" tabindex="-1" style="font-size:24px;line-height:32px">Ratificación</h1>
             <p class="intro">Leé esto antes de enviar.</p>
-            <div class="ratify" role="note">
-              <h3><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Tenés que ratificar la denuncia en persona</h3>
+            <div class="aviso" role="note"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><div>
+              <h3>Tenés que ratificar la denuncia en persona</h3>
               <ul>
                 <li>Presentate en el Colegio (Rivadavia 573, San Isidro) dentro de los <strong>15 días</strong> después de enviarla.<span class="note-pin">2</span></li>
                 <li>Llevá los <strong>originales</strong> de la documentación que adjuntaste.</li>
                 <li>Lo tiene que hacer la persona que firma la denuncia. No se puede delegar.</li>
                 <li>Si no la ratificás a tiempo, la denuncia se archiva sin aviso.</li>
               </ul>
-            </div>
+            </div></div>
             <div class="field" id="f-terminos"><label class="check"><input type="checkbox" name="terminos" id="terminos"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Entiendo que tengo que ratificar la denuncia y acepto los <a href="#" class="link link-inline">términos y condiciones</a></span></label><p class="error-msg" id="terminos-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
             <div class="actions"><button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button><button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button><span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span><span class="spacer"></span><button type="submit" class="btn btn-primary" data-main>Continuar</button></div>
           </form>
@@ -372,7 +369,7 @@ select.control:invalid{color:var(--text-muted)}
           <div class="done-card">
             <span class="done-icon"><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg></span>
             <h1 id="t-done" tabindex="-1">Recibimos tu denuncia</h1>
-            <div class="ratify" role="note"><h3><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Falta un paso: ratificarla en persona</h3><ul><li>Presentate en el Colegio, Rivadavia 573, San Isidro, dentro de los <strong>15 días</strong>.</li><li>Llevá los originales de la documentación.</li><li>Si no la ratificás, se archiva sin aviso.</li></ul></div>
+            <div class="aviso" role="note"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><div><h3>Falta un paso: ratificarla en persona</h3><ul><li>Presentate en el Colegio, Rivadavia 573, San Isidro, dentro de los <strong>15 días</strong>.</li><li>Llevá los originales de la documentación.</li><li>Si no la ratificás, se archiva sin aviso.</li></ul></div></div>
             <p>Te enviamos una copia desde denunciasm@cmcpsi.org.ar a <strong id="done-email"></strong>.<span class="note-pin">3</span></p>
             <div><a class="btn btn-secondary" href="../../">Volver a Trámites</a></div>
           </div>

@@ -52,6 +52,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* Field base (existente: input) */
 .field{display:flex;flex-direction:column;gap:var(--sp-8)}
+.field>.help{order:2;margin-top:-2px}
+.field>.disclose{order:3}
 .label{font-size:14px;font-weight:500;line-height:20px}
 .label .req{color:var(--error)}
 .label .opt{color:var(--text-muted);font-weight:400}

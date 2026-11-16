@@ -1,5 +1,6 @@
 /* CMCPSI prototipos: estilos compartidos (tokens del Figma "Web CMCPSI") */
 [hidden]{display:none!important}
+button,input,select,textarea{font-family:inherit;color:inherit}
 :root{
   --brand-primary:#13579b;        /* Brand / Primary */
   --brand-primary-hover:#09447f;  /* Brand / Primary Hover */
@@ -229,10 +230,11 @@ legend{font-size:14px;font-weight:500;line-height:20px;margin-bottom:var(--sp-8)
 .btn-add:active{background:var(--bg-brand-soft);color:var(--brand-dark)}
 
 /* 6. Input / Archivo · estados extendidos */
-.file{border:1px solid var(--border-default);border-radius:var(--r-input);padding:6px 6px 6px 6px;display:flex;align-items:center;gap:var(--sp-12);min-height:48px;background:#fff}
-.file .pick{background:var(--bg-institutional-panel);color:var(--brand-primary);font-size:14px;font-weight:500;border:0;border-radius:var(--r-medium);height:34px;padding:0 var(--sp-12);cursor:pointer;flex:none}
+.file{border:1px solid var(--border-default);border-radius:var(--r-input);padding:5px;display:flex;align-items:center;gap:var(--sp-12);min-height:48px;background:#fff}
+.file .pick{display:inline-flex;align-items:center;gap:6px;background:var(--bg-institutional-panel);color:var(--brand-primary);font-size:14px;font-weight:500;line-height:20px;border:0;border-radius:var(--r-medium);height:36px;padding:0 var(--sp-12);cursor:pointer;flex:none;white-space:nowrap}
+.file .pick .icon{width:18px;height:18px}
 .file .pick:hover{background:var(--bg-brand-soft)}
-.file .name{font-size:14px;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file .name{font-size:14px;line-height:20px;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .file-done{border:1px solid var(--border-default);border-radius:var(--r-input);padding:var(--sp-12);display:flex;align-items:center;gap:var(--sp-12);background:#fff}
 .file-done .thumb{width:40px;height:40px;border-radius:var(--r-medium);background:var(--bg-institutional-panel);color:var(--brand-primary);display:inline-flex;align-items:center;justify-content:center;flex:none}
 .file-done .info{flex:1;min-width:0}
@@ -347,3 +349,6 @@ legend{font-size:14px;font-weight:500;line-height:20px;margin-bottom:var(--sp-8)
 @media (max-width:640px){.cards{grid-template-columns:1fr}.page-head{margin-bottom:var(--sp-32)}.group{margin-top:var(--sp-40)}}
 /* Foco programático en títulos y resumen de errores: sin recuadro (el lector igual lo anuncia) */
 [tabindex="-1"]:focus{outline:none}
+
+/* Filas de dos campos: los controles quedan alineados aunque uno tenga ayuda */
+.row2{align-items:end}

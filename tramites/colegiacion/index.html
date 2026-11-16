@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../_shared/cmcpsi.css?v=1794855954">
+<link rel="stylesheet" href="../../_shared/cmcpsi.css?v=1794856706">
 <style>
 .layout{display:grid;grid-template-columns:minmax(0,680px) minmax(0,1fr);gap:var(--sp-64);align-items:start}
 .facts{list-style:none;display:grid;gap:var(--sp-12);margin:var(--sp-24) 0 0}
@@ -41,6 +41,10 @@ select.control:invalid{color:var(--text-muted)}
 .file-pick input[type=file]:focus-visible + .file{outline:2px solid var(--focus-ring);outline-offset:3px}
 .file-pick:hover .file{border-color:var(--border-input-hover)}
 .aside{background:var(--bg-institutional-panel);border-radius:var(--r-large);padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-16);position:sticky;top:var(--sp-24)}
+.aside-wrap{display:flex;flex-direction:column;gap:var(--sp-16)}
+.aside-wrap .aside{position:static}
+.aside .aviso{padding:var(--sp-12) var(--sp-16);font-size:14px;line-height:20px}
+.aside .aviso>.icon{width:18px;height:18px;margin-top:1px}
 .aside h2{font-size:16px;font-weight:600;line-height:24px}
 .aside ol{padding-left:20px;display:grid;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-secondary)}
 .aside p{font-size:14px;line-height:20px;color:var(--text-secondary)}
@@ -53,7 +57,7 @@ select.control:invalid{color:var(--text-muted)}
 .done-card p{font-size:16px;line-height:24px;color:var(--text-secondary)}
 .done-card .sign{color:var(--text-primary)}
 .done-card .next{background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:14px;line-height:20px;color:var(--text-secondary)}
-@media (max-width:960px){.layout{grid-template-columns:1fr;gap:var(--sp-32)}.aside{position:static}}
+@media (max-width:960px){.layout{grid-template-columns:1fr;gap:var(--sp-32)}.aside,.aside-wrap{position:static}}
 @media (max-width:640px){.row2{grid-template-columns:1fr}.row-num{grid-template-columns:1fr 1fr}.form-card,.need{padding:var(--sp-24) var(--sp-16)}.done-card{padding:var(--sp-24)}.start-actions .btn{width:100%}}
 </style>
 <style>
@@ -1008,7 +1012,7 @@ select.control:invalid{color:var(--text-muted)}
     <li><em>Guardar borrador:</em> simulado. En el sitio real necesita servidor (ver el cuadro sinóptico del panel admin).</li>
   </ol>
 </aside>
-<script src="../../_shared/forms.js?v=1794855954"></script>
+<script src="../../_shared/forms.js?v=1794856706"></script>
 <script>
 (function(){
   var t=document.getElementById('toggle-notes');
@@ -1019,8 +1023,8 @@ select.control:invalid{color:var(--text-muted)}
   var toast=document.createElement('div');toast.setAttribute('role','status');toast.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1b2430;color:#fff;font:500 14px/20px "Plus Jakarta Sans",system-ui,sans-serif;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(15,26,36,.25);z-index:80;opacity:0;transition:opacity .2s;pointer-events:none';document.body.appendChild(toast);var tt;
   document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();toast.textContent='Esta sección no forma parte del prototipo';toast.style.opacity='1';clearTimeout(tt);tt=setTimeout(function(){toast.style.opacity='0';},2200);});});
   var l=document.querySelector('link[href*="_shared/cmcpsi.css"]');
-  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'proto-nav.js?v=1794855954');document.body.appendChild(sc);}
-  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'select.js?v=1794855954');document.body.appendChild(ss);}
+  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'proto-nav.js?v=1794856706');document.body.appendChild(sc);}
+  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'select.js?v=1794856706');document.body.appendChild(ss);}
 })();
 var TR={colegiacion:'Solicitud de colegiación',pasividad:'Alta de pasividad',suspension:'Alta de suspensión',traslado:'Traslado de otro Colegio'};
 var tr=(new URLSearchParams(location.search).get('tramite')||'colegiacion').toLowerCase(); if(!TR[tr])tr='colegiacion';

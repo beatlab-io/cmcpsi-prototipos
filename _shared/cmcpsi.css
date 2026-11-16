@@ -383,3 +383,13 @@ textarea.control{height:auto;min-height:168px;padding:12px var(--inset);resize:v
 .aviso strong{font-weight:600}
 .aviso ul{margin:var(--sp-4) 0 0 18px;padding:0;display:grid;gap:4px}
 @media (max-width:640px){.aviso{padding:var(--sp-16)}}
+/* Stepper vertical (Cómo sigue). Mismo patrón que "Información para iniciar": círculo numerado + línea. */
+ol.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.flow li{display:grid;grid-template-columns:28px 1fr;gap:var(--sp-12);position:relative;padding-bottom:var(--sp-16)}
+.flow li:last-child{padding-bottom:0}
+.flow li:not(:last-child)::after{content:"";position:absolute;left:13px;top:32px;bottom:4px;width:2px;background:var(--border-default)}
+.flow .n{width:28px;height:28px;border-radius:var(--r-full);background:var(--bg-brand-soft);color:var(--brand-primary);font-size:13px;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
+.flow .current .n{background:var(--brand-primary);color:#fff}
+.flow strong{display:block;font-size:14px;font-weight:600;line-height:20px;color:var(--text-primary);padding-top:4px}
+.flow .d{display:block;font-size:13px;line-height:18px;color:var(--text-secondary);margin-top:2px}
+.flow .here{display:inline-block;margin-top:4px;padding:0 8px;border-radius:var(--r-full);background:var(--bg-default);color:var(--brand-primary);font-size:12px;font-weight:500;line-height:20px}

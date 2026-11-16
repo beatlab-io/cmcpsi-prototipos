@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Denuncia contra un profesional, prototipo CMCPSI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../_shared/cmcpsi.css">
+<style>
+.layout{display:grid;grid-template-columns:minmax(0,680px) minmax(0,1fr);gap:var(--sp-64);align-items:start}
+.facts{list-style:none;display:grid;gap:var(--sp-12);margin:var(--sp-24) 0 0}
+.facts li{display:flex;gap:var(--sp-12);align-items:center;font-size:15px;line-height:22px}
+.facts .icon{color:var(--icon-brand)}
+.need{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-32);display:flex;flex-direction:column;gap:var(--sp-24)}
+.need h2{font-size:20px;font-weight:600;line-height:28px}
+.need ul{list-style:none;display:grid;gap:var(--sp-16)}
+.need li{display:flex;gap:var(--sp-16);align-items:flex-start}
+.need li strong{display:block;font-size:16px;font-weight:600;line-height:24px}
+.need li .d{display:block;font-size:14px;line-height:20px;color:var(--text-secondary)}
+.need .ibox{width:40px;height:40px;border-radius:var(--r-medium);background:var(--bg-brand-soft);color:var(--icon-brand);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.need .ibox .icon{width:22px;height:22px}
+.start-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-16) var(--sp-24)}
+.form-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-32);display:flex;flex-direction:column;gap:var(--sp-24)}
+.form-card h2{font-size:20px;font-weight:600;line-height:28px}
+.form-card .intro{font-size:14px;line-height:20px;color:var(--text-secondary);margin-top:calc(-1*var(--sp-16))}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+.row-num{display:grid;grid-template-columns:2fr 1fr 1.2fr 1.2fr;gap:var(--sp-16);align-items:end}
+.row-num .label{white-space:nowrap}
+.reveal{border-left:3px solid var(--bg-brand-soft);padding-left:var(--sp-16);display:flex;flex-direction:column;gap:var(--sp-24)}
+.fixed{display:flex;flex-direction:column;gap:4px}
+.fixed .v{font-size:16px;line-height:24px}
+.select-wrap{position:relative}
+.select-wrap select{appearance:none;-webkit-appearance:none;padding-right:44px;cursor:pointer}
+.select-wrap .icon{position:absolute;right:14px;top:14px;color:var(--brand-primary);pointer-events:none}
+select.control:invalid{color:var(--text-muted)}
+.file-pick{position:relative}
+.file-pick input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.file-pick input[type=file]:focus-visible + .file{outline:2px solid var(--focus-ring);outline-offset:3px}
+.file-pick:hover .file{border-color:var(--border-input-hover)}
+.aside{background:var(--bg-institutional-panel);border-radius:var(--r-large);padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-16);position:sticky;top:var(--sp-24)}
+.aside h2{font-size:16px;font-weight:600;line-height:24px}
+.aside ol{padding-left:20px;display:grid;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-secondary)}
+.aside p{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.aside a{color:var(--brand-primary);font-weight:500}
+.step-wrap{margin-bottom:var(--sp-32)}
+.stepper-mobile{display:none}
+.review-stack{display:flex;flex-direction:column;gap:var(--sp-16)}
+.done-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-40);display:flex;flex-direction:column;gap:var(--sp-16);max-width:680px}
+.done-icon{width:56px;height:56px;border-radius:var(--r-full);background:var(--success-bg);color:var(--success);display:inline-flex;align-items:center;justify-content:center}
+.done-icon .icon{width:30px;height:30px}
+.done-card h1{font-size:32px;line-height:40px;font-weight:600}
+.done-card p{font-size:16px;line-height:24px;color:var(--text-secondary)}
+.done-card .sign{color:var(--text-primary)}
+.done-card .next{background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:14px;line-height:20px;color:var(--text-secondary)}
+@media (max-width:960px){.layout{grid-template-columns:1fr;gap:var(--sp-32)}.aside{position:static}}
+@media (max-width:760px){.stepper{display:none}.stepper-mobile{display:flex}}
+@media (max-width:640px){.row2{grid-template-columns:1fr}.row-num{grid-template-columns:1fr 1fr}.form-card,.need{padding:var(--sp-24) var(--sp-16)}.done-card{padding:var(--sp-24)}.start-actions .btn{width:100%}}
+</style>
+<style>
+.stepbar{display:flex;flex-direction:column;gap:var(--sp-8);margin-bottom:var(--sp-24)}
+.stepbar .top{display:flex;justify-content:space-between;gap:var(--sp-16);font-size:14px;line-height:20px}
+.stepbar .top span:first-child{font-weight:600}
+.stepbar .top span:last-child{color:var(--text-secondary);white-space:nowrap}
+.stepbar .track{height:4px;border-radius:var(--r-full);background:var(--border-default);overflow:hidden}
+.stepbar .track i{display:block;height:100%;background:var(--brand-primary);border-radius:var(--r-full)}
+.stepbar .next{font-size:12px;line-height:16px;color:var(--text-muted)}
+.sub{font-size:16px;font-weight:600;line-height:24px;padding-top:var(--sp-24);border-top:var(--bw-default) solid var(--border-subtle)}
+.sub.first{border-top:0;padding-top:0}
+.prefill{display:flex;gap:var(--sp-12);background:var(--success-bg);border-radius:var(--r-input);padding:var(--sp-12) var(--sp-16);font-size:14px;line-height:20px}
+.prefill .icon{color:var(--success);flex:none;margin-top:1px}
+.date{display:flex;gap:var(--sp-12)}
+.date .part{display:flex;flex-direction:column;gap:4px}
+.date .part span{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.date .d .control,.date .m .control{width:64px;text-align:center;padding:0 8px}
+.date .y .control{width:88px;text-align:center;padding:0 8px}
+.yesno{display:flex;gap:var(--sp-12)}
+.yesno .option{flex:1;max-width:160px}
+.rep{display:flex;flex-direction:column;gap:var(--sp-12)}
+.rep-item{display:flex;gap:var(--sp-12);align-items:flex-end}
+.rep-item > .field{flex:1}
+.rep-card{border:var(--bw-default) solid var(--border-default);border-radius:var(--r-input);padding:var(--sp-16);display:flex;flex-direction:column;gap:var(--sp-16)}
+.rep-card .card-head{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;line-height:20px}
+.btn-remove{background:none;border:0;color:var(--brand-primary);font-size:14px;font-weight:600;height:48px;padding:0 var(--sp-8);border-radius:var(--r-medium);cursor:pointer}
+.rep-card .btn-remove{height:32px}
+.btn-remove:hover{background:var(--bg-brand-soft)}
+.btn-add{align-self:flex-start;display:inline-flex;align-items:center;gap:var(--sp-8);height:44px;padding:0 var(--sp-12);border-radius:var(--r-full);border:0;background:none;color:var(--brand-primary);font-size:15px;font-weight:600;cursor:pointer}
+.btn-add:hover{background:var(--bg-brand-soft)}
+.phone-row{display:grid;grid-template-columns:110px 1fr;gap:var(--sp-12);align-items:end}
+.doc-progress{display:flex;align-items:center;gap:var(--sp-12);font-size:14px;line-height:20px;color:var(--text-secondary)}
+.doc-progress .track{flex:1;height:6px;background:var(--border-default);border-radius:var(--r-full);overflow:hidden}
+.doc-progress .track i{display:block;height:100%;background:var(--success);width:0;transition:width .2s}
+.doc-progress strong{color:var(--text-primary);font-weight:600}
+.copy-list{border:1px solid var(--border-default);border-radius:var(--r-large);background:#fff}
+.copy-row{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-12);padding:var(--sp-12) var(--sp-16);border-bottom:1px solid var(--border-subtle)}
+.copy-row:last-child{border-bottom:0}
+.copy-row .k{font-size:12px;font-weight:500;letter-spacing:.2px;text-transform:uppercase;color:var(--text-muted)}
+.copy-row .v{font-size:16px;font-weight:500;font-variant-numeric:tabular-nums;word-break:break-all}
+.btn-copy{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 var(--sp-12);border-radius:var(--r-full);border:1px solid var(--brand-primary);background:#fff;color:var(--brand-primary);font-size:14px;font-weight:600;cursor:pointer;flex:none}
+.btn-copy:hover{background:var(--bg-brand-soft)}
+.btn-copy.copied{border-color:var(--success);color:var(--success);background:var(--success-bg)}
+.btn-copy .icon{width:16px;height:16px}
+.disclose{border-left:3px solid var(--border-default);padding-left:var(--sp-16)}
+.disclose summary{cursor:pointer;color:var(--brand-primary);font-size:14px;font-weight:600;line-height:20px;list-style:none;display:inline-flex;align-items:center;gap:6px}
+.disclose summary::-webkit-details-marker{display:none}
+.disclose summary .icon{width:16px;height:16px;transition:transform .15s}
+.disclose[open] summary .icon{transform:rotate(90deg)}
+.disclose .body{margin-top:var(--sp-8);font-size:14px;line-height:22px;color:var(--text-secondary)}
+.help a{color:var(--brand-primary);font-weight:500}
+.saved{font-size:13px;color:var(--text-muted);display:inline-flex;align-items:center;gap:6px}
+.saved .icon{width:16px;height:16px;color:var(--success)}
+.total{display:flex;gap:var(--sp-12);background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:15px;line-height:22px}
+.total .icon{color:var(--icon-brand);flex:none;margin-top:1px}
+.total a{color:var(--brand-primary);font-weight:600}
+@media (max-width:640px){.yesno .option{max-width:none}.phone-row{grid-template-columns:96px 1fr}.date .d .control,.date .m .control{width:56px}.date .y .control{width:80px}}
+</style>
+<style>
+.choose{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+.choose .qcard{padding:var(--sp-32)}
+.choose .qcard h2{font-size:20px;font-weight:600;line-height:28px}
+.choose .qcard h2 a::after{content:"";position:absolute;inset:0;border-radius:var(--r-large)}
+.choose .qcard ul{list-style:none;display:grid;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-secondary)}
+.choose .qcard li{display:flex;gap:var(--sp-8)}
+.choose .qcard li .icon{width:18px;height:18px;color:var(--icon-brand);flex:none;margin-top:1px}
+.choose .cta{display:inline-flex;align-items:center;gap:6px;color:var(--brand-primary);font-weight:600;font-size:15px;margin-top:auto}
+.ratify{display:flex;flex-direction:column;gap:var(--sp-12);background:#fff6dc;border:1px solid #e7c66b;border-radius:var(--r-input);padding:var(--sp-16) var(--sp-16) var(--sp-16) var(--sp-16)}
+.ratify h3{display:flex;gap:var(--sp-8);align-items:center;font-size:16px;font-weight:600;line-height:24px}
+.ratify h3 .icon{color:#8a5a00}
+.ratify ul{padding-left:20px;display:grid;gap:6px;font-size:15px;line-height:22px}
+.anon-note{display:flex;gap:var(--sp-12);background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:15px;line-height:22px}
+.anon-note .icon{color:var(--icon-brand);flex:none;margin-top:1px}
+@media (max-width:760px){.choose{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M5 12l6 6"/><path d="M5 12l6-6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M9 12l2 2l4-4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol><symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M7 9l5-5l5 5"/><path d="M12 4v12"/></symbol><symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6-6"/></symbol><symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 7v5l3 3"/></symbol></defs></svg><div class="proto-bar" role="note">
+  <div class="container">
+    <span><strong>Prototipo de diseño, Denuncia contra un profesional v0.1.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
+    <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <div class="hdr-top">
+      <a href="#" class="logo" aria-label="CMCPSI, ir al inicio"><img src="../../../_shared/logo-cmcpsi.png" alt="CMCPSI, Colegio de Martilleros y Corredores Públicos de San Isidro"></a>
+      <label class="hdr-search">
+        <svg class="icon icon-sm" aria-hidden="true"><use href="#i-search"/></svg>
+        <span class="sr-only">Buscar en el sitio</span>
+        <input type="search" placeholder="Buscar trámites, valores, noticias o recursos">
+      </label>
+      <div class="hdr-actions">
+        <a href="#" class="link link-inline">Iniciar sesión</a>
+        <a href="#" class="btn btn-primary">Consultar padrón</a>
+      </div>
+      <div class="hdr-mobile-actions mobile-only">
+        <button class="icon-btn" type="button" aria-label="Buscar"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+        <button class="icon-btn menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="../../../tramites/" aria-current="page">Trámites</a>
+      <a href="#">Colegiados</a>
+      <a href="#">Comunidad</a>
+      <a href="#">Actualidad</a>
+      <a href="#">El Colegio</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="#">Inicio</a></li><li><a href="../../">Trámites</a></li><li><a href="../">Denuncias</a></li><li aria-current="page">Contra un profesional</li></ol></nav>
+    <div class="layout">
+      <div>
+        <section class="view" id="v-start" aria-labelledby="t-start">
+          <div class="page-head" style="margin-bottom:var(--sp-32)">
+            <h1 class="t-h1" id="t-start" tabindex="-1">Denuncia contra un profesional</h1>
+            <p class="t-lead">Para denunciar a un martillero o corredor público colegiado.</p>
+            <ul class="facts">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Son 3 pasos y una revisión final.</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Podés guardar el borrador y seguir después.</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Después de enviarla, tenés 15 días para ratificarla en persona.</li>
+            </ul>
+          </div>
+          <div class="need">
+            <h2>Vas a necesitar</h2>
+            <ul>
+              <li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-id"/></svg></span><div><strong>Tu DNI</strong><span class="d">Una copia del frente y dorso.</span></div></li>
+              <li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span><div><strong>La documentación que tengas</strong><span class="d">Contratos, mensajes o fotos que respalden la denuncia. Vas a tener que llevar los originales al ratificarla.</span></div></li>
+            </ul>
+            <div class="start-actions"><button type="button" class="btn btn-primary" id="start">Empezar <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button></div>
+          </div>
+        </section>
+        <section class="view" id="v-1" aria-labelledby="t-1" hidden>
+          <div class="stepbar"><div class="top"><span>Tus datos</span><span>Paso 1 de 4</span></div><div class="track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" aria-label="Paso 1 de 4"><i style="width:25%"></i></div><div class="next">Sigue: La denuncia</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="1" novalidate>
+            <h1 class="t-h2" id="t-1" tabindex="-1" style="font-size:24px;line-height:32px">Tus datos</h1>
+            <p class="intro">Los campos sin la aclaración “opcional” son obligatorios.</p>
+            <h2 class="sub first">Datos personales</h2>
+            <div class="row2"><div class="field" id="f-apellido">
+              <label class="label" for="apellido">Apellido</label>
+              <p class="error-msg" id="apellido-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="apellido" name="apellido" type="text" autocomplete="family-name" aria-describedby="apellido-err" required>
+            </div><div class="field" id="f-nombre">
+              <label class="label" for="nombre">Nombre</label>
+              <p class="error-msg" id="nombre-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="nombre" name="nombre" type="text" autocomplete="given-name" aria-describedby="nombre-err" required>
+            </div></div>
+            <div class="row2"><div class="field" id="f-tipodoc">
+              <label class="label" for="tipodoc">Tipo de documento</label>
+              <p class="error-msg" id="tipodoc-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="tipodoc" name="tipodoc" required aria-describedby="tipodoc-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>DNI</option><option>Pasaporte</option><option>LC</option><option>LE</option><option>CI</option><option>CIP</option><option>CIF</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div><div class="field" id="f-doc">
+              <label class="label" for="doc">Número de documento</label>
+              <p class="help" id="doc-help">Sin puntos.</p><p class="error-msg" id="doc-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="doc" name="doc" type="text" autocomplete="off" inputmode="numeric" aria-describedby="doc-help doc-err" required>
+            </div></div>
+            <div class="field" id="f-dni_file">
+              <span class="label" id="dni_file-lbl">Copia del DNI, frente y dorso</span>
+              <p class="help" id="dni_file-help">Si son varias personas las que denuncian, el DNI de cada una. Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="dni_file-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="dni_file-pick">
+                <input type="file" id="dni_file" name="dni_file" accept="image/*,application/pdf" aria-labelledby="dni_file-lbl" aria-describedby="dni_file-help dni_file-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="dni_file-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="dni_file-fname"></strong><span class="ok" id="dni_file-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="dni_file">Reemplazar<span class="sr-only"> copia del dni, frente y dorso</span></button><button type="button" data-remove="dni_file">Quitar<span class="sr-only"> copia del dni, frente y dorso</span></button></div>
+              </div>
+            </div>
+            <h2 class="sub">Contacto</h2>
+            <div class="field" id="f-email">
+              <label class="label" for="email">Email (domicilio electrónico)</label>
+              <p class="help" id="email-help">Te vamos a escribir ahí sobre la denuncia.</p><p class="error-msg" id="email-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="email-help email-err" required>
+            </div>
+            <div class="field" id="f-tel">
+              <label class="label" for="tel">Número de teléfono</label>
+              <p class="help" id="tel-help">Con código de área. Por ejemplo, 11 2345 6789.</p><p class="error-msg" id="tel-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="tel-help tel-err" required>
+            </div>
+            <h2 class="sub">Domicilio postal</h2>
+            <div class="row-num"><div class="field" id="f-calle">
+              <label class="label" for="calle">Calle</label>
+              <p class="error-msg" id="calle-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="calle" name="calle" type="text" autocomplete="address-line1" aria-describedby="calle-err" required>
+            </div><div class="field" id="f-numero">
+              <label class="label" for="numero">Número <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="numero-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="numero" name="numero" type="text" autocomplete="off" inputmode="numeric" aria-describedby="numero-err">
+            </div><div class="field" id="f-piso">
+              <label class="label" for="piso">Piso <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="piso-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="piso" name="piso" type="text" autocomplete="off" aria-describedby="piso-err">
+            </div><div class="field" id="f-depto">
+              <label class="label" for="depto">Depto <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="depto-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="depto" name="depto" type="text" autocomplete="off" aria-describedby="depto-err">
+            </div></div>
+            <div class="row2"><div class="field" id="f-localidad">
+              <label class="label" for="localidad">Barrio o localidad</label>
+              <p class="error-msg" id="localidad-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="localidad" name="localidad" type="text" autocomplete="address-level2" aria-describedby="localidad-err" required>
+            </div><div class="field" id="f-cp">
+              <label class="label" for="cp">Código postal</label>
+              <p class="help" id="cp-help">Por ejemplo, 1642 o B1642DSD.</p><p class="error-msg" id="cp-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="cp" name="cp" type="text" autocomplete="postal-code" aria-describedby="cp-help cp-err" required>
+            </div></div>
+            <div class="row2"><div class="field" id="f-partido">
+              <label class="label" for="partido">Partido o ciudad</label>
+              <p class="error-msg" id="partido-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="partido" name="partido" type="text" autocomplete="address-level2" aria-describedby="partido-err" required>
+            </div><div class="field" id="f-provincia">
+              <label class="label" for="provincia">Provincia</label>
+              <p class="error-msg" id="provincia-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="provincia" name="provincia" required aria-describedby="provincia-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>Buenos Aires</option><option>Ciudad Autónoma de Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div></div>
+            <div class="actions"><button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button><span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span><span class="spacer"></span><button type="submit" class="btn btn-primary" data-main>Continuar</button></div>
+          </form>
+        </section>
+        <section class="view" id="v-2" aria-labelledby="t-2" hidden>
+          <div class="stepbar"><div class="top"><span>La denuncia</span><span>Paso 2 de 4</span></div><div class="track" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="4" aria-label="Paso 2 de 4"><i style="width:50%"></i></div><div class="next">Sigue: Ratificación</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="2" novalidate>
+            <h1 class="t-h2" id="t-2" tabindex="-1" style="font-size:24px;line-height:32px">La denuncia</h1>
+            <p class="intro">Los campos sin la aclaración “opcional” son obligatorios.</p>
+            <h2 class="sub first">A quién denunciás</h2>
+            <div class="field" id="f-denunciado">
+              <label class="label" for="denunciado">Nombre del denunciado</label>
+              <p class="help" id="denunciado-help">Nombre y apellido, o nombre de la empresa.</p><p class="error-msg" id="denunciado-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="denunciado" name="denunciado" type="text" autocomplete="off" aria-describedby="denunciado-help denunciado-err" required>
+            </div>
+            <div class="field" id="f-dom_desconocido"><label class="check"><input type="checkbox" name="dom_desconocido" id="dom_desconocido"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>No conozco su domicilio</span></label><p class="error-msg" id="dom_desconocido-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div id="r-domden"><div class="field" id="f-dom_denunciado">
+              <label class="label" for="dom_denunciado">Domicilio del denunciado</label>
+              <p class="help" id="dom_denunciado-help">Calle, número y localidad, si los sabés.</p><p class="error-msg" id="dom_denunciado-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="dom_denunciado" name="dom_denunciado" type="text" autocomplete="off" aria-describedby="dom_denunciado-help dom_denunciado-err" required>
+            </div></div>
+            <h2 class="sub">Qué pasó</h2>
+            <div class="field" id="f-relato">
+              <label class="label" for="relato">Relato de los hechos</label>
+              <p class="help" id="relato-help">Contá con claridad qué pasó, cuándo y dónde. Incluí todo lo que ayude a entender la situación.</p>
+              <p class="error-msg" id="relato-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <textarea class="control" id="relato" name="relato" rows="7" aria-describedby="relato-help relato-err"></textarea>
+            </div>
+            <div class="field" id="f-prueba">
+              <span class="label" id="prueba-lbl">Prueba documental <span class="opt">(opcional)</span></span>
+              <p class="help" id="prueba-help">Contratos, mensajes, fotos u otros documentos. Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="prueba-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="prueba-pick">
+                <input type="file" id="prueba" name="prueba" accept="image/*,application/pdf" aria-labelledby="prueba-lbl" aria-describedby="prueba-help prueba-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="prueba-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="prueba-fname"></strong><span class="ok" id="prueba-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="prueba">Reemplazar<span class="sr-only"> prueba documental <span class="opt">(opcional)</span></span></button><button type="button" data-remove="prueba">Quitar<span class="sr-only"> prueba documental <span class="opt">(opcional)</span></span></button></div>
+              </div>
+            </div>
+            <div class="actions"><button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button><button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button><span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span><span class="spacer"></span><button type="submit" class="btn btn-primary" data-main>Continuar</button></div>
+          </form>
+        </section>
+        <section class="view" id="v-3" aria-labelledby="t-3" hidden>
+          <div class="stepbar"><div class="top"><span>Ratificación</span><span>Paso 3 de 4</span></div><div class="track" role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="4" aria-label="Paso 3 de 4"><i style="width:75%"></i></div><div class="next">Sigue: Revisión</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="3" novalidate>
+            <h1 class="t-h2" id="t-3" tabindex="-1" style="font-size:24px;line-height:32px">Ratificación</h1>
+            <p class="intro">Leé esto antes de enviar.</p>
+            <div class="ratify" role="note">
+              <h3><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Tenés que ratificar la denuncia en persona</h3>
+              <ul>
+                <li>Presentate en el Colegio (Rivadavia 573, San Isidro) dentro de los <strong>15 días</strong> después de enviarla.<span class="note-pin">2</span></li>
+                <li>Llevá los <strong>originales</strong> de la documentación que adjuntaste.</li>
+                <li>Lo tiene que hacer la persona que firma la denuncia. No se puede delegar.</li>
+                <li>Si no la ratificás a tiempo, la denuncia se archiva sin aviso.</li>
+              </ul>
+            </div>
+            <div class="field" id="f-terminos"><label class="check"><input type="checkbox" name="terminos" id="terminos"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Entiendo que tengo que ratificar la denuncia y acepto los <a href="#" class="link link-inline">términos y condiciones</a></span></label><p class="error-msg" id="terminos-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div class="actions"><button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button><button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button><span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span><span class="spacer"></span><button type="submit" class="btn btn-primary" data-main>Continuar</button></div>
+          </form>
+        </section>
+        <section class="view" id="v-4" aria-labelledby="t-4" hidden>
+          <div class="stepbar"><div class="top"><span>Revisión</span><span>Paso 4 de 4</span></div><div class="track" role="progressbar" aria-valuenow="4" aria-valuemin="1" aria-valuemax="4" aria-label="Paso 4 de 4"><i style="width:100%"></i></div></div>
+          <div class="page-head" style="margin-bottom:var(--sp-24)">
+            <h1 class="t-h2" id="t-4" tabindex="-1">Revisá la denuncia</h1>
+            <p class="t-lead" style="font-size:16px;line-height:24px">Si algo no está bien, cambialo antes de enviar.</p>
+          </div>
+          <div class="review-stack"><div class="review"><div class="review-head"><h3>Tus datos</h3><a class="link" href="#" data-go="1">Cambiar<span class="sr-only"> tus datos</span></a></div><dl id="rv-1"></dl></div><div class="review"><div class="review-head"><h3>La denuncia</h3><a class="link" href="#" data-go="2">Cambiar<span class="sr-only"> la denuncia</span></a></div><dl id="rv-2"></dl></div></div>
+          <div class="actions" style="border-top:0">
+            <button type="button" class="btn btn-secondary" data-go="3"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button>
+            <span class="spacer"></span>
+            <button type="button" class="btn btn-primary" id="send">Enviar denuncia</button>
+          </div>
+        </section>
+        <section class="view" id="v-done" aria-labelledby="t-done" hidden>
+          <div class="done-card">
+            <span class="done-icon"><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg></span>
+            <h1 id="t-done" tabindex="-1">Recibimos tu denuncia</h1>
+            <div class="ratify" role="note"><h3><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Falta un paso: ratificarla en persona</h3><ul><li>Presentate en el Colegio, Rivadavia 573, San Isidro, dentro de los <strong>15 días</strong>.</li><li>Llevá los originales de la documentación.</li><li>Si no la ratificás, se archiva sin aviso.</li></ul></div>
+            <p>Te enviamos una copia desde denunciasm@cmcpsi.org.ar a <strong id="done-email"></strong>.<span class="note-pin">3</span></p>
+            <div><a class="btn btn-secondary" href="../../">Volver a Trámites</a></div>
+          </div>
+        </section>
+      </div>
+      <aside class="aside" aria-label="Cómo sigue" id="aside">
+        <h2>Cómo sigue</h2>
+        <ol><li>Enviás la denuncia online.</li><li>La ratificás en persona en el Colegio dentro de los 15 días.</li><li>El Colegio la tramita.</li></ol>
+        <p>Si no la ratificás a tiempo, se archiva sin aviso.</p>
+      </aside>
+    </div>
+  </div>
+<footer class="site-footer after-content">
+  <div class="container">
+    <div class="ftr-grid">
+      <div class="ftr-brand">
+        <img src="../../../_shared/logo-cmcpsi.png" alt="CMCPSI">
+        <p>Colegio de Martilleros y Corredores Públicos del Departamento Judicial de San Isidro.</p>
+        <p>Rivadavia 573 - San Isidro, Buenos Aires<br><a href="mailto:colegio@cmcpsi.org.ar">colegio@cmcpsi.org.ar</a></p>
+      </div>
+      <div class="ftr-col"><h2>Accesos rápidos</h2><ul><li><a href="#">Consultar padrón</a></li><li><a href="../../../tramites/">Trámites</a></li><li><a href="#">Valores y vencimientos</a></li><li><a href="#">Beneficios</a></li><li><a href="#">Calculadora</a></li></ul></div>
+      <div class="ftr-col"><h2>Información</h2><ul><li><a href="#">El Colegio</a></li><li><a href="#">Consejo Directivo</a></li><li><a href="#">Actualidad</a></li><li><a href="#">Capacitaciones</a></li><li><a href="#">Contacto</a></li></ul></div>
+      <div class="ftr-col ftr-legal"><h2>Legal</h2><ul><li><a href="#">Ley 10.973</a></li><li><a href="#">Código de Ética</a></li><li><a href="#">Términos y privacidad</a></li></ul>
+        <h2 style="margin-top:var(--sp-24)">Redes sociales</h2>
+        <div class="ftr-social"><a href="#" aria-label="Instagram del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a><a href="#" aria-label="WhatsApp del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg></a></div>
+      </div>
+    </div>
+    <p class="ftr-bottom">© 2026 Colegio de Martilleros y Corredores Públicos de San Isidro.</p>
+  </div>
+</footer>
+</main>
+<aside class="notes-panel" aria-label="Notas de diseño">
+  <header>Notas de diseño, Denuncia contra un profesional v0.1</header>
+  <ol>
+    <li><em>Confirmar email:</em> el formulario actual pide escribir el email dos veces. Se reemplazó por la revisión final, donde se ve y se puede corregir (GOV.UK desaconseja los campos de confirmación).</li>
+    <li><em>Plazo:</em> el texto del Colegio dice “15 días”. Confirmar si son hábiles o corridos para poder mostrar la fecha límite exacta en la confirmación.</li>
+    <li><em>Avisos por mail:</em> llegan a la casilla de denuncias y a los destinatarios internos que definió el Colegio (ver el cuadro sinóptico del panel admin, que es privado). Quien denuncia recibe una copia desde denunciasm@cmcpsi.org.ar.</li>
+    <li><em>Ratificación:</em> se avisa en la página del trámite, en el paso 3 (con una casilla de confirmación) y en la confirmación, porque si no se cumple la denuncia se archiva.</li>
+    <li><em>Prueba documental:</em> se marcó como opcional. Confirmar si es obligatoria y si se pueden subir varios archivos.</li>
+  </ol>
+</aside>
+<script src="../../../_shared/forms.js"></script>
+<script>
+(function(){
+  var t=document.getElementById('toggle-notes');
+  t.addEventListener('click',function(){var on=document.body.classList.toggle('show-notes');t.setAttribute('aria-pressed',on);t.textContent=on?'Ocultar notas':'Ver notas de diseño';});
+  var m=document.querySelector('.menu-btn'),n=document.getElementById('nav');
+  m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o);m.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
+  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+})();
+document.querySelectorAll('[data-draft]').forEach(function(b){b.addEventListener('click',function(){var s=b.parentNode.querySelector('[data-saved]'),d=new Date();s.querySelector('span').textContent='Borrador guardado a las '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');s.hidden=false;});});
+function req(m){return function(x){return x?'':m;};}
+var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+var form=CMCPSIForm({steps:3,doneEmail:'email',
+ rules:{
+  1:{apellido:req('Ingresá tu apellido'),nombre:req('Ingresá tu nombre'),tipodoc:req('Seleccioná el tipo de documento'),doc:req('Ingresá tu número de documento'),
+     dni_file:req('Subí la copia de tu DNI'),email:function(x){if(!x)return'Ingresá tu email';return emailRe.test(x)?'':'Ingresá un email con el formato nombre@ejemplo.com';},
+     tel:function(x,v){if(!x)return'Ingresá tu número de teléfono';return v.digits(x).length<8?'Ingresá el teléfono con código de área':'';},
+     calle:req('Ingresá la calle'),localidad:req('Ingresá el barrio o la localidad'),cp:req('Ingresá el código postal'),partido:req('Ingresá el partido o la ciudad'),provincia:req('Seleccioná la provincia')},
+  2:{denunciado:req('Ingresá el nombre de la persona o empresa que denunciás'),
+     dom_denunciado:function(x,v){return !v('dom_desconocido')&&!x?'Ingresá el domicilio del denunciado o marcá que no lo conocés':'';},
+     relato:function(x){if(!x)return'Contá qué pasó';return x.length<30?'Contá un poco más: qué pasó, cuándo y dónde':'';}},
+  3:{terminos:req('Para enviar tenés que confirmar que vas a ratificar la denuncia y aceptar los términos')}
+ },
+ review:function(v,rows){
+  rows('rv-1',[['Apellido y nombre',v('apellido')+', '+v('nombre')],['Documento',v('tipodoc')+' '+v('doc')],['Copia del DNI',v('dni_file')],['Email',v('email')],['Teléfono',v('tel')],['Domicilio postal',v('calle')+(v('numero')?' '+v('numero'):' s/n')+(v('piso')?', piso '+v('piso'):'')+(v('depto')?', depto. '+v('depto'):'')+'. '+v('localidad')+' ('+v('cp')+'), '+v('partido')+', '+v('provincia')]]);
+  rows('rv-2',[['Denunciado',v('denunciado')],['Domicilio del denunciado',v('dom_desconocido')?'Desconocido':v('dom_denunciado')],['Relato',v('relato')],['Prueba documental',v('prueba')]]);
+ }});
+var cb=document.querySelector('[name=dom_desconocido]');cb.addEventListener('change',function(){document.getElementById('r-domden').hidden=cb.checked;});
+</script>
+</body>
+</html>

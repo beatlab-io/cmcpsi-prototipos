@@ -352,3 +352,5 @@ legend{font-size:14px;font-weight:500;line-height:20px;margin-bottom:var(--sp-8)
 
 /* Filas de dos campos: los controles quedan alineados aunque uno tenga ayuda */
 .row2{align-items:end}
+/* Área de texto (input / Área de texto) */
+textarea.control{height:auto;min-height:168px;padding:12px var(--inset);resize:vertical}

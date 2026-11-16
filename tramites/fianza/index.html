@@ -77,13 +77,18 @@ select.control:invalid{color:var(--text-muted)}
 .notice{display:flex;gap:var(--sp-12);background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:15px;line-height:22px;margin-bottom:var(--sp-32)}
 .notice .icon{color:var(--icon-brand);flex:none;margin-top:1px}
 .notice strong{font-weight:600}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-12);margin-top:var(--sp-16);align-items:start}
-.opt{border:var(--bw-default) solid var(--border-default);border-radius:var(--r-input);padding:var(--sp-16);display:flex;flex-direction:column;gap:var(--sp-8)}
+.opts{display:grid;gap:var(--sp-12);margin-top:var(--sp-16)}
+.opt{border:var(--bw-default) solid var(--border-default);border-radius:var(--r-input);padding:20px var(--sp-24);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--sp-12) var(--sp-32);align-items:center}
+.opt-head{display:flex;flex-direction:column;gap:var(--sp-8)}
+.opt-body{display:flex;flex-direction:column;align-items:flex-start}
 .opt .tag{font-size:12px;font-weight:500;line-height:16px;letter-spacing:.2px;text-transform:uppercase;color:var(--brand-primary)}
 .opt h3{font-size:16px;font-weight:600;line-height:24px}
 .opt p{font-size:14px;line-height:20px}
-.opt .link{margin-top:var(--sp-4)}
-.cond{display:grid;gap:var(--sp-8);margin:var(--sp-4) 0 0}
+.opt .link{margin:0}
+.opt-b{grid-template-columns:1fr;align-items:start}
+.opt-b .opt-body{padding-top:var(--sp-16);border-top:var(--bw-default) solid var(--border-subtle)}
+.cond{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-12) var(--sp-24);margin:0;width:100%}
+.cond .wide{grid-column:1/-1}
 .cond div{font-size:14px;line-height:20px}
 .cond dt{color:var(--text-muted);font-size:12px;line-height:16px}
 .cond dd{color:var(--text-primary)}
@@ -93,7 +98,7 @@ select.control:invalid{color:var(--text-muted)}
 .btn-copy .icon{width:16px;height:16px}
 .warn{display:flex;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-primary)!important;background:#fff6dc;border-radius:var(--r-medium);padding:var(--sp-12);margin-top:var(--sp-16)}
 .warn .icon{color:#8a5a00;width:18px;height:18px;flex:none;margin-top:1px}
-@media (max-width:760px){.opts{grid-template-columns:1fr}}
+@media (max-width:760px){.opt{grid-template-columns:1fr;padding:var(--sp-16)}.cond{grid-template-columns:1fr}}
 @media (max-width:640px){.process{padding:var(--sp-24) var(--sp-16)}.process .btn{width:100%}}
 </style>
 </head>
@@ -153,23 +158,27 @@ select.control:invalid{color:var(--text-muted)}
                 <p>Elegí una de estas dos opciones.</p>
                 <div class="opts">
                   <div class="opt">
+                    <div class="opt-head">
                     <span class="tag">Opción A</span>
                     <h3>Con la plataforma del Colegio</h3>
                     <p>Se genera online. Pago único de <strong>$27.700</strong>.</p>
-                    <a class="link" href="https://soter-premiar-pro.herokuapp.com/auctioneers/new?prod_id=62068" target="_blank" rel="noopener">Generar la póliza <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a>
+                    </div>
+                    <div class="opt-body"><a class="link" href="https://soter-premiar-pro.herokuapp.com/auctioneers/new?prod_id=62068" target="_blank" rel="noopener">Generar la póliza <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg><span class="sr-only">(se abre en otro sitio)</span></a></div>
                   </div>
-                  <div class="opt">
+                  <div class="opt opt-b">
+                    <div class="opt-head">
                     <span class="tag">Opción B</span>
                     <h3>Con otra aseguradora</h3>
-                    <p>La póliza tiene que cumplir estas condiciones:</p>
-                    <dl class="cond">
-                      <div><dt>A la orden de</dt><dd id="orden">Colegio de Martilleros y Corredores Públicos del Departamento Judicial de San Isidro, Rivadavia 573, San Isidro</dd>
+                    <p>La póliza tiene que cumplir estas condiciones.</p>
+                    </div>
+                    <div class="opt-body"><dl class="cond">
+                      <div class="wide"><dt>A la orden de</dt><dd id="orden">Colegio de Martilleros y Corredores Públicos del Departamento Judicial de San Isidro, Rivadavia 573, San Isidro</dd>
                         <button type="button" class="btn-copy" data-copy-from="orden"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span><span class="sr-only"> a la orden de</span></button></div>
                       <div><dt>Monto</dt><dd>$9.600.000 (12 cuotas anuales)</dd></div>
                       <div><dt>Plazo</dt><dd>1 año</dd></div>
                       <div><dt>Alcance</dt><dd>Art. 6 de la Ley 20.266</dd></div>
-                      <div><dt>Compañía</dt><dd>De primera línea, habilitada por la Superintendencia de Seguros de la Nación</dd></div>
-                    </dl>
+                      <div class="wide"><dt>Compañía</dt><dd>De primera línea, habilitada por la Superintendencia de Seguros de la Nación</dd></div>
+                    </dl></div>
                   </div>
                 </div>
               </div>

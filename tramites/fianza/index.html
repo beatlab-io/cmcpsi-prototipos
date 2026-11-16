@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../_shared/cmcpsi.css?v=1794857752">
+<link rel="stylesheet" href="../../_shared/cmcpsi.css?v=1794857972">
 <style>
 .layout{display:grid;grid-template-columns:minmax(0,680px) minmax(0,1fr);gap:var(--sp-64);align-items:start}
 .facts{list-style:none;display:grid;gap:var(--sp-12);margin:var(--sp-24) 0 0}
@@ -341,7 +341,7 @@ select.control:invalid{color:var(--text-muted)}
     <li><em>Confirmación:</em> texto propuesto. El aviso por mail va al área de Fianzas y a quien presenta (los destinatarios internos están en el cuadro sinóptico privado del panel admin).</li>
   </ol>
 </aside>
-<script src="../../_shared/forms.js?v=1794857752"></script>
+<script src="../../_shared/forms.js?v=1794857972"></script>
 <script>
 (function(){
   var t=document.getElementById('toggle-notes');
@@ -352,8 +352,8 @@ select.control:invalid{color:var(--text-muted)}
   var toast=document.createElement('div');toast.setAttribute('role','status');toast.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1b2430;color:#fff;font:500 14px/20px "Plus Jakarta Sans",system-ui,sans-serif;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(15,26,36,.25);z-index:80;opacity:0;transition:opacity .2s;pointer-events:none';document.body.appendChild(toast);var tt;
   document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();toast.textContent='Esta sección no forma parte del prototipo';toast.style.opacity='1';clearTimeout(tt);tt=setTimeout(function(){toast.style.opacity='0';},2200);});});
   var l=document.querySelector('link[href*="_shared/cmcpsi.css"]');
-  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'proto-nav.js?v=1794857752');document.body.appendChild(sc);}
-  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'select.js?v=1794857752');document.body.appendChild(ss);}
+  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'proto-nav.js?v=1794857972');document.body.appendChild(sc);}
+  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'select.js?v=1794857972');document.body.appendChild(ss);}
 })();
 document.querySelectorAll('[data-copy-from]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.dataset.copyFrom).textContent,l=b.querySelector('span');var done=function(){b.classList.add('copied');l.textContent='Copiado';setTimeout(function(){b.classList.remove('copied');l.textContent='Copiar';},2000);};try{navigator.clipboard.writeText(t).then(done,done);}catch(e){done();}});});
 CMCPSIForm({

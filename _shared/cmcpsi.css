@@ -393,3 +393,13 @@ ol.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;ga
 .flow strong{display:block;font-size:14px;font-weight:600;line-height:20px;color:var(--text-primary);padding-top:4px}
 .flow .d{display:block;font-size:13px;line-height:18px;color:var(--text-secondary);margin-top:2px}
 .flow .here{display:inline-block;margin-top:4px;padding:0 8px;border-radius:var(--r-full);background:var(--bg-default);color:var(--brand-primary);font-size:12px;font-weight:500;line-height:20px}
+/* Qué vas a necesitar: ícono + qué es + (opcional) botón secundario "Cómo conseguirlo" */
+.btn-sm{height:36px;padding:0 14px;font-size:14px}
+.need-items{list-style:none;margin:0;padding:0;display:grid;gap:var(--sp-16)}
+ul.need-items>li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:var(--sp-16);align-items:center}
+.need-items .ibox{width:40px;height:40px;border-radius:var(--r-medium);background:var(--bg-brand-soft);color:var(--icon-brand);display:inline-flex;align-items:center;justify-content:center}
+.need-items .ibox .icon{width:22px;height:22px}
+.need-items strong{display:block;font-size:16px;font-weight:600;line-height:24px;color:var(--text-primary)}
+.need-items .d{display:block;font-size:14px;line-height:20px;color:var(--text-secondary)}
+.need-items .btn .icon{width:16px;height:16px}
+@media (max-width:640px){ul.need-items>li{grid-template-columns:40px minmax(0,1fr);align-items:start;row-gap:var(--sp-8)}ul.need-items>li>.btn{grid-column:2;justify-self:start}}

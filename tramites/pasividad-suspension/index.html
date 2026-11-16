@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../_shared/cmcpsi.css?v=1794857752">
+<link rel="stylesheet" href="../../_shared/cmcpsi.css?v=1794857972">
 <style>
 .layout{display:grid;grid-template-columns:minmax(0,680px) minmax(0,1fr);gap:var(--sp-64);align-items:start}
 .facts{list-style:none;display:grid;gap:var(--sp-12);margin:var(--sp-24) 0 0}
@@ -69,6 +69,8 @@ select.control:invalid{color:var(--text-muted)}
 .process h2{font-size:20px;font-weight:600;line-height:28px;margin:6px 0 var(--sp-4)}
 .process p{font-size:16px;line-height:24px;color:var(--text-secondary)}
 .process .badge{margin-left:var(--sp-8);vertical-align:middle}
+.process .need-title{font-size:16px;font-weight:600;line-height:24px;margin:var(--sp-16) 0 var(--sp-12)}
+.process .need-items{margin-bottom:var(--sp-24)}
 .process .need-list{list-style:none;display:grid;gap:var(--sp-8);margin:var(--sp-16) 0 var(--sp-24);padding:var(--sp-16);background:var(--bg-institutional-panel);border-radius:var(--r-input)}
 .process .need-list li{display:flex;gap:var(--sp-12);align-items:center;font-size:15px;line-height:22px}
 .process .need-list .icon{color:var(--icon-brand);width:20px;height:20px}
@@ -80,7 +82,7 @@ select.control:invalid{color:var(--text-muted)}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M5 12l6 6"/><path d="M5 12l6-6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M9 12l2 2l4-4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol><symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12H3l9-9l9 9h-2"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M7 9l5-5l5 5"/><path d="M12 4v12"/></symbol><symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6-6"/></symbol></defs></svg><div class="proto-bar" role="note">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M5 12l6 6"/><path d="M5 12l6-6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M9 12l2 2l4-4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol><symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12H3l9-9l9 9h-2"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M7 9l5-5l5 5"/><path d="M12 4v12"/></symbol><symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6-6"/></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-3-2l-2 2l-2-2l-2 2l-2-2l-3 2"/><path d="M14 8H9.5a1.5 1.5 0 0 0 0 3h3a1.5 1.5 0 0 1 0 3H8"/><path d="M12 17v1m0-12v1"/></symbol></defs></svg><div class="proto-bar" role="note">
   <div class="container">
     <span><strong>Prototipo de diseño, Pasividad y suspensión v0.1.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
     <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
@@ -128,10 +130,8 @@ select.control:invalid{color:var(--text-muted)}
             <li><span class="n" aria-hidden="true">1</span><div>
               <h2><span class="sr-only">Etapa 1: </span>Solicitud online</h2>
               <p>Completás tus datos, tu DNI y tu domicilio. Son 3 pasos cortos.</p>
-              <ul class="need-list" aria-label="Vas a necesitar">
-                <li><svg class="icon" aria-hidden="true"><use href="#i-id"/></svg><span>Tu DNI (frente y dorso), tu CUIT y tu número de matrícula</span></li>
-                <li><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Tu domicilio particular en San Isidro, Pilar, Vicente López, San Fernando o Tigre</span></li>
-              </ul>
+              <h3 class="need-title">Qué vas a necesitar<span class="note-pin">6</span></h3>
+              <ul class="need-items"><li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-id"/></svg></span><div><strong>Tu DNI</strong><span class="d">Una foto o escaneo del frente y otra del dorso.</span></div></li><li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-receipt"/></svg></span><div><strong>Tu CUIT</strong><span class="d">Los 11 números. Si no lo sabés, lo consultás online.</span></div><a class="btn btn-secondary btn-sm" href="https://seti.afip.gob.ar/padron-puc-constancia-internet/ConsultaConstanciaAction.do" target="_blank" rel="noopener">Cómo conseguirlo<span class="sr-only">: Tu CUIT</span><span class="sr-only"> (se abre en otro sitio)</span></a></li><li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span><div><strong>Tu número de matrícula</strong></div></li><li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg></span><div><strong>Los datos de tu domicilio particular</strong><span class="d">Tiene que estar en San Isidro, Pilar, Vicente López, San Fernando o Tigre.</span></div></li></ul>
               <button type="button" class="btn btn-primary" id="start">Empezar la solicitud <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
             </div></li>
             <li><span class="n" aria-hidden="true">2</span><div>
@@ -319,18 +319,11 @@ select.control:invalid{color:var(--text-muted)}
           </div>
         </section>
       </div>
-      <div class="aside-wrap" id="aside">
-        <section class="aside" aria-labelledby="as-antes">
-          <h2 id="as-antes">Antes de iniciar<span class="note-pin">6</span></h2>
-          <p>Para las próximas etapas vas a necesitar documentación personal, informes de registros, la fianza y dos avales. Algunos documentos vencen rápido: pedilos cerca de la fecha en que vas a presentarlos.</p>
-          <a class="link" href="../requisitos-y-documentacion/">Ver requisitos y documentación <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
-        </section>
-        <section class="aside" aria-labelledby="as-sigue">
+      <aside class="aside" aria-labelledby="as-sigue" id="aside">
           <h2 id="as-sigue">Cómo sigue<span class="note-pin">7</span></h2>
           <ol class="flow" aria-label="Pasos del trámite, 9 en total"><li class="current" aria-current="step"><span class="n" aria-hidden="true">1</span><div><strong>Solicitud online</strong><span class="here">Estás acá</span><span class="d">Tus datos, tu DNI y tu domicilio. Son 3 pasos cortos.</span></div></li><li><span class="n" aria-hidden="true">2</span><div><strong>Reunión presencial</strong></div></li><li><span class="n" aria-hidden="true">3</span><div><strong>Formulario completo</strong></div></li><li><span class="n" aria-hidden="true">4</span><div><strong>Presentás la documentación en persona</strong></div></li><li><span class="n" aria-hidden="true">5</span><div><strong>Presentás los avales</strong></div></li><li><span class="n" aria-hidden="true">6</span><div><strong>Se publican los edictos</strong></div></li><li><span class="n" aria-hidden="true">7</span><div><strong>El Consejo Directivo evalúa la solicitud</strong></div></li><li><span class="n" aria-hidden="true">8</span><div><strong>Si se aprueba, te notificamos <span data-alta>el alta</span></strong></div></li><li><span class="n" aria-hidden="true">9</span><div><strong>Inspección del domicilio profesional</strong></div></li></ol>
           <p>¿Dudas? Escribí a <a href="mailto:fiscalizacion@cmcpsi.org.ar">fiscalizacion@cmcpsi.org.ar</a>.<span class="note-pin">1</span></p>
-        </section>
-      </div>
+      </aside>
     </div>
   </div>
 <footer class="site-footer after-content">
@@ -360,11 +353,11 @@ select.control:invalid{color:var(--text-muted)}
     <li><em>Etapa 3:</em> el enlace es solo para el prototipo: muestra cómo es el formulario completo. En el sitio real se habilita cuando el Colegio aprueba la etapa 1: la persona sigue desde su vista de usuario, con los datos de la etapa 1 bloqueados en gris (pendiente de diseño).</li>
     <li><em>Confirmación:</em> el Colegio no mandó texto para el final de la etapa 1. Es una propuesta.</li>
     <li><em>Pasividad o suspensión:</em> los dos trámites usan el mismo formulario, así que se elige al principio en vez de tener dos páginas iguales. Confirmar.</li>
-    <li><em>Antes de iniciar:</em> sale del hub de Trámites y se muestra acá, arriba de Cómo sigue. Resume lo que hay que juntar y lleva a Requisitos y documentación (la misma lista vale para matriculación, pasividad y suspensión).</li>
+    <li><em>Qué vas a necesitar:</em> solo lo que pide la etapa 1, con “Cómo conseguirlo” donde hace falta. El enlace de CUIT lleva a la constancia de ARCA (ex AFIP): verificar que siga vigente.</li>
     <li><em>Cómo sigue:</em> une las 3 etapas con los pasos de “Información para iniciar” del Colegio, que agrupa matriculación, pasividad y suspensión. Confirmar si avales, edictos e inspección aplican igual a la pasividad y a la suspensión. El último paso cambia según el trámite elegido.</li>
   </ol>
 </aside>
-<script src="../../_shared/forms.js?v=1794857752"></script>
+<script src="../../_shared/forms.js?v=1794857972"></script>
 <script>
 (function(){
   var t=document.getElementById('toggle-notes');
@@ -375,8 +368,8 @@ select.control:invalid{color:var(--text-muted)}
   var toast=document.createElement('div');toast.setAttribute('role','status');toast.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1b2430;color:#fff;font:500 14px/20px "Plus Jakarta Sans",system-ui,sans-serif;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(15,26,36,.25);z-index:80;opacity:0;transition:opacity .2s;pointer-events:none';document.body.appendChild(toast);var tt;
   document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();toast.textContent='Esta sección no forma parte del prototipo';toast.style.opacity='1';clearTimeout(tt);tt=setTimeout(function(){toast.style.opacity='0';},2200);});});
   var l=document.querySelector('link[href*="_shared/cmcpsi.css"]');
-  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'proto-nav.js?v=1794857752');document.body.appendChild(sc);}
-  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'select.js?v=1794857752');document.body.appendChild(ss);}
+  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'proto-nav.js?v=1794857972');document.body.appendChild(sc);}
+  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'select.js?v=1794857972');document.body.appendChild(ss);}
 })();
 document.querySelectorAll('[name=tramite]').forEach(function(r){r.addEventListener('change',function(){var t=document.querySelector('[data-alta]');if(t)t.textContent=r.value==='Alta de suspensión'?'el alta de suspensión':'el alta de pasividad';});});
 

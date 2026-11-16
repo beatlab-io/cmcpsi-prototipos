@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../_shared/cmcpsi.css">
+<link rel="stylesheet" href="../../_shared/cmcpsi.css?v=1794855954">
 <style>
 .layout{display:grid;grid-template-columns:minmax(0,680px) minmax(0,1fr);gap:var(--sp-64);align-items:start}
 .facts{list-style:none;display:grid;gap:var(--sp-12);margin:var(--sp-24) 0 0}
@@ -1008,19 +1008,19 @@ select.control:invalid{color:var(--text-muted)}
     <li><em>Guardar borrador:</em> simulado. En el sitio real necesita servidor (ver el cuadro sinóptico del panel admin).</li>
   </ol>
 </aside>
-<script src="../../_shared/forms.js"></script>
+<script src="../../_shared/forms.js?v=1794855954"></script>
 <script>
 (function(){
   var t=document.getElementById('toggle-notes');
   t.addEventListener('click',function(){var on=document.body.classList.toggle('show-notes');t.setAttribute('aria-pressed',on);t.textContent=on?'Ocultar notas':'Ver notas de diseño';});
   var m=document.querySelector('.menu-btn'),n=document.getElementById('nav');
   m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o);m.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
-  var css=document.querySelector('link[href$="_shared/cmcpsi.css"]');if(css){var root=css.getAttribute('href').replace('_shared/cmcpsi.css','')||'./';var bc=document.querySelector('.breadcrumb li:first-child a');if(bc&&bc.getAttribute('href')==='#')bc.setAttribute('href',root);}
+  var css=document.querySelector('link[href*="_shared/cmcpsi.css"]');if(css){var root=css.getAttribute('href').split('_shared/')[0]||'./';var bc=document.querySelector('.breadcrumb li:first-child a');if(bc&&bc.getAttribute('href')==='#')bc.setAttribute('href',root);}
   var toast=document.createElement('div');toast.setAttribute('role','status');toast.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1b2430;color:#fff;font:500 14px/20px "Plus Jakarta Sans",system-ui,sans-serif;padding:10px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(15,26,36,.25);z-index:80;opacity:0;transition:opacity .2s;pointer-events:none';document.body.appendChild(toast);var tt;
   document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();toast.textContent='Esta sección no forma parte del prototipo';toast.style.opacity='1';clearTimeout(tt);tt=setTimeout(function(){toast.style.opacity='0';},2200);});});
-  var l=document.querySelector('link[href$="_shared/cmcpsi.css"]');
-  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace('cmcpsi.css','proto-nav.js');document.body.appendChild(sc);}
-  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace('cmcpsi.css','select.js');document.body.appendChild(ss);}
+  var l=document.querySelector('link[href*="_shared/cmcpsi.css"]');
+  if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'proto-nav.js?v=1794855954');document.body.appendChild(sc);}
+  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace(/cmcpsi[.]css.*$/,'select.js?v=1794855954');document.body.appendChild(ss);}
 })();
 var TR={colegiacion:'Solicitud de colegiación',pasividad:'Alta de pasividad',suspension:'Alta de suspensión',traslado:'Traslado de otro Colegio'};
 var tr=(new URLSearchParams(location.search).get('tramite')||'colegiacion').toLowerCase(); if(!TR[tr])tr='colegiacion';

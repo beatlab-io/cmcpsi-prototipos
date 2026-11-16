@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CMCPSI Cowork, prototipo de diseño v0.4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Tokens: archivo Figma "Web CMCPSI" (16/11/2026)
+   CMCPSI / Primitives · Semantic · Foundations
+   Breadcrumb: spec confirmada (12/16, 500, +0.2px, uppercase).
+   Resto de line-height / letter-spacing: cotejar en Figma.
+   ============================================================ */
+:root{
+  --brand-primary:#13579b;        /* Brand / Primary */
+  --brand-primary-hover:#09447f;  /* Brand / Primary Hover */
+  --brand-dark:#15355c;           /* Brand / Dark */
+  --text-primary:#0f1a24;         /* Text / Primary */
+  --text-secondary:#5c6470;       /* Text / Secondary */
+  --text-muted:#7a8794;           /* Text / Muted */
+  --text-on-brand:#ffffff;        /* Text / On Brand */
+  --bg-default:#ffffff;           /* Background / Default */
+  --bg-subtle:#f6f8fa;            /* Background / Subtle */
+  --bg-brand-soft:#deeaf7;        /* Background / Brand Soft */
+  --bg-institutional-panel:#f0f6fb; /* Background / Institutional Panel */
+  --border-default:#d5e1eb;       /* Border / Default */
+  --border-subtle:#eef1f5;        /* Border / Subtle */
+  --icon-brand:#13579b;           /* Icon / Brand */
+  --icon-secondary:#5c6470;       /* Icon / Secondary */
+  --indicator-muted:#d7dee7;      /* Carousel / Indicator Muted */
+  --focus-ring:#1c82db;           /* Focus / Ring */
+  --sp-4:4px;--sp-8:8px;--sp-12:12px;--sp-16:16px;--sp-24:24px;--sp-32:32px;
+  --sp-40:40px;--sp-48:48px;--sp-64:64px;--sp-80:80px;
+  --r-small:4px;--r-medium:8px;--r-large:16px;--r-xl:24px;--r-full:999px;
+  --bw-default:1px;--bw-focus:2px;
+  --container:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--text-primary);background:var(--bg-default);-webkit-font-smoothing:antialiased}
+img,svg{display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+:focus-visible{outline:var(--bw-focus) solid var(--focus-ring);outline-offset:3px;border-radius:var(--r-small)}
+.container{max-width:calc(var(--container) + 2*var(--sp-40));margin:0 auto;padding:0 var(--sp-40)}
+.icon{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.icon-sm{width:18px;height:18px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Jerarquía tipográfica (una sola escala para toda la página) ----------
+   Página      → Interior/Títulos/H1   44 · SemiBold
+   Sección     → Interior/Títulos/H2   32 · SemiBold
+   Bloque/card → Interior/Títulos/H4   20 · SemiBold
+   Precio      → CMCPSI/H5             24 · SemiBold   (nunca más grande que un título)
+   Bajada      → Interior/Cuerpo/Grande 18
+   Texto       → Interior/Cuerpo/Base   16 · Pequeño 14
+   Etiquetas   → Interior/Etiqueta      12 · Medium · uppercase · +0.2px
+------------------------------------------------------------------------------- */
+.t-h1{font-size:44px;font-weight:600;line-height:52px;letter-spacing:-0.01em}
+.t-h2{font-size:32px;font-weight:600;line-height:40px}
+.t-h4{font-size:20px;font-weight:600;line-height:28px}
+.t-price{font-size:24px;font-weight:600;line-height:32px}
+.t-lead{font-size:18px;line-height:28px;color:var(--text-secondary)}
+.t-body{font-size:16px;line-height:24px}
+.t-small{font-size:14px;line-height:20px}
+.t-label,.breadcrumb{font-size:12px;font-weight:500;line-height:16px;letter-spacing:.2px;text-transform:uppercase}
+
+/* ---------- Prototype bar (fuera de la UI) ---------- */
+.proto-bar{background:#1b2430;color:#e8edf3;font-size:13px}
+.proto-bar .container{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:40px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.proto-bar strong{font-weight:600}
+.proto-bar button{font-weight:600;color:#1b2430;background:#e8edf3;border:0;border-radius:var(--r-full);padding:6px 14px;cursor:pointer}
+.proto-bar button[aria-pressed="true"]{background:#ffd666}
+
+/* ---------- Button ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-8);height:44px;padding:0 22px;border-radius:var(--r-full);font-size:15px;font-weight:600;white-space:nowrap;border:var(--bw-default) solid transparent;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.btn:focus-visible{border-radius:var(--r-full)}
+.btn-primary{background:var(--brand-primary);color:var(--text-on-brand)}
+.btn-primary:hover{background:var(--brand-primary-hover)}
+.btn-primary:active{background:var(--brand-dark)}
+.btn-secondary{background:var(--bg-default);color:var(--brand-primary);border-color:var(--brand-primary)}
+.btn-secondary:hover{background:var(--bg-brand-soft)}
+.btn-secondary:active{background:var(--bg-brand-soft);color:var(--brand-dark);border-color:var(--brand-dark)}
+.btn-tertiary{background:none;color:var(--brand-primary)}
+.btn-tertiary:hover{color:var(--brand-primary-hover)}
+.btn-tertiary:active{background:var(--bg-brand-soft);color:var(--brand-dark)}
+.btn:disabled,.btn[aria-disabled="true"]{background:var(--bg-subtle);color:var(--text-muted);border-color:transparent;cursor:default;pointer-events:none}
+/* ---------- Link · Flecha ---------- */
+.link{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--brand-primary);font-size:15px;font-weight:600;transition:color .15s}
+.link:hover{color:var(--brand-primary-hover)}
+.link:active{color:var(--brand-dark)}
+.link[aria-disabled="true"]{color:var(--text-muted);pointer-events:none}
+.link-inline{min-height:0}
+
+/* ---------- Header / Desktop ---------- */
+.site-header{background:var(--bg-default);border-bottom:var(--bw-default) solid var(--border-subtle);position:relative;z-index:20}
+.hdr-top{display:flex;align-items:center;gap:var(--sp-24);height:88px;border-bottom:var(--bw-default) solid var(--border-subtle)}
+.hdr-top .logo img{height:44px;width:auto}
+.hdr-search{margin-left:auto;display:flex;align-items:center;gap:var(--sp-8);width:420px;height:42px;padding:0 var(--sp-16);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-full);color:var(--text-secondary);transition:border-color .15s}
+.hdr-search:hover{border-color:var(--brand-primary)}
+.hdr-search:focus-within{border-color:var(--brand-primary);box-shadow:0 0 0 1px var(--brand-primary)}
+.hdr-search input{border:0;outline:0;background:none;font:inherit;font-size:13px;width:100%;color:var(--text-primary)}
+.hdr-search input::placeholder{color:var(--text-secondary)}
+.hdr-actions{display:flex;align-items:center;gap:var(--sp-16)}
+.hdr-actions .link{font-size:14px;font-weight:500}
+.hdr-actions .btn{height:40px;font-size:14px;padding:0 20px}
+.nav{display:flex;justify-content:center;gap:var(--sp-8);height:56px;align-items:center}
+.nav a{position:relative;display:inline-flex;align-items:center;height:40px;padding:0 var(--sp-12);border-radius:var(--r-medium);font-size:14px;font-weight:500;color:var(--brand-primary);transition:background .15s}
+.nav a:hover{background:var(--bg-brand-soft)}
+.nav a[aria-current="page"]{color:var(--brand-primary-hover);font-weight:600}
+.nav a[aria-current="page"]::after{content:"";position:absolute;left:var(--sp-12);right:var(--sp-12);bottom:-8px;height:2px;background:var(--brand-primary)}
+.nav a[aria-current="page"]:hover{background:none}
+.mobile-only{display:none}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:none;color:var(--brand-primary);border-radius:var(--r-medium);cursor:pointer}
+.icon-btn:hover{background:var(--bg-brand-soft)}
+
+/* ---------- Breadcrumb / Item ---------- */
+.breadcrumb{padding:var(--sp-32) 0}
+.breadcrumb ol{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-8)}
+.breadcrumb li{display:flex;align-items:center;gap:var(--sp-8);color:var(--text-muted)}
+.breadcrumb li+li::before{content:">";color:var(--text-muted)}
+.breadcrumb a{color:var(--brand-primary)}
+.breadcrumb a:hover{color:var(--brand-primary-hover)}
+
+/* ---------- Intro (patrón Beneficios / Detalle) ---------- */
+.intro{display:grid;grid-template-columns:1fr 1.1fr;gap:var(--sp-64);align-items:start}
+.intro .carousel{order:2}
+.intro-copy{padding-top:var(--sp-8)}
+.intro-logo{height:52px;width:auto;margin-bottom:var(--sp-32)}
+.intro-copy .t-label{color:var(--brand-primary);display:block;margin-bottom:var(--sp-12)}
+.intro-copy h1{margin-bottom:var(--sp-16)}
+.intro-copy .t-lead{margin-bottom:var(--sp-24)}
+/* Detail / Benefit Highlight */
+.highlight{background:var(--bg-institutional-panel);border-radius:var(--r-large);padding:var(--sp-24);margin-bottom:var(--sp-32)}
+.highlight .t-label{color:var(--brand-primary);margin-bottom:var(--sp-8)}
+.highlight p:not(.t-label){font-size:18px;font-weight:600;line-height:26px}
+/* Lista de oferta · propuesta (2×2: ícono + frase clave + línea de apoyo) */
+.offer{list-style:none;display:grid;grid-template-columns:1fr 1fr;margin:0 0 var(--sp-32);border-top:var(--bw-default) solid var(--border-default)}
+.offer li{display:flex;gap:var(--sp-12);align-items:flex-start;padding:var(--sp-16) var(--sp-16) var(--sp-16) 0;border-bottom:var(--bw-default) solid var(--border-default)}
+.offer li:nth-child(even){padding-left:var(--sp-16);border-left:var(--bw-default) solid var(--border-default)}
+.offer-icon{width:36px;height:36px;border-radius:var(--r-medium);background:var(--bg-brand-soft);color:var(--icon-brand);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.offer-icon .icon{width:20px;height:20px}
+.offer strong{display:block;font-size:16px;line-height:24px;font-weight:600}
+.offer li span:not(.offer-icon):not(.note-pin){font-size:14px;line-height:20px;color:var(--text-secondary)}
+.intro-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-16) var(--sp-24)}
+
+/* ---------- Carousel / Cowork / Hero ---------- */
+.carousel-track{position:relative;aspect-ratio:3/2;border-radius:var(--r-large);overflow:hidden;background:var(--bg-subtle)}
+.carousel-slide{position:absolute;inset:0;opacity:0;transition:opacity .35s ease}
+.carousel-slide.is-active{opacity:1}
+.carousel-slide img{width:100%;height:100%;object-fit:cover}
+.carousel-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-16);margin-top:var(--sp-8)}
+.carousel-caption{color:var(--text-secondary)}
+.carousel-controls{display:flex;align-items:center;gap:0}
+/* Carousel / Arrow · 44px: Normal sin fondo · Hover y Presionado con círculo Brand Soft · Deshabilitado atenuado */
+.carousel-arrow{width:44px;height:44px;border:0;border-radius:var(--r-full);background:none;color:var(--brand-primary);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,color .15s}
+.carousel-arrow .icon{width:20px;height:20px;stroke-width:2.25}
+.carousel-arrow:hover{background:var(--bg-brand-soft)}
+.carousel-arrow:active{background:var(--bg-brand-soft);color:var(--brand-dark)}
+.carousel-arrow:disabled{color:#a6bfd6;cursor:default;background:none} /* Carousel / Indicator Intermediate */
+.carousel-dots{display:flex}
+.carousel-dot{width:18px;height:44px;border:0;background:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border-radius:var(--r-full)}
+.carousel-dot::before{content:"";width:8px;height:8px;border-radius:var(--r-full);background:var(--indicator-muted)}
+.carousel-dot[aria-current="true"]::before{background:var(--brand-primary)}
+
+/* ---------- Secciones ---------- */
+.section{padding-top:var(--sp-80)}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--sp-24);margin-bottom:var(--sp-32)}
+.section-head h2{margin-bottom:var(--sp-8)}
+.section-head p{color:var(--text-secondary)}
+.band{background:var(--bg-subtle);margin-top:var(--sp-80);padding:var(--sp-64) 0}
+.band .section{padding-top:0}
+
+/* ---------- Card / Cowork Space (propuesta) ---------- */
+.spaces{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-24)}
+.space-card{border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);overflow:hidden;display:flex;flex-direction:column;background:var(--bg-default)}
+.space-card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.space-body{padding:var(--sp-24);display:flex;flex-direction:column;flex:1}
+.space-body h3{margin-bottom:var(--sp-4)}
+.space-body .desc{color:var(--text-secondary);margin-bottom:var(--sp-24)}
+.price-list{list-style:none;margin-top:auto;border-top:var(--bw-default) solid var(--border-subtle)}
+.price-list li{display:flex;align-items:baseline;justify-content:space-between;gap:var(--sp-12);padding:var(--sp-12) 0;border-bottom:var(--bw-default) solid var(--border-subtle)}
+.price-list li:last-child{border-bottom:0;padding-bottom:0}
+.price-list .what{color:var(--text-secondary)}
+.price-list .amount{text-align:right;white-space:nowrap}
+.price-list .amount small{display:block;font-size:12px;line-height:16px;color:var(--text-muted);font-weight:400}
+
+.plans{margin-top:var(--sp-24);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-24) var(--sp-32);display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:var(--sp-32);align-items:center}
+.plans .lead h3{margin-bottom:var(--sp-4)}
+.plans .lead p{color:var(--text-secondary)}
+.plan .what{color:var(--text-secondary);margin-bottom:2px}
+.plan small{display:block;font-size:12px;line-height:16px;color:var(--text-muted)}
+.price-note{margin-top:var(--sp-24);color:var(--text-secondary)}
+
+/* ---------- Servicios ---------- */
+.services{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-24) var(--sp-32)}
+.services li{display:flex;align-items:center;gap:var(--sp-12);font-size:16px;line-height:24px}
+.services .icon{color:var(--icon-brand)}
+
+/* ---------- Ubicación y contacto ---------- */
+.location{display:grid;grid-template-columns:1fr 1.15fr;gap:var(--sp-48);align-items:start}
+.address h3{margin-bottom:var(--sp-8)}
+.address p{color:var(--text-secondary);margin-bottom:var(--sp-24)}
+/* Contact / Item */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-12);margin-bottom:var(--sp-24)}
+.contact-item{display:block;border:var(--bw-default) solid var(--border-default);border-radius:var(--r-medium);padding:var(--sp-12) var(--sp-16);transition:border-color .15s,background .15s}
+.contact-wide{grid-column:1/-1}
+a.contact-item:hover{border-color:var(--brand-primary);background:var(--bg-institutional-panel)}
+.contact-item .t-label{color:var(--text-muted);display:block;margin-bottom:var(--sp-4)}
+.contact-item .value{font-size:14px;line-height:20px;color:var(--text-primary)}
+a.contact-item .value{color:var(--brand-primary);font-weight:500}
+.map{margin:0}
+.map-frame{border-radius:var(--r-large);overflow:hidden;border:var(--bw-default) solid var(--border-default);background:var(--bg-subtle)}
+.map-frame iframe{display:block;width:100%;aspect-ratio:16/10;border:0}
+.map .link{margin-top:var(--sp-4)}
+
+/* ---------- Footer / Desktop ---------- */
+.site-footer{border-top:var(--bw-default) solid var(--border-subtle);padding:var(--sp-48) 0 var(--sp-32);font-size:13px;color:var(--text-secondary)}
+.site-footer.after-content{margin-top:var(--sp-80)}
+.ftr-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:var(--sp-32)}
+.ftr-brand img{height:36px;width:auto;margin-bottom:var(--sp-16)}
+.ftr-brand p{max-width:260px;line-height:1.6;margin-bottom:var(--sp-12)}
+.ftr-brand a{color:var(--brand-primary)}
+.ftr-col h2{font-size:11px;font-weight:500;letter-spacing:.2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:var(--sp-12)}
+.ftr-col ul{list-style:none;display:grid;gap:var(--sp-8)}
+.ftr-col a{color:var(--text-primary)}
+.ftr-col a:hover{color:var(--brand-primary)}
+.ftr-social{display:flex;gap:var(--sp-12);margin-top:var(--sp-8)}
+.ftr-social a{color:var(--text-primary);display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:var(--r-small)}
+.ftr-social .icon{width:18px;height:18px}
+.ftr-bottom{margin-top:var(--sp-40);padding-top:var(--sp-24);border-top:var(--bw-default) solid var(--border-subtle);font-size:11px;color:var(--text-muted)}
+
+/* ---------- Notas de diseño ---------- */
+.note-pin{display:none}
+body.show-notes .note-pin{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:var(--r-full);background:#ffd666;color:#1b2430;font-size:11px;font-weight:700;margin-left:6px;vertical-align:middle;letter-spacing:0;text-transform:none;box-shadow:0 0 0 2px #fff;flex:none;line-height:1}
+.notes-panel{display:none;position:fixed;right:16px;bottom:16px;width:min(420px,calc(100vw - 32px));max-height:min(72vh,600px);overflow:auto;background:#fff;border:1px solid #e3c25a;border-radius:12px;box-shadow:0 12px 40px rgba(15,26,36,.18);z-index:60;font-size:13.5px;line-height:1.5}
+body.show-notes .notes-panel{display:block}
+.notes-panel header{position:sticky;top:0;background:#fff8e1;padding:12px 16px;font-weight:700;border-bottom:1px solid #f0dc9a}
+.notes-panel ol{padding:12px 16px 16px 36px;display:grid;gap:10px}
+.notes-panel em{font-style:normal;font-weight:600;color:#8a5a00}
+
+/* ---------- Responsive · Mobile 390 ---------- */
+@media (max-width:1100px){
+  .hdr-search{width:300px}
+  .intro{gap:var(--sp-40)}
+  .services{grid-template-columns:repeat(3,1fr)}
+  .plans{grid-template-columns:1fr 1fr;row-gap:var(--sp-24)}
+  .plans .lead{grid-column:1/-1}
+  .plans .link{grid-column:1/-1}
+}
+@media (max-width:860px){
+  .container{padding:0 var(--sp-16)}
+  .hdr-top{height:64px;border-bottom:0}
+  .hdr-top .logo img{height:34px}
+  .hdr-search,.hdr-actions{display:none}
+  .mobile-only{display:inline-flex}
+  .hdr-mobile-actions{margin-left:auto;display:flex;gap:var(--sp-4)}
+  .site-header{border-bottom:var(--bw-default) solid var(--border-default)}
+  .nav{display:none}
+  .nav.open{display:flex;flex-direction:column;align-items:stretch;height:auto;gap:0;padding:var(--sp-8) var(--sp-16) var(--sp-16);border-top:var(--bw-default) solid var(--border-subtle)}
+  .nav.open a{height:48px;border-radius:0;border-bottom:var(--bw-default) solid var(--border-subtle);font-size:16px}
+  .nav.open a[aria-current="page"]::after{left:0;right:auto;width:3px;top:12px;bottom:12px;height:auto}
+  .nav.open a[aria-current="page"]{padding-left:var(--sp-16)}
+  .breadcrumb{padding:var(--sp-24) 0 var(--sp-16)}
+  .intro{grid-template-columns:1fr;gap:var(--sp-32)}
+  .intro-copy{order:-1;padding-top:0}
+  .intro-logo{height:40px;margin-bottom:var(--sp-24)}
+  .t-h1{font-size:32px;line-height:40px}
+  .t-h2{font-size:26px;line-height:34px}
+  .t-lead{font-size:16px;line-height:24px}
+  .highlight p:not(.t-label){font-size:16px;line-height:24px}
+  .intro-actions .btn{flex:1 1 100%}
+  .offer{grid-template-columns:1fr}
+  .offer li:nth-child(even){padding-left:0;border-left:0}
+  .section{padding-top:var(--sp-64)}
+  .section-head{flex-direction:column;align-items:flex-start;margin-bottom:var(--sp-24)}
+  .band{margin-top:var(--sp-64);padding:var(--sp-48) 0}
+  .spaces{grid-template-columns:1fr;gap:var(--sp-16)}
+  .plans{padding:var(--sp-24);gap:var(--sp-16) var(--sp-24)}
+  .services{grid-template-columns:1fr;gap:var(--sp-16)}
+  .location{grid-template-columns:1fr;gap:var(--sp-32)}
+  .contact-grid{grid-template-columns:1fr}
+  .location .btn{width:100%}
+  .ftr-grid{grid-template-columns:1fr 1fr;gap:var(--sp-32) var(--sp-24)}
+  .ftr-brand,.ftr-legal{grid-column:1/-1}
+  .ftr-col li a{display:inline-block;padding:6px 0;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.carousel-slide{transition:none}}
+</style>
+</head>
+<body>
+
+<!-- Íconos Tabler (outline). En Figma: Icon / Tabler / … -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+    <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 6l-6 6l6 6"/></symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/><path d="M11 13l9-9"/><path d="M15 4h5v5"/></symbol>
+    <symbol id="i-lock-access" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2"/><path d="M4 16v2a2 2 0 0 0 2 2h2"/><path d="M16 4h2a2 2 0 0 1 2 2v2"/><path d="M16 20h2a2 2 0 0 0 2-2v-2"/><path d="M8 11a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z"/><path d="M10 10V8a2 2 0 1 1 4 0v2"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M3 14c.83.642 2.077 1.017 3.5 1c1.423.017 2.67-.358 3.5-1c.83-.642 2.077-1.017 3.5-1c1.423-.017 2.67.358 3.5 1"/><path d="M8 3a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2"/><path d="M12 3a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2"/><path d="M3 10h14v5a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6v-5z"/><path d="M16.746 16.726a3 3 0 1 0 .252-5.555"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M12 18h.01"/><path d="M9.172 15.172a4 4 0 0 1 5.656 0"/><path d="M6.343 12.343a8 8 0 0 1 11.314 0"/><path d="M3.515 9.515c4.686-4.687 12.284-4.687 17 0"/></symbol>
+    <symbol id="i-lock-sq" viewBox="0 0 24 24"><path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9-9 9s-9-1.8-9-9s1.8-9 9-9z"/><path d="M8 12a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z"/><path d="M10 11V9a2 2 0 1 1 4 0v2"/></symbol>
+    <symbol id="i-door" viewBox="0 0 24 24"><path d="M14 12v.01"/><path d="M3 21h18"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></symbol>
+    <symbol id="i-air" viewBox="0 0 24 24"><path d="M8 16a3 3 0 0 1-3 3"/><path d="M16 16a3 3 0 0 0 3 3"/><path d="M12 16v4"/><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M7 13v-3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 0 12 0a6 6 0 0 0-12 0"/><path d="M12 3c1.333.333 2 2.333 2 6s-.667 5.667-2 6"/><path d="M12 3c-1.333.333-2 2.333-2 6s.667 5.667 2 6"/><path d="M6 9h12"/><path d="M3 20h7"/><path d="M14 20h7"/><path d="M10 20a2 2 0 1 0 4 0a2 2 0 0 0-4 0"/><path d="M12 15v3"/></symbol>
+    <symbol id="i-volume-off" viewBox="0 0 24 24"><path d="M15 8a5 5 0 0 1 1.912 4.934m-1.377 2.602a5 5 0 0 1-.535.464"/><path d="M17.7 5a9 9 0 0 1 2.362 11.086m-1.676 2.299a9 9 0 0 1-.686.615"/><path d="M9.069 5.054L9.5 4.5A.8.8 0 0 1 11 5v2m0 4v8a.8.8 0 0 1-1.5.5L6 15H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2l1.294-1.664"/><path d="M3 3l18 18"/></symbol>
+    <symbol id="i-silence" viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6v13"/><path d="M12 6v13"/><path d="M21 6v13"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 1 1 16 0v3"/><path d="M18 19c0 1.657-2.686 3-6 3"/><path d="M4 14a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3z"/><path d="M15 14a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3z"/></symbol>
+    <symbol id="i-printer" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2"/><path d="M17 9V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v4"/><path d="M7 15a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 13l-2-2"/><path d="M12 12l2-2"/><path d="M12 21V8"/><path d="M9.824 16a3 3 0 0 1-2.743-3.69a3 3 0 0 1 .304-4.833a3 3 0 0 1 4.615-3.707a3 3 0 0 1 4.614 3.707a3 3 0 0 1 .305 4.833a3 3 0 0 1-2.919 3.695h-4z"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M3 7l6-3l6 3l6-3v13l-6 3l-6-3l-6 3V7"/><path d="M9 4v13"/><path d="M15 7v13"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol>
+    <symbol id="i-armchair" viewBox="0 0 24 24"><path d="M5 10V6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4"/><path d="M16 15v-2a3 3 0 1 1 3 3v3H5v-3a3 3 0 1 1 3-3v2"/><path d="M8 12h8"/><path d="M7 19v2"/><path d="M17 19v2"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4L18.5 9.5a2.828 2.828 0 1 0-4-4L4 16v4"/><path d="M13.5 6.5l4 4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol>
+  </defs>
+</svg>
+
+<!-- Barra de prototipo: NO forma parte del diseño -->
+<div class="proto-bar" role="note">
+  <div class="container">
+    <span><strong>Prototipo de diseño, Cowork v0.4.</strong> No es el sitio publicado. Precios y datos pendientes de validación.</span>
+    <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
+  </div>
+</div>
+
+<!-- Header / Desktop · Header / Mobile -->
+<header class="site-header">
+  <div class="container">
+    <div class="hdr-top">
+      <a href="#" class="logo" aria-label="CMCPSI, ir al inicio"><img src="assets/logo-cmcpsi.png" alt="CMCPSI, Colegio de Martilleros y Corredores Públicos de San Isidro"></a>
+      <label class="hdr-search">
+        <svg class="icon icon-sm" aria-hidden="true"><use href="#i-search"/></svg>
+        <span class="sr-only">Buscar en el sitio</span>
+        <input type="search" placeholder="Buscar trámites, valores, noticias o recursos">
+      </label>
+      <div class="hdr-actions">
+        <a href="#" class="link link-inline">Iniciar sesión</a>
+        <a href="#" class="btn btn-primary">Consultar padrón</a>
+      </div>
+      <div class="hdr-mobile-actions mobile-only">
+        <button class="icon-btn" type="button" aria-label="Buscar"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+        <button class="icon-btn menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#">Trámites</a>
+      <a href="#">Colegiados</a>
+      <a href="#" aria-current="page">Comunidad</a>
+      <a href="#">Actualidad</a>
+      <a href="#">El Colegio</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <ol>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Comunidad</a></li>
+        <li aria-current="page">Cowork</li>
+      </ol>
+    </nav>
+
+    <!-- INTRO · patrón Beneficios / Detalle -->
+    <section class="intro" aria-labelledby="page-title">
+      <div class="carousel" aria-roledescription="carrusel" aria-label="Fotos del Cowork">
+        <div class="carousel-track" id="track"></div>
+        <div class="carousel-bar">
+          <p class="carousel-caption t-small" id="caption" aria-live="polite"></p>
+          <div class="carousel-controls">
+            <button class="carousel-arrow" type="button" data-dir="-1" aria-label="Foto anterior"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-chev-l"/></svg></button>
+            <div class="carousel-dots" id="dots" role="group" aria-label="Elegir foto"></div>
+            <button class="carousel-arrow" type="button" data-dir="1" aria-label="Foto siguiente"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-chev-r"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="intro-copy">
+        <h1 id="page-title" class="t-h1">Comunidad CMCPsi: tu espacio de trabajo en el colegio<span class="note-pin">1</span></h1>
+        <p class="t-lead">Tu oficina, cuando la necesitás. Un espacio para trabajar, reunirte y recibir clientes en un entorno profesional.</p>
+        <ul class="offer" aria-label="Qué ofrece el Cowork">
+          <li><span class="offer-icon"><svg class="icon" aria-hidden="true"><use href="#i-armchair"/></svg></span><div><strong>Puestos individuales</strong><span>Desde $12.000 la hora.<span class="note-pin">11</span></span></div></li>
+          <li><span class="offer-icon"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg></span><div><strong>Sala de firmas</strong><span>Para recibir a tus clientes.</span></div></li>
+          <li><span class="offer-icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span><div><strong>Casilleros</strong><span>Para que recibas tu correspondencia.</span></div></li>
+          <li><span class="offer-icon"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg></span><div><strong>Planes quincenales</strong><span>Para mantener reservado tu lugar.</span></div></li>
+        </ul>
+        <div class="intro-actions">
+          <a class="btn btn-primary" href="https://comunidadcmcpsi.ar/landing" target="_blank" rel="noopener">Reservar en la web del Cowork <svg class="icon icon-sm" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(se abre en una pestaña nueva)</span></a>
+          <a class="link js-anchor" href="#espacios">Ver espacios y precios <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+          <span class="note-pin">2</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESPACIOS Y PRECIOS -->
+    <section class="section" id="espacios" aria-labelledby="espacios-title" tabindex="-1">
+      <div class="section-head">
+        <div>
+          <h2 id="espacios-title" class="t-h2">Espacios y precios</h2>
+          <p class="t-body">Elegí cómo usarlo, por unas horas o con más continuidad.</p>
+        </div>
+      </div>
+
+      <div class="spaces">
+        <article class="space-card">
+          <img src="assets/cowork-puestos-compartidos.jpg" alt="Puestos de trabajo compartidos en espacio abierto">
+          <div class="space-body">
+            <h3 class="t-h4">Puesto individual</h3>
+            <p class="desc t-small">Escritorio en espacio abierto, por la mañana, por la tarde o todo el día.</p>
+            <ul class="price-list">
+              <li><span class="what t-small">Media jornada</span><span class="amount t-price">$12.000</span></li>
+              <li><span class="what t-small">Jornada completa</span><span class="amount t-price">$20.000<span class="note-pin">3</span></span></li>
+            </ul>
+          </div>
+        </article>
+        <article class="space-card">
+          <img src="assets/cowork-sala-firmas.jpg" alt="Sala de firmas con mesa de reunión y sillas">
+          <div class="space-body">
+            <h3 class="t-h4">Sala de firmas</h3>
+            <p class="desc t-small">Espacio cerrado e individual para tus encuentros de firma.</p>
+            <ul class="price-list">
+              <li><span class="what t-small">Por hora</span><span class="amount t-price">$20.000<span class="note-pin">4</span></span></li>
+            </ul>
+          </div>
+        </article>
+        <article class="space-card">
+          <img src="assets/cowork-casilleros.jpg" alt="Casilleros personales con cerradura">
+          <div class="space-body">
+            <h3 class="t-h4">Casillero de notificaciones</h3>
+            <p class="desc t-small">Espacio personal para guardar llaves, documentación o material de trabajo.</p>
+            <ul class="price-list">
+              <li><span class="what t-small">Reserva bimestral</span><span class="amount t-price">$85.000<span class="note-pin">5</span></span></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <div class="plans">
+        <div class="lead">
+          <h3 class="t-h4">¿Venís más seguido?</h3>
+          <p class="t-small">Uso continuo del espacio. Se reservan por mail.</p>
+        </div>
+        <div class="plan">
+          <p class="what t-small">Plan quincenal</p>
+          <p class="t-price">$150.000</p>
+          <small>Quince días</small>
+        </div>
+        <div class="plan">
+          <p class="what t-small">Plan mensual</p>
+          <p class="t-price">$250.000</p>
+          <small>Un mes completo</small>
+        </div>
+        <a class="link" href="mailto:comunidadcmcpsi@gmail.com?subject=Consulta%20por%20planes%20del%20Cowork">Consultar por mail <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a>
+      </div>
+      <p class="price-note t-small">Las reservas y los pagos se hacen en la <a class="link link-inline" href="https://comunidadcmcpsi.ar/landing" target="_blank" rel="noopener">web del Cowork<span class="sr-only"> (se abre en una pestaña nueva)</span></a>.<span class="note-pin">6</span></p>
+    </section>
+  </div>
+
+  <!-- SERVICIOS · banda Background / Subtle (como “Otros beneficios”) -->
+  <div class="band">
+    <div class="container">
+      <section class="section" aria-labelledby="servicios-title">
+        <div class="section-head">
+          <div>
+            <h2 id="servicios-title" class="t-h2">Servicios incluidos</h2>
+            <p class="t-body">Todas las comodidades para trabajar profesionalmente.</p>
+          </div>
+        </div>
+        <ul class="services">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-lock-access"/></svg>Acceso y seguridad</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-wifi"/></svg>WiFi de alta velocidad</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-coffee"/></svg>Café y cocina</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-air"/></svg>Climatización</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-door"/></svg>Sala de reuniones</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-silence"/></svg>Áreas silenciosas</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-volume-off"/></svg>Aislamiento acústico</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-network"/></svg>Espacios de networking</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-lock-sq"/></svg>Lockers privados</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-printer"/></svg>Servicios de impresión</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-headset"/></svg>Atención administrativa</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-tree"/></svg>Espacio al aire libre<span class="note-pin">7</span></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- UBICACIÓN Y CONTACTO -->
+    <section class="section" id="ubicacion" aria-labelledby="ubicacion-title" tabindex="-1">
+      <div class="section-head">
+        <div>
+          <h2 id="ubicacion-title" class="t-h2">Ubicación y contacto</h2>
+          <p class="t-body">En el corazón de San Isidro, con fácil acceso.<span class="note-pin">8</span></p>
+        </div>
+      </div>
+      <div class="location">
+        <div>
+          <div class="address">
+            <h3 class="t-h4">Almte. Brown 160</h3>
+            <p class="t-body">B1642DSD, San Isidro, Provincia de Buenos Aires<span class="note-pin">9</span></p>
+          </div>
+          <div class="contact-grid">
+            <a class="contact-item" href="tel:+541136969399"><span class="t-label">Teléfono</span><span class="value">11 3696-9399</span></a>
+            <div class="contact-item"><span class="t-label">Horarios</span><span class="value">Lunes a viernes, de 9 a 18 h</span></div>
+            <a class="contact-item contact-wide" href="mailto:comunidadcmcpsi@gmail.com"><span class="t-label">Email</span><span class="value">comunidadcmcpsi@gmail.com</span></a>
+          </div>
+          <a class="btn btn-primary" href="https://wa.me/5491136969399" target="_blank" rel="noopener"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+        </div>
+        <figure class="map">
+          <div class="map-frame">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4556.074811359143!2d-58.51455902147311!3d-34.46928580475454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb03167723095%3A0x1f17df0a5d06613b!2sAlmte.%20Brown%20160%2C%20B1642%20DSD%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1794842013629!5m2!1ses!2sar" title="Mapa de Google con la ubicación del Cowork en Almte. Brown 160, San Isidro" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+          <a class="link" href="https://www.google.com/maps/search/?api=1&query=Almirante+Brown+160,+San+Isidro,+Buenos+Aires" target="_blank" rel="noopener">Abrir en Google Maps <svg class="icon icon-sm" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only">(se abre en una pestaña nueva)</span></a><span class="note-pin">10</span>
+        </figure>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer / Desktop · Footer / Mobile -->
+  <footer class="site-footer after-content">
+    <div class="container">
+      <div class="ftr-grid">
+        <div class="ftr-brand">
+          <img src="assets/logo-cmcpsi.png" alt="CMCPSI">
+          <p>Colegio de Martilleros y Corredores Públicos del Departamento Judicial de San Isidro.</p>
+          <p>Rivadavia 573 - San Isidro, Buenos Aires<br><a href="mailto:colegio@cmcpsi.org.ar">colegio@cmcpsi.org.ar</a></p>
+        </div>
+        <div class="ftr-col">
+          <h2>Accesos rápidos</h2>
+          <ul><li><a href="#">Consultar padrón</a></li><li><a href="#">Trámites</a></li><li><a href="#">Valores y vencimientos</a></li><li><a href="#">Beneficios</a></li><li><a href="#">Calculadora</a></li></ul>
+        </div>
+        <div class="ftr-col">
+          <h2>Información</h2>
+          <ul><li><a href="#">El Colegio</a></li><li><a href="#">Consejo Directivo</a></li><li><a href="#">Actualidad</a></li><li><a href="#">Capacitaciones</a></li><li><a href="#">Contacto</a></li></ul>
+        </div>
+        <div class="ftr-col ftr-legal">
+          <h2>Legal</h2>
+          <ul><li><a href="#">Ley 10.973</a></li><li><a href="#">Código de Ética</a></li><li><a href="#">Términos y privacidad</a></li></ul>
+          <h2 style="margin-top:var(--sp-24)">Redes sociales</h2>
+          <div class="ftr-social">
+            <a href="#" aria-label="Instagram del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+            <a href="#" aria-label="WhatsApp del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <p class="ftr-bottom">© 2026 Colegio de Martilleros y Corredores Públicos de San Isidro.</p>
+    </div>
+  </footer>
+</main>
+
+<!-- Panel de notas: NO forma parte del diseño -->
+<aside class="notes-panel" aria-label="Notas de diseño">
+  <header>Notas de diseño, v0.4</header>
+  <ol>
+    <li><em>Jerarquía:</em> la página sigue el patrón aprobado de Beneficios / Detalle (ficha a la izquierda, fotos a la derecha). H1 definido por Anto: “Comunidad CMCPsi: tu espacio de trabajo en el colegio”. Revisar con Flor cómo se escriben “CMCPsi” (en el resto del sitio figura “CMCPSI”) y “Colegio” (con o sin mayúscula).</li>
+    <li><em>Acción principal:</em> “Reservar en la web del Cowork”. El botón dice explícitamente dónde ocurre la reserva, así no promete una reserva dentro del sitio del Colegio (doc 02).</li>
+    <li><em>Conflicto en la web del Cowork:</em> el listado de precios dice Media jornada $12.000 y Jornada completa $20.000, pero el sistema de reserva cobra “Puesto individual $12.000 por día”. Confirmar cuál es el correcto.</li>
+    <li><em>Conflicto:</em> la Sala de firmas figura $20.000 “por hora” en el listado y $20.000 “por día” en el sistema de reserva.</li>
+    <li><em>Casillero:</em> $85.000 con reserva bimestral (dato de la web actual). Confirmar si el importe es por bimestre.</li>
+    <li><em>Reservas:</em> la web del Cowork tiene calendario y pago online. Por eso las reservas se derivan allá y esta página informa.</li>
+    <li><em>Servicios:</em> la web actual lista 13, incluido el Casillero de notificaciones. Acá el Casillero queda fuera porque ya tiene su card con precio. Ícono Tabler en Icon / Brand, sin contenedor, para que no compita con los títulos. Faltan en la biblioteca: door, volume-off, book (Áreas silenciosas), headset, printer y tree.</li>
+    <li><em>Texto:</em> la web actual dice “fácil acceso y estacionamiento”. Saqué “estacionamiento” hasta confirmarlo.</li>
+    <li><em>Dos direcciones:</em> el Cowork está en Almte. Brown 160 y la sede del Colegio (footer) en Rivadavia 573.</li>
+    <li><em>Mapa:</em> Google Maps incrustado (código provisto por Anto). El visor de artifacts de Claude bloquea iframes de otros sitios, así que ahí puede verse vacío. En el sitio real y en GitHub Pages se ve bien.</li>
+  <li><em>“Desde $12.000 la hora”:</em> texto definido por Anto. La web del Cowork indica $12.000 por media jornada en el listado y por día en el sistema de reserva. Confirmar la unidad antes de publicar. Componente “Lista de oferta” (2×2) es nuevo: si se aprueba, crearlo en la biblioteca.</li>
+  </ol>
+</aside>
+
+<script>
+(function(){
+  /* Notas */
+  var t=document.getElementById('toggle-notes');
+  t.addEventListener('click',function(){
+    var on=document.body.classList.toggle('show-notes');
+    t.setAttribute('aria-pressed',on);
+    t.textContent=on?'Ocultar notas':'Ver notas de diseño';
+  });
+  /* Menú mobile */
+  var m=document.querySelector('.menu-btn'),n=document.getElementById('nav');
+  m.addEventListener('click',function(){
+    var o=n.classList.toggle('open');
+    m.setAttribute('aria-expanded',o);
+    m.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');
+  });
+  /* Anclas */
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.js-anchor').forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var s=document.querySelector(a.getAttribute('href'));
+      s.scrollIntoView({behavior:reduce?'auto':'smooth'});
+      s.focus({preventScroll:true});
+    });
+  });
+  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+
+  /* Carrusel manual, sin autoplay · fotos de comunidadcmcpsi.ar */
+  var photos=[
+    ['puestos-compartidos','Puestos compartidos','Puestos de trabajo compartidos con escritorios y sillas ergonómicas'],
+    ['sala-reuniones','Sala de reuniones','Sala de reuniones con mesa larga y ventanales'],
+    ['sala-firmas','Sala de firmas','Sala de firmas con mesa y sillas'],
+    ['area-descanso','Área de descanso','Área de descanso con mesas redondas y salida al jardín'],
+    ['cafe-kitchenette','Café y kitchenette','Kitchenette con mesas y lámparas colgantes'],
+    ['jardin','Jardín','Jardín al aire libre con árbol y cerco de madera'],
+    ['hall','Hall','Hall con escalera y lucernario'],
+    ['casilleros','Casilleros','Casilleros personales con cerradura']
+  ];
+  var track=document.getElementById('track'),dotsEl=document.getElementById('dots'),cap=document.getElementById('caption');
+  var arrows=document.querySelectorAll('.carousel-arrow'),slides=[],dots=[],i=0;
+  photos.forEach(function(p,k){
+    var s=document.createElement('div');s.className='carousel-slide';s.setAttribute('role','group');
+    s.setAttribute('aria-roledescription','diapositiva');s.setAttribute('aria-label',(k+1)+' de '+photos.length+': '+p[1]);
+    var img=new Image();img.src='assets/cowork-'+p[0]+'.jpg';img.alt=p[2];if(k>0)img.loading='lazy';
+    s.appendChild(img);track.appendChild(s);slides.push(s);
+    var d=document.createElement('button');d.type='button';d.className='carousel-dot';d.setAttribute('aria-label','Foto '+(k+1)+': '+p[1]);
+    d.addEventListener('click',function(){go(k);});dotsEl.appendChild(d);dots.push(d);
+  });
+  function go(k){
+    i=Math.max(0,Math.min(slides.length-1,k));
+    slides.forEach(function(s,j){s.classList.toggle('is-active',j===i);s.setAttribute('aria-hidden',j!==i);});
+    dots.forEach(function(d,j){d.setAttribute('aria-current',j===i?'true':'false');});
+    arrows[0].disabled=i===0;arrows[1].disabled=i===slides.length-1;
+    cap.textContent=photos[i][1]+', '+(i+1)+' de '+photos.length;
+  }
+  arrows.forEach(function(b){b.addEventListener('click',function(){go(i+Number(b.dataset.dir));});});
+  go(0);
+})();
+</script>
+</body>
+</html>

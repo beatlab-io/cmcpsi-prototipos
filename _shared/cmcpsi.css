@@ -249,7 +249,7 @@ legend{font-size:14px;font-weight:500;line-height:20px;margin-bottom:var(--sp-8)
 .is-error .file{border-color:var(--error)}
 
 /* 7. Form / Resumen de errores */
-.err-summary{border:1px solid var(--error);border-left-width:4px;border-radius:var(--r-input);background:var(--error-bg);padding:var(--sp-16) var(--sp-24)}
+.err-summary{border:1px solid var(--error);border-radius:var(--r-input);background:var(--error-bg);padding:var(--sp-16) var(--sp-24)}
 .err-summary h3{font-size:16px;font-weight:600;line-height:24px;color:var(--error);margin-bottom:var(--sp-8)}
 .err-summary p{font-size:14px;line-height:20px;color:var(--text-primary);margin-bottom:var(--sp-8)}
 .err-summary ul{list-style:none;display:grid;gap:4px}
@@ -354,3 +354,15 @@ legend{font-size:14px;font-weight:500;line-height:20px;margin-bottom:var(--sp-8)
 .row2{align-items:end}
 /* Área de texto (input / Área de texto) */
 textarea.control{height:auto;min-height:168px;padding:12px var(--inset);resize:vertical}
+/* Select con el diseño del sistema (reemplaza la lista nativa). Ver _shared/select.js. Referencia: Figma _input / Dropdown */
+.select-wrap.cs .cs-native{position:absolute;inset:0;opacity:0;pointer-events:none}
+.cs-btn{display:flex;align-items:center;text-align:left;cursor:pointer;padding-right:44px}
+.cs-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cs-value.is-placeholder{color:var(--text-secondary)}
+.cs-list{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:40;margin:0;padding:4px;list-style:none;background:var(--bg-default);border:1px solid var(--border-default);border-radius:var(--r-input);box-shadow:0 4px 16px rgba(15,26,36,.08);max-height:296px;overflow:auto}
+.cs-up .cs-list{top:auto;bottom:calc(100% + 8px)}
+.cs-list li{display:flex;align-items:center;min-height:44px;padding:10px 12px;border-radius:6px;font-size:16px;font-weight:400;line-height:24px;letter-spacing:0;color:var(--text-primary);cursor:pointer}
+.cs-list li .icon{display:none}
+.cs-list li.is-active{background:var(--bg-subtle)}
+.cs-list li[aria-selected="true"]{background:var(--bg-input-soft);color:var(--brand-primary)}
+.cs-list li[aria-selected="true"].is-active{background:var(--bg-institutional-panel)}

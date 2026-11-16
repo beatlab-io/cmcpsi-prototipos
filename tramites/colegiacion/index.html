@@ -1009,6 +1009,7 @@ select.control:invalid{color:var(--text-muted)}
   document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();toast.textContent='Esta sección no forma parte del prototipo';toast.style.opacity='1';clearTimeout(tt);tt=setTimeout(function(){toast.style.opacity='0';},2200);});});
   var l=document.querySelector('link[href$="_shared/cmcpsi.css"]');
   if(l&&document.querySelector('section.view')){var sc=document.createElement('script');sc.src=l.getAttribute('href').replace('cmcpsi.css','proto-nav.js');document.body.appendChild(sc);}
+  if(l&&document.querySelector('.select-wrap select')){var ss=document.createElement('script');ss.src=l.getAttribute('href').replace('cmcpsi.css','select.js');document.body.appendChild(ss);}
 })();
 var TR={colegiacion:'Solicitud de colegiación',pasividad:'Alta de pasividad',suspension:'Alta de suspensión',traslado:'Traslado de otro Colegio'};
 var tr=(new URLSearchParams(location.search).get('tramite')||'colegiacion').toLowerCase(); if(!TR[tr])tr='colegiacion';

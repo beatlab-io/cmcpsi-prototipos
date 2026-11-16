@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Turnos de Fiscalización, prototipo CMCPSI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/cmcpsi.css">
+<style>
+.layout{display:grid;grid-template-columns:minmax(0,640px) minmax(0,1fr);gap:var(--sp-64);align-items:start}
+.facts{list-style:none;display:grid;gap:var(--sp-12);margin:var(--sp-24) 0 0}
+.facts li{display:flex;gap:var(--sp-12);align-items:center;font-size:15px;line-height:22px}
+.facts .icon{color:var(--icon-brand)}
+.form-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-32);display:flex;flex-direction:column;gap:var(--sp-24)}
+.form-card h2{font-size:20px;font-weight:600;line-height:28px}
+.form-card .req-note{font-size:14px;color:var(--text-secondary);margin-top:calc(-1*var(--sp-16))}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+.aside{background:var(--bg-institutional-panel);border-radius:var(--r-large);padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-16);position:sticky;top:var(--sp-24)}
+.aside h2{font-size:16px;font-weight:600;line-height:24px}
+.aside ol{padding-left:20px;display:grid;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-secondary)}
+.aside p{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.aside a{color:var(--brand-primary);font-weight:500}
+.step-mini{font-size:14px;line-height:20px;color:var(--text-secondary);margin-bottom:var(--sp-8)}
+.step-mini strong{color:var(--text-primary);font-weight:600}
+.done-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-40);text-align:left;display:flex;flex-direction:column;gap:var(--sp-16);max-width:640px}
+.done-icon{width:56px;height:56px;border-radius:var(--r-full);background:var(--success-bg);color:var(--success);display:inline-flex;align-items:center;justify-content:center}
+.done-icon .icon{width:30px;height:30px}
+.done-card h1{font-size:32px;line-height:40px;font-weight:600}
+.done-card p{font-size:16px;line-height:24px;color:var(--text-secondary)}
+.done-card p strong{color:var(--text-primary);font-weight:600}
+.view[hidden]{display:none}
+.is-error .control{border-color:var(--error)}
+@media (max-width:960px){.layout{grid-template-columns:1fr;gap:var(--sp-32)}.aside{position:static}}
+@media (max-width:640px){.row2{grid-template-columns:1fr}.form-card{padding:var(--sp-24) var(--sp-16)}.done-card{padding:var(--sp-24)}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M5 12l6 6"/><path d="M5 12l6-6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M9 12l2 2l4-4"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 7v5l3 3"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol></defs></svg><div class="proto-bar" role="note">
+  <div class="container">
+    <span><strong>Prototipo de diseño, Turnos de Fiscalización v0.1.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
+    <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <div class="hdr-top">
+      <a href="#" class="logo" aria-label="CMCPSI, ir al inicio"><img src="../../_shared/logo-cmcpsi.png" alt="CMCPSI, Colegio de Martilleros y Corredores Públicos de San Isidro"></a>
+      <label class="hdr-search">
+        <svg class="icon icon-sm" aria-hidden="true"><use href="#i-search"/></svg>
+        <span class="sr-only">Buscar en el sitio</span>
+        <input type="search" placeholder="Buscar trámites, valores, noticias o recursos">
+      </label>
+      <div class="hdr-actions">
+        <a href="#" class="link link-inline">Iniciar sesión</a>
+        <a href="#" class="btn btn-primary">Consultar padrón</a>
+      </div>
+      <div class="hdr-mobile-actions mobile-only">
+        <button class="icon-btn" type="button" aria-label="Buscar"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+        <button class="icon-btn menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="../../tramites/" aria-current="page">Trámites</a>
+      <a href="#">Colegiados</a>
+      <a href="#">Comunidad</a>
+      <a href="#">Actualidad</a>
+      <a href="#">El Colegio</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="#">Inicio</a></li><li><a href="../">Trámites</a></li><li aria-current="page">Turnos de Fiscalización</li></ol></nav>
+
+    <div class="layout">
+      <div>
+        <!-- VISTA 1 · Formulario -->
+        <section class="view" id="v-form" aria-labelledby="t-form">
+          <div class="page-head" style="margin-bottom:var(--sp-32)">
+            <h1 class="t-h1" id="t-form" tabindex="-1">Pedí un turno de Fiscalización</h1>
+            <p class="t-lead">Atención personalizada con el área de Fiscalización del Colegio.</p>
+            <ul class="facts">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Te respondemos dentro de los 3 días hábiles.</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Te llega una copia de la solicitud por email.<span class="note-pin">1</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Son 6 datos y no hace falta adjuntar archivos.</li>
+            </ul>
+          </div>
+
+          <div class="err-summary" id="err-summary" role="alert" tabindex="-1" hidden>
+            <h3>Revisá <span id="err-count"></span> para continuar</h3>
+            <ul id="err-list"></ul>
+          </div>
+
+          <form class="form-card" id="form" novalidate>
+            <p class="step-mini"><strong>Paso 1 de 2</strong>, tus datos</p>
+            <h2 style="margin-top:calc(-1*var(--sp-16))">Datos del colegiado</h2>
+            <p class="req-note">Todos los campos son obligatorios.<span class="note-pin">2</span></p>
+            <div class="row2">
+        <div class="field" id="f-nombre">
+          <label class="label" for="nombre">Nombre</label>
+          
+          <p class="error-msg" id="nombre-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+          <input class="control" id="nombre" name="nombre" type="text" autocomplete="given-name" aria-describedby="nombre-err" required>
+        </div>
+        <div class="field" id="f-apellido">
+          <label class="label" for="apellido">Apellido</label>
+          
+          <p class="error-msg" id="apellido-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+          <input class="control" id="apellido" name="apellido" type="text" autocomplete="family-name" aria-describedby="apellido-err" required>
+        </div>
+            </div>
+        <div class="field" id="f-matricula">
+          <label class="label" for="matricula">Número de matrícula</label>
+          
+          <p class="error-msg" id="matricula-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+          <input class="control" id="matricula" name="matricula" type="text" autocomplete="off" aria-describedby="matricula-err" required>
+        </div>
+        <div class="field" id="f-celular">
+          <label class="label" for="celular">Celular</label>
+          <p class="help" id="celular-help">Con código de área, sin el 0 ni el 15. Por ejemplo, 11 2345 6789.</p>
+          <p class="error-msg" id="celular-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+          <input class="control" id="celular" name="celular" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="celular-help celular-err" required>
+        </div>
+        <div class="field" id="f-email">
+          <label class="label" for="email">Email</label>
+          <p class="help" id="email-help">Te enviamos ahí la respuesta y la copia de tu solicitud.</p>
+          <p class="error-msg" id="email-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+          <input class="control" id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="email-help email-err" required>
+        </div>
+            <fieldset class="field" id="f-motivo">
+              <legend>Motivo del turno</legend>
+              <p class="error-msg" id="motivo-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="options" aria-describedby="motivo-err">
+                <label class="option"><input type="radio" name="motivo" value="Actualización de datos"><span class="dot"></span><span class="txt">Actualización de datos</span></label>
+                <label class="option"><input type="radio" name="motivo" value="Consulta"><span class="dot"></span><span class="txt">Consulta</span></label>
+              </div>
+            </fieldset>
+            <div class="actions">
+              <span class="spacer"></span>
+              <button type="submit" class="btn btn-primary">Continuar</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- VISTA 2 · Revisión -->
+        <section class="view" id="v-review" aria-labelledby="t-review" hidden>
+          <div class="page-head" style="margin-bottom:var(--sp-32)">
+            <p class="step-mini"><strong>Paso 2 de 2</strong>, revisá y enviá</p>
+            <h1 class="t-h1" id="t-review" tabindex="-1">Revisá tus datos</h1>
+            <p class="t-lead">Si algo no está bien, cambialo antes de enviar.</p>
+          </div>
+          <div class="review">
+            <div class="review-head"><h3>Datos del colegiado</h3><a class="link" href="#" data-edit="nombre">Cambiar<span class="sr-only"> datos del colegiado</span></a></div>
+            <dl id="review-list"></dl>
+          </div>
+          <div class="actions" style="border-top:0">
+            <button type="button" class="btn btn-secondary" data-edit="nombre"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Volver</button>
+            <span class="spacer"></span>
+            <button type="button" class="btn btn-primary" id="send">Enviar solicitud</button>
+          </div>
+        </section>
+
+        <!-- VISTA 3 · Confirmación -->
+        <section class="view" id="v-done" aria-labelledby="t-done" hidden>
+          <div class="done-card">
+            <span class="done-icon"><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg></span>
+            <h1 id="t-done" tabindex="-1">Recibimos tu solicitud de turno</h1>
+            <p>Te vamos a responder dentro de los 3 días hábiles a <strong id="done-email"></strong>.</p>
+            <p>También te enviamos una copia de la solicitud a ese email. Si no la ves, revisá la carpeta de spam.<span class="note-pin">3</span></p>
+            <p>Si tenés dudas, escribí a <a class="link link-inline" href="mailto:fiscalizacion@cmcpsi.org.ar">fiscalizacion@cmcpsi.org.ar</a>.</p>
+            <div><a class="btn btn-secondary" href="../">Volver a Trámites</a></div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="aside" aria-label="Cómo sigue">
+        <h2>Cómo sigue</h2>
+        <ol>
+          <li>Completás tus datos y el motivo.</li>
+          <li>Fiscalización revisa la solicitud.</li>
+          <li>Te escribimos al email para coordinar el turno.<span class="note-pin">4</span></li>
+        </ol>
+        <p>¿Tenés una consulta rápida? Escribí a <a href="mailto:fiscalizacion@cmcpsi.org.ar">fiscalizacion@cmcpsi.org.ar</a>.</p>
+      </aside>
+    </div>
+  </div>
+<footer class="site-footer after-content">
+  <div class="container">
+    <div class="ftr-grid">
+      <div class="ftr-brand">
+        <img src="../../_shared/logo-cmcpsi.png" alt="CMCPSI">
+        <p>Colegio de Martilleros y Corredores Públicos del Departamento Judicial de San Isidro.</p>
+        <p>Rivadavia 573 - San Isidro, Buenos Aires<br><a href="mailto:colegio@cmcpsi.org.ar">colegio@cmcpsi.org.ar</a></p>
+      </div>
+      <div class="ftr-col"><h2>Accesos rápidos</h2><ul><li><a href="#">Consultar padrón</a></li><li><a href="../../tramites/">Trámites</a></li><li><a href="#">Valores y vencimientos</a></li><li><a href="#">Beneficios</a></li><li><a href="#">Calculadora</a></li></ul></div>
+      <div class="ftr-col"><h2>Información</h2><ul><li><a href="#">El Colegio</a></li><li><a href="#">Consejo Directivo</a></li><li><a href="#">Actualidad</a></li><li><a href="#">Capacitaciones</a></li><li><a href="#">Contacto</a></li></ul></div>
+      <div class="ftr-col ftr-legal"><h2>Legal</h2><ul><li><a href="#">Ley 10.973</a></li><li><a href="#">Código de Ética</a></li><li><a href="#">Términos y privacidad</a></li></ul>
+        <h2 style="margin-top:var(--sp-24)">Redes sociales</h2>
+        <div class="ftr-social"><a href="#" aria-label="Instagram del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a><a href="#" aria-label="WhatsApp del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg></a></div>
+      </div>
+    </div>
+    <p class="ftr-bottom">© 2026 Colegio de Martilleros y Corredores Públicos de San Isidro.</p>
+  </div>
+</footer>
+</main>
+<aside class="notes-panel" aria-label="Notas de diseño">
+  <header>Notas de diseño, Turnos v0.1</header>
+  <ol>
+    <li><em>Copia por email:</em> el Colegio pidió que el mail llegue a fiscalizacion@cmcpsi.org.ar y a quien pide el turno. El envío lo hace el servidor; en el prototipo está simulado.</li>
+    <li><em>Todos obligatorios:</em> se aclara una vez arriba, en lugar de poner un asterisco en cada campo. Confirmar que ningún dato sea opcional.</li>
+    <li><em>Confirmación:</em> el Colegio no mandó un texto para esta pantalla. Es una propuesta basada en lo que sí está definido (3 días hábiles y la copia por email).</li>
+    <li><em>“Cómo sigue”:</em> el paso 3 supone que el turno se coordina por email. Confirmar con Fiscalización cómo se asigna el turno.</li>
+    <li><em>Accesibilidad:</em> etiquetas visibles, autocomplete en nombre, apellido, celular y email, validación al continuar (no mientras se escribe), resumen de errores con enlaces a cada campo, datos conservados y foco en el título de cada pantalla.</li>
+    <li><em>Panel admin:</em> exportar a Excel por rango de fechas y los mails van en el panel y el servidor. Ver el pedido para Flor.</li>
+  </ol>
+</aside>
+<script>
+(function(){
+  var t=document.getElementById('toggle-notes');
+  t.addEventListener('click',function(){var on=document.body.classList.toggle('show-notes');t.setAttribute('aria-pressed',on);t.textContent=on?'Ocultar notas':'Ver notas de diseño';});
+  var m=document.querySelector('.menu-btn'),n=document.getElementById('nav');
+  m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o);m.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
+  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+})();
+(function(){
+  var form=document.getElementById('form'),sum=document.getElementById('err-summary'),list=document.getElementById('err-list'),cnt=document.getElementById('err-count');
+  var views={form:document.getElementById('v-form'),review:document.getElementById('v-review'),done:document.getElementById('v-done')};
+  var labels={nombre:'Nombre',apellido:'Apellido',matricula:'Número de matrícula',celular:'Celular',email:'Email',motivo:'Motivo del turno'};
+  var tried=false;
+  function val(id){if(id==='motivo'){var r=form.querySelector('input[name=motivo]:checked');return r?r.value:'';}return form[id].value.trim();}
+  function check(id){
+    var v=val(id);
+    if(!v) return {nombre:'Ingresá tu nombre',apellido:'Ingresá tu apellido',matricula:'Ingresá tu número de matrícula',celular:'Ingresá tu celular',email:'Ingresá tu email',motivo:'Elegí el motivo del turno'}[id];
+    if(id==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'Ingresá un email con el formato nombre@ejemplo.com';
+    if(id==='celular'&&v.replace(/\D/g,'').length<8) return 'Ingresá el celular con código de área, por ejemplo 11 2345 6789';
+    return '';
+  }
+  function show(id,msg){
+    var f=document.getElementById('f-'+id),e=document.getElementById(id+'-err');
+    f.classList.toggle('is-error',!!msg);e.hidden=!msg;e.querySelector('span').textContent=msg||'';
+    var inp=id==='motivo'?null:form[id]; if(inp) inp.setAttribute('aria-invalid',msg?'true':'false');
+  }
+  function validate(){
+    var errs=[];Object.keys(labels).forEach(function(id){var m=check(id);show(id,m);if(m)errs.push([id,m]);});return errs;
+  }
+  Object.keys(labels).forEach(function(id){
+    var els=id==='motivo'?form.querySelectorAll('input[name=motivo]'):[form[id]];
+    els.forEach(function(el){el.addEventListener(id==='motivo'?'change':'blur',function(){if(tried){show(id,check(id));refresh();}});});
+  });
+  function refresh(){var e=validate();if(!e.length){sum.hidden=true;}else{render(e);}}
+  function render(errs){
+    list.innerHTML='';cnt.textContent=errs.length===1?'1 dato':errs.length+' datos';
+    errs.forEach(function(x){var li=document.createElement('li'),a=document.createElement('a');a.href='#'+(x[0]==='motivo'?'f-motivo':x[0]);a.textContent=x[1];
+      a.addEventListener('click',function(ev){ev.preventDefault();var t=x[0]==='motivo'?form.querySelector('input[name=motivo]'):form[x[0]];t.focus();t.scrollIntoView({block:'center'});});li.appendChild(a);list.appendChild(li);});
+    sum.hidden=false;
+  }
+  function go(name){Object.keys(views).forEach(function(k){views[k].hidden=k!==name;});var h=views[name].querySelector('h1');window.scrollTo(0,0);h.focus();}
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();tried=true;var errs=validate();
+    if(errs.length){render(errs);sum.focus();return;}
+    sum.hidden=true;
+    var dl=document.getElementById('review-list');dl.innerHTML='';
+    [['Nombre y apellido',val('nombre')+' '+val('apellido')],['Número de matrícula',val('matricula')],['Celular',val('celular')],['Email',val('email')],['Motivo del turno',val('motivo')]].forEach(function(r){
+      var dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=r[0];dd.textContent=r[1];dl.appendChild(dt);dl.appendChild(dd);});
+    go('review');
+  });
+  document.querySelectorAll('[data-edit]').forEach(function(b){b.addEventListener('click',function(ev){ev.preventDefault();go('form');form[b.dataset.edit].focus();});});
+  document.getElementById('send').addEventListener('click',function(){document.getElementById('done-email').textContent=val('email');document.querySelector('.aside').hidden=true;go('done');});
+})();
+</script>
+</body>
+</html>

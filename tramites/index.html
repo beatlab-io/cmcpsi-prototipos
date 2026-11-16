@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Trámites, prototipo CMCPSI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_shared/cmcpsi.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0"/><path d="M16 19h6"/><path d="M19 16v6"/><path d="M6 21v-2a4 4 0 0 1 4-4h4"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06"/><path d="M15 19l2 2l4-4"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M10 9v6"/><path d="M14 9v6"/></symbol><symbol id="i-exchange" viewBox="0 0 24 24"><path d="M7 10h14l-4-4"/><path d="M17 14H3l4 4"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></symbol><symbol id="i-report" viewBox="0 0 24 24"><path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-5l-5 3v-3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h12z"/></symbol><symbol id="i-stamp" viewBox="0 0 24 24"><path d="M21 17.85h-18c0-1.66 1.34-3 3-3h3.43c.86 0 1.32-1.01.77-1.67a6.4 6.4 0 0 1-1.48-4.33c0-3.04 2.18-5.62 5.17-5.85a5.84 5.84 0 0 1 6.28 5.85c0 1.43-.52 2.74-1.38 3.75c-.6.7-.13 1.75.79 1.75h.42c1.66 0 3 1.34 3 3z"/><path d="M5 21h14"/></symbol></defs></svg><div class="proto-bar" role="note">
+  <div class="container">
+    <span><strong>Prototipo de diseño, Trámites v0.1.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
+    <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <div class="hdr-top">
+      <a href="#" class="logo" aria-label="CMCPSI, ir al inicio"><img src="../_shared/logo-cmcpsi.png" alt="CMCPSI, Colegio de Martilleros y Corredores Públicos de San Isidro"></a>
+      <label class="hdr-search">
+        <svg class="icon icon-sm" aria-hidden="true"><use href="#i-search"/></svg>
+        <span class="sr-only">Buscar en el sitio</span>
+        <input type="search" placeholder="Buscar trámites, valores, noticias o recursos">
+      </label>
+      <div class="hdr-actions">
+        <a href="#" class="link link-inline">Iniciar sesión</a>
+        <a href="#" class="btn btn-primary">Consultar padrón</a>
+      </div>
+      <div class="hdr-mobile-actions mobile-only">
+        <button class="icon-btn" type="button" aria-label="Buscar"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+        <button class="icon-btn menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="../tramites/" aria-current="page">Trámites</a>
+      <a href="#">Colegiados</a>
+      <a href="#">Comunidad</a>
+      <a href="#">Actualidad</a>
+      <a href="#">El Colegio</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="#">Inicio</a></li><li aria-current="page">Trámites</li></ol></nav>
+
+    <div class="page-head">
+      <h1 class="t-h1">Trámites</h1>
+      <p class="t-lead">Iniciá tus gestiones con el Colegio. Antes de empezar, revisá qué necesitás tener a mano.<span class="note-pin">1</span></p>
+    </div>
+
+    <section class="group" aria-labelledby="g1">
+      <h2 id="g1">Gestiones frecuentes</h2>
+      <div class="cards">
+      <article class="qcard">
+        <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#i-user-plus"/></svg></span>
+        <h3><a href="#">Matriculación</a></h3>
+        <p>Pre-solicitud de colegiación. El Colegio la revisa y te contacta cuando termina la fiscalización.</p>
+        <div class="tags"><span class="badge">Formulario online</span></div>
+      </article>
+      <article class="qcard">
+        <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></span>
+        <h3><a href="#">Fianza</a></h3>
+        <p>Presentá la póliza del seguro de caución a favor del Colegio.</p>
+        <div class="tags"><span class="badge">Formulario online</span></div>
+      </article>
+      <article class="qcard">
+        <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#i-pause"/></svg></span>
+        <h3><a href="#">Pasividad y suspensión</a></h3>
+        <p>Alta de pasividad o de suspensión. Se hace en tres etapas, una de ellas presencial.</p>
+        <div class="tags"><span class="badge">Formulario online</span><span class="badge neutral">En 3 etapas</span></div>
+      </article>
+      <article class="qcard">
+        <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#i-exchange"/></svg></span>
+        <h3><a href="#">Traslado de legajo</a></h3>
+        <p>Si venís de otro Colegio de Martilleros y Corredores Públicos.</p>
+        <div class="tags"><span class="badge">Formulario online</span></div>
+      </article>
+      </div>
+    </section>
+
+    <section class="group" aria-labelledby="g2">
+      <h2 id="g2">Certificaciones y fiscalización</h2>
+      <div class="cards">
+      <article class="qcard">
+        <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg></span>
+        <h3><a href="turnos-fiscalizacion/">Turnos de Fiscalización</a></h3>
+        <p>Pedí un turno de atención con el área de Fiscalización. Respondemos dentro de los 3 días hábiles.</p>
+        <div class="tags"><span class="badge">Formulario online</span></div>
+      </article>
+      <article class="qcard">
+        <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#i-report"/></svg></span>
+        <h3><a href="#">Denuncias</a></h3>
+        <p>Denuncia contra un colegiado o ante Fiscalización, con identificación o anónima.</p>
+        <div class="tags"><span class="badge">Formulario online</span></div>
+      </article>
+      <article class="qcard">
+        <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#i-stamp"/></svg></span>
+        <h3><a href="#">Sellados y certificaciones</a></h3>
+        
+        <div class="tags"><span class="badge neutral">Información</span></div>
+      </article>
+      </div>
+    </section>
+
+    <section class="group" aria-labelledby="g3">
+      <h2 id="g3">Antes de iniciar<span class="note-pin">2</span></h2>
+      <ul class="link-list">
+        <li><a href="#">Requisitos y documentación <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></li>
+        <li><a href="#">Información para iniciar <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></li>
+        <li><a href="#">Preguntas frecuentes <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></a></li>
+      </ul>
+    </section>
+  </div>
+<footer class="site-footer after-content">
+  <div class="container">
+    <div class="ftr-grid">
+      <div class="ftr-brand">
+        <img src="../_shared/logo-cmcpsi.png" alt="CMCPSI">
+        <p>Colegio de Martilleros y Corredores Públicos del Departamento Judicial de San Isidro.</p>
+        <p>Rivadavia 573 - San Isidro, Buenos Aires<br><a href="mailto:colegio@cmcpsi.org.ar">colegio@cmcpsi.org.ar</a></p>
+      </div>
+      <div class="ftr-col"><h2>Accesos rápidos</h2><ul><li><a href="#">Consultar padrón</a></li><li><a href="../tramites/">Trámites</a></li><li><a href="#">Valores y vencimientos</a></li><li><a href="#">Beneficios</a></li><li><a href="#">Calculadora</a></li></ul></div>
+      <div class="ftr-col"><h2>Información</h2><ul><li><a href="#">El Colegio</a></li><li><a href="#">Consejo Directivo</a></li><li><a href="#">Actualidad</a></li><li><a href="#">Capacitaciones</a></li><li><a href="#">Contacto</a></li></ul></div>
+      <div class="ftr-col ftr-legal"><h2>Legal</h2><ul><li><a href="#">Ley 10.973</a></li><li><a href="#">Código de Ética</a></li><li><a href="#">Términos y privacidad</a></li></ul>
+        <h2 style="margin-top:var(--sp-24)">Redes sociales</h2>
+        <div class="ftr-social"><a href="#" aria-label="Instagram del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a><a href="#" aria-label="WhatsApp del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg></a></div>
+      </div>
+    </div>
+    <p class="ftr-bottom">© 2026 Colegio de Martilleros y Corredores Públicos de San Isidro.</p>
+  </div>
+</footer>
+</main>
+<aside class="notes-panel" aria-label="Notas de diseño">
+  <header>Notas de diseño, Trámites v0.1</header>
+  <ol>
+    <li><em>Estructura:</em> los grupos y trámites siguen la arquitectura aprobada (Gestiones frecuentes, Certificaciones y fiscalización, Antes de iniciar). “Todos los trámites” es esta misma página.</li>
+    <li><em>Antes de iniciar:</em> va al final como apoyo, pero cada trámite tiene su propia página con “Qué vas a necesitar”, así no hay que salir del recorrido.</li>
+    <li><em>Tarjetas:</em> patrón Card / Quick Action de Accesos principales. Toda la tarjeta es clickeable y el foco de teclado rodea la tarjeta completa.</li>
+    <li><em>Descripciones:</em> salen del material del Colegio. “Sellados y certificaciones” no tiene descripción porque no hay material todavía.</li>
+    <li><em>Prototipo:</em> por ahora solo Turnos de Fiscalización está armado. Los demás enlaces no llevan a ninguna página.</li>
+  </ol>
+</aside>
+<script>
+(function(){
+  var t=document.getElementById('toggle-notes');
+  t.addEventListener('click',function(){var on=document.body.classList.toggle('show-notes');t.setAttribute('aria-pressed',on);t.textContent=on?'Ocultar notas':'Ver notas de diseño';});
+  var m=document.querySelector('.menu-btn'),n=document.getElementById('nav');
+  m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o);m.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
+  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+})();
+</script>
+</body>
+</html>

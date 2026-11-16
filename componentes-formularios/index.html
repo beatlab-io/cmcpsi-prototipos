@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CMCPSI, componentes de formulario v0.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Tokens del archivo Figma "Web CMCPSI": CMCPSI / Primitives, Semantic y Foundations.
+   Estilos de texto de formulario: CMCPSI/Inputs/Etiqueta (Medium 14), Valor (Regular 16),
+   Ayuda (Regular 14), Acción (Medium 12). Radius / Input 10, Spacing / Input Inset 14. */
+:root{
+  --brand-primary:#13579b;--brand-primary-hover:#09447f;--brand-dark:#15355c;
+  --text-primary:#0f1a24;--text-secondary:#5c6470;--text-muted:#7a8794;--text-on-brand:#fff;
+  --bg-default:#fff;--bg-subtle:#f6f8fa;--bg-brand-soft:#deeaf7;--bg-input-soft:#f4f9fd;--bg-institutional-panel:#f0f6fb;
+  --border-default:#d5e1eb;--border-subtle:#eef1f5;--border-input-hover:#a5bdd0;
+  --success:#0e7a46;--success-bg:#e4f5ec;--error:#b42318;--error-bg:#fef3f2;
+  --disabled-bg:#f9fafb;--disabled-text:#9da6b4;--focus-ring:#1c82db;
+  --sp-4:4px;--sp-8:8px;--sp-12:12px;--sp-16:16px;--sp-24:24px;--sp-32:32px;--sp-40:40px;--sp-48:48px;--sp-64:64px;
+  --r-small:4px;--r-medium:8px;--r-input:10px;--r-large:16px;--r-full:999px;--inset:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--text-primary);background:var(--bg-subtle);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:var(--sp-48) var(--sp-40) var(--sp-64)}
+.icon{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Página de documentación (fuera del sistema) ---------- */
+.doc-head h1{font-size:32px;font-weight:600;line-height:40px;margin-bottom:var(--sp-8)}
+.doc-head p{color:var(--text-secondary);max-width:760px;line-height:24px}
+.doc-status{display:inline-block;margin-top:var(--sp-16);font-size:12px;font-weight:500;letter-spacing:.2px;text-transform:uppercase;color:#8a5a00;background:#fff3cd;border-radius:var(--r-full);padding:4px 10px}
+.comp{background:var(--bg-default);border-radius:var(--r-large);padding:var(--sp-32);margin-top:var(--sp-32)}
+.comp-head{display:flex;justify-content:space-between;gap:var(--sp-16);align-items:baseline;flex-wrap:wrap;margin-bottom:var(--sp-8)}
+.comp h2{font-size:20px;font-weight:600;line-height:28px}
+.comp-name{font-size:12px;font-weight:500;color:var(--brand-primary);background:var(--bg-institutional-panel);border-radius:var(--r-small);padding:3px 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.comp-use{color:var(--text-secondary);font-size:14px;line-height:20px;max-width:820px;margin-bottom:var(--sp-24)}
+.comp-use strong{color:var(--text-primary);font-weight:600}
+.states{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-24)}
+.state-label{font-size:12px;color:var(--text-muted);margin-bottom:var(--sp-8)}
+.spec{margin-top:var(--sp-24);border-top:1px solid var(--border-subtle);padding-top:var(--sp-16);font-size:13px;line-height:20px;color:var(--text-secondary)}
+.spec li{margin-left:18px}
+.toc{margin-top:var(--sp-24);display:flex;flex-wrap:wrap;gap:var(--sp-8)}
+.toc a{font-size:13px;font-weight:500;color:var(--brand-primary);background:var(--bg-default);border:1px solid var(--border-default);border-radius:var(--r-full);padding:6px 12px;text-decoration:none}
+.toc a:hover{background:var(--bg-brand-soft)}
+
+/* ====================== COMPONENTES ====================== */
+
+/* Field base (existente: input) */
+.field{display:flex;flex-direction:column;gap:var(--sp-8)}
+.label{font-size:14px;font-weight:500;line-height:20px}
+.label .req{color:var(--error)}
+.label .opt{color:var(--text-muted);font-weight:400}
+.help{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.error-msg{display:flex;gap:6px;align-items:flex-start;font-size:14px;line-height:20px;color:var(--error)}
+.error-msg .icon{width:18px;height:18px;margin-top:1px}
+.control{height:48px;border:1px solid var(--border-default);border-radius:var(--r-input);background:var(--bg-default);padding:0 var(--inset);font-size:16px;width:100%;transition:border-color .15s,box-shadow .15s,background .15s}
+.control:hover,.is-hover .control{border-color:var(--border-input-hover)}
+.control:focus,.is-focus .control{outline:0;border-color:var(--brand-primary);box-shadow:0 0 0 1px var(--brand-primary);background:var(--bg-input-soft)}
+.is-error .control{border-color:var(--error)}
+.is-error .control:focus{box-shadow:0 0 0 1px var(--error)}
+.control:disabled{background:var(--disabled-bg);border-color:var(--border-subtle);color:var(--disabled-text)}
+
+/* 1. Form / Stepper */
+.stepper{list-style:none;display:flex;gap:var(--sp-8)}
+.stepper li{flex:1;display:flex;flex-direction:column;gap:var(--sp-8)}
+.stepper .bar{height:4px;border-radius:var(--r-full);background:var(--border-default)}
+.stepper .meta{display:flex;gap:var(--sp-8);align-items:center;font-size:14px;line-height:20px;color:var(--text-muted)}
+.stepper .num{width:24px;height:24px;border-radius:var(--r-full);border:1px solid var(--border-default);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none}
+.stepper .done .bar{background:var(--brand-primary)}
+.stepper .done .num{background:var(--brand-primary);border-color:var(--brand-primary);color:#fff}
+.stepper .done .meta{color:var(--text-secondary)}
+.stepper .current .bar{background:var(--brand-primary)}
+.stepper .current .num{border:2px solid var(--brand-primary);color:var(--brand-primary)}
+.stepper .current .meta{color:var(--text-primary);font-weight:600}
+.stepper-mobile{display:flex;flex-direction:column;gap:var(--sp-8);max-width:358px}
+.stepper-mobile .top{display:flex;justify-content:space-between;font-size:14px;line-height:20px}
+.stepper-mobile .top span:first-child{font-weight:600}
+.stepper-mobile .top span:last-child{color:var(--text-secondary)}
+.stepper-mobile .track{height:4px;border-radius:var(--r-full);background:var(--border-default);overflow:hidden}
+.stepper-mobile .track i{display:block;height:100%;background:var(--brand-primary);border-radius:var(--r-full)}
+.stepper-mobile .next{font-size:12px;line-height:16px;color:var(--text-muted)}
+
+/* 2. Input / Radio group (opciones en caja, como Sí o No) */
+fieldset{border:0;min-width:0}
+legend{font-size:14px;font-weight:500;line-height:20px;margin-bottom:var(--sp-8)}
+.options{display:flex;flex-direction:column;gap:var(--sp-8)}
+.option{position:relative;display:flex;gap:var(--sp-12);align-items:flex-start;border:1px solid var(--border-default);border-radius:var(--r-input);padding:var(--inset);cursor:pointer;background:var(--bg-default);transition:border-color .15s,background .15s}
+.option:hover{border-color:var(--border-input-hover)}
+.option input{position:absolute;opacity:0;width:1px;height:1px}
+.option .dot{width:20px;height:20px;border-radius:var(--r-full);border:1.5px solid var(--border-input-hover);flex:none;margin-top:2px;display:inline-flex;align-items:center;justify-content:center;background:#fff;transition:border-color .15s}
+.option .dot::after{content:"";width:10px;height:10px;border-radius:var(--r-full);background:var(--brand-primary);transform:scale(0);transition:transform .15s}
+.option .txt{display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:24px}
+.option .txt small{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.option:has(input:checked){border-color:var(--brand-primary);box-shadow:0 0 0 1px var(--brand-primary);background:var(--bg-input-soft)}
+.option:has(input:checked) .dot{border-color:var(--brand-primary)}
+.option:has(input:checked) .dot::after{transform:scale(1)}
+.option:has(input:focus-visible){outline:2px solid var(--focus-ring);outline-offset:3px}
+.option:has(input:disabled){background:var(--disabled-bg);border-color:var(--border-subtle);color:var(--disabled-text);cursor:default}
+.option:has(input:disabled) .txt small{color:var(--disabled-text)}
+.is-error .option{border-color:var(--error)}
+.options.row{flex-direction:row}
+.options.row .option{flex:1}
+
+/* 3. Input / Checkbox */
+.check{display:flex;gap:var(--sp-12);align-items:flex-start;cursor:pointer;font-size:16px;line-height:24px}
+.check input{position:absolute;opacity:0;width:1px;height:1px}
+.check .box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border-input-hover);flex:none;margin-top:2px;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#fff;transition:background .15s,border-color .15s}
+.check .box svg{width:14px;height:14px;stroke-width:3;opacity:0}
+.check:hover .box{border-color:var(--brand-primary)}
+.check input:checked + .box{background:var(--brand-primary);border-color:var(--brand-primary)}
+.check input:checked + .box svg{opacity:1}
+.check input:focus-visible + .box{outline:2px solid var(--focus-ring);outline-offset:3px}
+.check input:disabled + .box{background:var(--disabled-bg);border-color:var(--border-subtle)}
+.check:has(input:disabled){color:var(--disabled-text);cursor:default}
+.is-error .check .box{border-color:var(--error)}
+.check a{color:var(--brand-primary);font-weight:500}
+
+/* 4. Input / Fecha (día, mes, año) */
+.date{display:flex;gap:var(--sp-12)}
+.date .part{display:flex;flex-direction:column;gap:4px}
+.date .part span{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.date .d .control,.date .m .control{width:64px;text-align:center;padding:0 8px}
+.date .y .control{width:88px;text-align:center;padding:0 8px}
+
+/* 5. Form / Grupo repetible */
+.repeat{display:flex;flex-direction:column;gap:var(--sp-12)}
+.repeat-item{display:flex;gap:var(--sp-12);align-items:flex-end}
+.repeat-item .field{flex:1}
+.repeat-item.card{flex-direction:column;align-items:stretch;border:1px solid var(--border-default);border-radius:var(--r-input);padding:var(--sp-16);gap:var(--sp-12)}
+.repeat-item.card .card-head{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600}
+.btn-remove{background:none;border:0;color:var(--brand-primary);font-size:14px;font-weight:600;height:48px;padding:0 var(--sp-8);border-radius:var(--r-medium);cursor:pointer}
+.card .btn-remove{height:32px}
+.btn-remove:hover{color:var(--brand-primary-hover);background:var(--bg-brand-soft)}
+.btn-add{align-self:flex-start;display:inline-flex;align-items:center;gap:var(--sp-8);height:44px;padding:0 var(--sp-16);border-radius:var(--r-full);border:0;background:none;color:var(--brand-primary);font-size:15px;font-weight:600;cursor:pointer}
+.btn-add:hover{color:var(--brand-primary-hover)}
+.btn-add:active{background:var(--bg-brand-soft);color:var(--brand-dark)}
+
+/* 6. Input / Archivo · estados extendidos */
+.file{border:1px solid var(--border-default);border-radius:var(--r-input);padding:6px 6px 6px 6px;display:flex;align-items:center;gap:var(--sp-12);min-height:48px;background:#fff}
+.file .pick{background:var(--bg-institutional-panel);color:var(--brand-primary);font-size:14px;font-weight:500;border:0;border-radius:var(--r-medium);height:34px;padding:0 var(--sp-12);cursor:pointer;flex:none}
+.file .pick:hover{background:var(--bg-brand-soft)}
+.file .name{font-size:14px;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-done{border:1px solid var(--border-default);border-radius:var(--r-input);padding:var(--sp-12);display:flex;align-items:center;gap:var(--sp-12);background:#fff}
+.file-done .thumb{width:40px;height:40px;border-radius:var(--r-medium);background:var(--bg-institutional-panel);color:var(--brand-primary);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.file-done .info{flex:1;min-width:0}
+.file-done .info strong{display:block;font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-done .info span{font-size:12px;color:var(--text-muted)}
+.file-done .ok{color:var(--success)}
+.file-done .acts{display:flex;gap:4px}
+.file-done .acts button{background:none;border:0;color:var(--brand-primary);font-size:14px;font-weight:600;padding:6px 8px;border-radius:var(--r-medium);cursor:pointer}
+.file-done .acts button:hover{background:var(--bg-brand-soft)}
+.progress{height:4px;background:var(--border-default);border-radius:var(--r-full);overflow:hidden;margin-top:6px}
+.progress i{display:block;height:100%;width:62%;background:var(--brand-primary)}
+.is-error .file{border-color:var(--error)}
+
+/* 7. Form / Resumen de errores */
+.err-summary{border:1px solid var(--error);border-left-width:4px;border-radius:var(--r-input);background:var(--error-bg);padding:var(--sp-16) var(--sp-24)}
+.err-summary h3{font-size:16px;font-weight:600;line-height:24px;color:var(--error);margin-bottom:var(--sp-8)}
+.err-summary p{font-size:14px;line-height:20px;color:var(--text-primary);margin-bottom:var(--sp-8)}
+.err-summary ul{list-style:none;display:grid;gap:4px}
+.err-summary a{color:var(--error);font-size:14px;font-weight:600;line-height:20px;text-decoration:underline;text-underline-offset:2px}
+
+/* 8. Form / Resumen de revisión */
+.review{border:1px solid var(--border-default);border-radius:var(--r-large);overflow:hidden;background:#fff}
+.review-head{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-16) var(--sp-24);background:var(--bg-subtle);border-bottom:1px solid var(--border-default)}
+.review-head h3{font-size:16px;font-weight:600}
+.review dl{display:grid;grid-template-columns:minmax(140px,1fr) 2fr;margin:0}
+.review dt,.review dd{padding:var(--sp-12) var(--sp-24);border-bottom:1px solid var(--border-subtle);font-size:14px;line-height:20px}
+.review dt{color:var(--text-secondary)}
+.review dd{color:var(--text-primary);font-weight:500}
+.review dl > :nth-last-child(-n+2){border-bottom:0}
+.link{color:var(--brand-primary);font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.link:hover{color:var(--brand-primary-hover)}
+
+/* 9. Form / Dato para copiar */
+.copy-list{border:1px solid var(--border-default);border-radius:var(--r-large);background:#fff}
+.copy-row{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-12);padding:var(--sp-12) var(--sp-16);border-bottom:1px solid var(--border-subtle)}
+.copy-row:last-child{border-bottom:0}
+.copy-row .k{font-size:12px;font-weight:500;letter-spacing:.2px;text-transform:uppercase;color:var(--text-muted)}
+.copy-row .v{font-size:16px;font-weight:500;font-variant-numeric:tabular-nums;word-break:break-all}
+.btn-copy{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 var(--sp-12);border-radius:var(--r-full);border:1px solid var(--brand-primary);background:#fff;color:var(--brand-primary);font-size:14px;font-weight:600;cursor:pointer;flex:none}
+.btn-copy:hover{background:var(--bg-brand-soft)}
+.btn-copy.copied{border-color:var(--success);color:var(--success);background:var(--success-bg)}
+
+/* 10. Form / Ayuda desplegable */
+.disclose{border-left:3px solid var(--border-default);padding-left:var(--sp-16)}
+.disclose summary{cursor:pointer;color:var(--brand-primary);font-size:14px;font-weight:600;line-height:20px;list-style:none;display:inline-flex;align-items:center;gap:6px}
+.disclose summary::-webkit-details-marker{display:none}
+.disclose summary .icon{width:16px;height:16px;transition:transform .15s}
+.disclose[open] summary .icon{transform:rotate(90deg)}
+.disclose .body{margin-top:var(--sp-8);font-size:14px;line-height:22px;color:var(--text-secondary)}
+
+/* 11. Form / Barra de acciones */
+.actions{display:flex;align-items:center;gap:var(--sp-16);padding-top:var(--sp-24);border-top:1px solid var(--border-subtle)}
+.actions .spacer{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-8);height:44px;padding:0 22px;border-radius:var(--r-full);font-size:15px;font-weight:600;border:1px solid transparent;cursor:pointer;white-space:nowrap}
+.btn-primary{background:var(--brand-primary);color:#fff}
+.btn-primary:hover{background:var(--brand-primary-hover)}
+.btn-primary:active{background:var(--brand-dark)}
+.btn-secondary{background:#fff;color:var(--brand-primary);border-color:var(--brand-primary)}
+.btn-secondary:hover{background:var(--bg-brand-soft)}
+.btn-tertiary{background:none;color:var(--brand-primary)}
+.btn-tertiary:hover{color:var(--brand-primary-hover)}
+.btn-tertiary:active{background:var(--bg-brand-soft)}
+.saved{font-size:13px;color:var(--text-muted);display:inline-flex;align-items:center;gap:6px}
+.saved .icon{width:16px;height:16px;color:var(--success)}
+
+@media (max-width:760px){
+  .wrap{padding:var(--sp-32) var(--sp-16)}
+  .comp{padding:var(--sp-24) var(--sp-16)}
+  .stepper{display:none}
+  .options.row{flex-direction:column}
+  .review dl{grid-template-columns:1fr}
+  .review dt{border-bottom:0;padding-bottom:0}
+  .actions{flex-wrap:wrap}
+  .actions .spacer{display:none}
+  .actions .btn-primary{order:-1;width:100%}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"/><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4.6 4.4 0 0 1 0-9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7"/><path d="M9 15l3-3l3 3"/><path d="M12 12v9"/></symbol>
+</defs></svg>
+
+<main class="wrap">
+  <header class="doc-head">
+    <h1>Componentes de formulario</h1>
+    <p>Componentes nuevos para los trámites, con el estilo de los inputs existentes (input / __input): mismas etiquetas, alturas, radios, bordes y estados. No están en la página “✅ Components” del archivo de Figma. Para agregarlos al sistema de diseño.</p>
+    <span class="doc-status">Propuesta, pendiente de aprobación</span>
+    <nav class="toc" aria-label="Componentes">
+      <a href="#c1">Indicador de pasos</a><a href="#c2">Opciones (radio)</a><a href="#c3">Checkbox</a><a href="#c4">Fecha</a><a href="#c5">Grupo repetible</a><a href="#c6">Archivo, estados</a><a href="#c7">Resumen de errores</a><a href="#c8">Revisá tus datos</a><a href="#c9">Dato para copiar</a><a href="#c10">Ayuda desplegable</a><a href="#c11">Barra de acciones</a>
+    </nav>
+  </header>
+
+  <!-- 1 -->
+  <section class="comp" id="c1">
+    <div class="comp-head"><h2>1. Indicador de pasos</h2><span class="comp-name">Form / Stepper</span></div>
+    <p class="comp-use">Muestra en qué paso estás y cuántos faltan. <strong>Variantes:</strong> Desktop (pasos con nombre) y Mobile (texto + barra). <strong>Estados de cada paso:</strong> Completado, Actual, Pendiente. Los pasos completados no son botones: para volver se usa “Anterior” o “Cambiar” en la revisión.</p>
+    <div class="state-label">Desktop</div>
+    <ol class="stepper" aria-label="Pasos del trámite">
+      <li class="done"><span class="bar"></span><span class="meta"><span class="num"><svg class="icon" style="width:14px;height:14px;stroke-width:3" aria-hidden="true"><use href="#i-check"/></svg></span><span>Datos personales<span class="sr-only">, completado</span></span></span></li>
+      <li class="current" aria-current="step"><span class="bar"></span><span class="meta"><span class="num">2</span><span>Datos profesionales</span></span></li>
+      <li><span class="bar"></span><span class="meta"><span class="num">3</span><span>Documentación</span></span></li>
+      <li><span class="bar"></span><span class="meta"><span class="num">4</span><span>Pago</span></span></li>
+    </ol>
+    <div class="state-label" style="margin-top:var(--sp-32)">Mobile 390</div>
+    <div class="stepper-mobile">
+      <div class="top"><span>Datos profesionales</span><span>Paso 2 de 4</span></div>
+      <div class="track" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="4" aria-label="Paso 2 de 4"><i style="width:50%"></i></div>
+      <div class="next">Sigue: Documentación</div>
+    </div>
+    <ul class="spec"><li>Barra 4px, Radius / Full. Completado y Actual: Brand / Primary. Pendiente: Border / Default.</li><li>Número 24px. Texto: Cuerpo Pequeño 14. Actual en SemiBold.</li><li>Accesibilidad: lista ordenada, aria-current="step" en el actual y “completado” como texto oculto.</li></ul>
+  </section>
+
+  <!-- 2 -->
+  <section class="comp" id="c2">
+    <div class="comp-head"><h2>2. Opciones (radio)</h2><span class="comp-name">Input / Radio group</span></div>
+    <p class="comp-use">Extiende el “Sí o No” existente a más de dos opciones, en columna, con descripción opcional. <strong>Uso:</strong> Motivo del turno, “Con identificación / Anónima”, Estado civil (si son 5 opciones o menos, en vez de un Dropdown). Toda la caja es clickeable. <strong>Estados:</strong> Normal, Hover, Seleccionado, Foco, Error, Deshabilitado.</p>
+    <div class="states">
+      <fieldset>
+        <legend>Motivo del turno <span class="req" style="color:var(--error)">*</span></legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="motivo" checked><span class="dot"></span><span class="txt">Actualización de datos<small>Cambios de domicilio, teléfono o email</small></span></label>
+          <label class="option"><input type="radio" name="motivo"><span class="dot"></span><span class="txt">Consulta<small>Dudas sobre un trámite o tu matrícula</small></span></label>
+        </div>
+      </fieldset>
+      <fieldset class="is-error">
+        <legend>¿Cómo querés hacer la denuncia? <span style="color:var(--error)">*</span></legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="den"><span class="dot"></span><span class="txt">Con identificación</span></label>
+          <label class="option"><input type="radio" name="den"><span class="dot"></span><span class="txt">Anónima</span></label>
+        </div>
+        <p class="error-msg" style="margin-top:var(--sp-8)"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Elegí una opción.</p>
+      </fieldset>
+      <fieldset disabled>
+        <legend style="color:var(--disabled-text)">Deshabilitado</legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="dis" disabled><span class="dot"></span><span class="txt">Opción no disponible</span></label>
+        </div>
+      </fieldset>
+    </div>
+    <ul class="spec"><li>Caja: alto mínimo 48px, Radius / Input 10, Spacing / Input Inset 14. Seleccionado: borde Brand / Primary 2px y fondo Background / Input Soft (igual que Pressed del input).</li><li>Círculo 20px con borde Border / Input Hover y punto interno de 10px en Brand / Primary.</li><li>Accesibilidad: fieldset + legend, radios nativos y flechas del teclado para moverse entre opciones.</li></ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="comp" id="c3">
+    <div class="comp-head"><h2>3. Checkbox</h2><span class="comp-name">Input / Checkbox</span></div>
+    <p class="comp-use"><strong>Uso:</strong> aceptar términos, “Soy martillero judicial”, “Aporto a otra caja previsional”, “Domicilio desconocido”, “Es el mismo que mi domicilio particular”. Cuando se marca, puede mostrar campos relacionados debajo. <strong>Estados:</strong> Sin marcar, Hover, Marcado, Foco, Error, Deshabilitado.</p>
+    <div class="states">
+      <label class="check"><input type="checkbox"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Es el mismo que mi domicilio particular</span></label>
+      <label class="check"><input type="checkbox" checked><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Soy martillero judicial</span></label>
+      <div class="is-error field">
+        <label class="check"><input type="checkbox"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Leí y acepto los <a href="#">términos y condiciones</a></span></label>
+        <p class="error-msg"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Para enviar tenés que aceptar los términos y condiciones.</p>
+      </div>
+      <label class="check"><input type="checkbox" disabled><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Deshabilitado</span></label>
+    </div>
+    <ul class="spec"><li>Caja 20px, radio 5px, borde Border / Input Hover. Marcado: Brand / Primary con tilde blanco. Texto: Inputs / Valor 16.</li><li>Área táctil: toda la fila, con un mínimo de 24×24 px (WCAG 2.5.8).</li></ul>
+  </section>
+
+  <!-- 4 -->
+  <section class="comp" id="c4">
+    <div class="comp-head"><h2>4. Fecha</h2><span class="comp-name">Input / Fecha</span></div>
+    <p class="comp-use">Tres campos numéricos (Día, Mes, Año), más fácil que un calendario para fechas de nacimiento o de títulos. <strong>Uso:</strong> Fecha de nacimiento, emisión del título, “¿Desde cuándo?”. <strong>Estados:</strong> los del input, más error en un solo campo o en la fecha entera.</p>
+    <div class="states">
+      <fieldset class="field">
+        <legend>Fecha de nacimiento <span style="color:var(--error)">*</span></legend>
+        <p class="help" id="h-fn">Por ejemplo, 27 3 1985</p>
+        <div class="date" aria-describedby="h-fn">
+          <label class="part d"><span>Día</span><input class="control" inputmode="numeric" maxlength="2" autocomplete="bday-day" value="27"></label>
+          <label class="part m"><span>Mes</span><input class="control" inputmode="numeric" maxlength="2" autocomplete="bday-month" value="3"></label>
+          <label class="part y"><span>Año</span><input class="control" inputmode="numeric" maxlength="4" autocomplete="bday-year" value="1985"></label>
+        </div>
+      </fieldset>
+      <fieldset class="field">
+        <legend>¿Desde cuándo?</legend>
+        <p class="error-msg"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>La fecha tiene que incluir un año.</p>
+        <div class="date">
+          <label class="part d"><span>Día</span><input class="control" inputmode="numeric" maxlength="2" value="12"></label>
+          <label class="part m"><span>Mes</span><input class="control" inputmode="numeric" maxlength="2" value="8"></label>
+          <label class="part y is-error"><span>Año</span><input class="control" inputmode="numeric" maxlength="4" aria-invalid="true"></label>
+        </div>
+      </fieldset>
+    </div>
+    <ul class="spec"><li>Día y Mes 64px, Año 88px, alto 48px. Las etiquetas Día/Mes/Año en Inputs / Ayuda 14.</li><li>Error: marcar solo el campo con problema y un mensaje que diga qué falta.</li><li>Accesibilidad: inputmode numérico y autocomplete bday-* en la fecha de nacimiento.</li></ul>
+  </section>
+
+  <!-- 5 -->
+  <section class="comp" id="c5">
+    <div class="comp-head"><h2>5. Grupo repetible</h2><span class="comp-name">Form / Repeatable</span></div>
+    <p class="comp-use">Permite cargar más de uno de lo mismo. <strong>Variante Simple</strong> (un campo por ítem): emails, websites. <strong>Variante Tarjeta</strong> (varios campos por ítem): teléfonos, hijos. El primer ítem no se puede quitar si el dato es obligatorio.</p>
+    <div class="states" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))">
+      <div class="repeat" id="emails">
+        <div class="repeat-item"><div class="field"><label class="label" for="e1">Email <span class="req">*</span></label><input id="e1" class="control" type="email" autocomplete="email" value="ricardo.gomez@mail.com"></div></div>
+        <button type="button" class="btn-add" data-add="emails"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Agregar otro email</button>
+      </div>
+      <div class="repeat">
+        <div class="repeat-item card">
+          <div class="card-head"><span>Teléfono 1</span></div>
+          <fieldset><legend>Tipo</legend><div class="options row"><label class="option"><input type="radio" name="t1" checked><span class="dot"></span><span class="txt">Celular</span></label><label class="option"><input type="radio" name="t1"><span class="dot"></span><span class="txt">Fijo</span></label></div></fieldset>
+          <div style="display:flex;gap:var(--sp-12)"><div class="field" style="width:96px"><label class="label" for="ca">Código de área</label><input id="ca" class="control" inputmode="numeric" value="11"></div><div class="field" style="flex:1"><label class="label" for="nt">Número</label><input id="nt" class="control" inputmode="numeric" autocomplete="tel-local" value="3696 9399"></div></div>
+        </div>
+        <div class="repeat-item card">
+          <div class="card-head"><span>Teléfono 2</span><button type="button" class="btn-remove">Quitar<span class="sr-only"> teléfono 2</span></button></div>
+          <fieldset><legend>Tipo</legend><div class="options row"><label class="option"><input type="radio" name="t2"><span class="dot"></span><span class="txt">Celular</span></label><label class="option"><input type="radio" name="t2" checked><span class="dot"></span><span class="txt">Fijo</span></label></div></fieldset>
+          <div style="display:flex;gap:var(--sp-12)"><div class="field" style="width:96px"><label class="label" for="ca2">Código de área</label><input id="ca2" class="control" inputmode="numeric"></div><div class="field" style="flex:1"><label class="label" for="nt2">Número</label><input id="nt2" class="control" inputmode="numeric"></div></div>
+        </div>
+        <button type="button" class="btn-add"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Agregar otro teléfono</button>
+      </div>
+    </div>
+    <ul class="spec"><li>“Agregar otro…”: Button / Terciario con ícono +. “Quitar”: Link de texto, junto al ítem que elimina.</li><li>Al agregar, el foco pasa al campo nuevo. Al quitar, vuelve al ítem anterior. Se anuncia “Teléfono 2 agregado / quitado”.</li></ul>
+  </section>
+
+  <!-- 6 -->
+  <section class="comp" id="c6">
+    <div class="comp-head"><h2>6. Archivo, estados extendidos</h2><span class="comp-name">Input / Archivo · Cargando, Cargado, Error</span></div>
+    <p class="comp-use">El input Archivo existente tiene Normal, Foco y Error. Para formularios con muchos documentos hacen falta estos estados extra: <strong>Cargando</strong> (con progreso), <strong>Cargado</strong> (nombre, peso, Ver, Reemplazar, Quitar) y <strong>Error de formato o tamaño</strong>. La ayuda indica qué formatos y peso se aceptan <em>(pendiente: confirmar con Fausti)</em>.</p>
+    <div class="states" style="grid-template-columns:repeat(auto-fill,minmax(340px,1fr))">
+      <div class="field"><span class="label">Foto tipo 4x4 <span class="req">*</span></span><p class="help">De frente, con fondo blanco. Formatos: <em>a confirmar</em>.</p><div class="file"><button type="button" class="pick">Seleccionar archivo</button><span class="name">Sin archivos seleccionados</span></div></div>
+      <div class="field"><span class="label">Certificado de domicilio <span class="req">*</span></span><div class="file-done"><span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-cloud"/></svg></span><div class="info"><strong>certificado-domicilio.pdf</strong><span>Subiendo… 62%</span><div class="progress" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="Subiendo certificado-domicilio.pdf"><i></i></div></div><div class="acts"><button type="button">Cancelar</button></div></div></div>
+      <div class="field"><span class="label">Documento (frente y dorso) <span class="req">*</span></span><div class="file-done"><span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span><div class="info"><strong>dni-frente-dorso.pdf</strong><span class="ok">Cargado, 1,2 MB</span></div><div class="acts"><button type="button">Ver</button><button type="button">Reemplazar</button><button type="button">Quitar</button></div></div></div>
+      <div class="field is-error"><span class="label">Firma <span class="req">*</span></span><div class="file"><button type="button" class="pick">Seleccionar archivo</button><span class="name">firma.heic</span></div><p class="error-msg"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Este formato no se acepta. Subí una imagen JPG o PNG <em>(a confirmar)</em>.</p></div>
+    </div>
+    <ul class="spec"><li>Mismo contenedor que Archivo (Radius / Input, Border / Default). Ícono en contenedor Background / Institutional Panel 40px.</li><li>Cargado: texto de estado en Success. Acciones como Link de texto.</li><li>El archivo cargado se conserva aunque haya errores en otros campos.</li></ul>
+  </section>
+
+  <!-- 7 -->
+  <section class="comp" id="c7">
+    <div class="comp-head"><h2>7. Resumen de errores</h2><span class="comp-name">Form / Error summary</span></div>
+    <p class="comp-use">Aparece arriba del paso al intentar avanzar con errores, y recibe el foco. Cada ítem lleva al campo con problema. Complementa, no reemplaza, el mensaje junto a cada campo (WCAG 3.3.1 y 3.3.3).</p>
+    <div class="err-summary" role="alert" tabindex="-1">
+      <h3>Revisá 2 datos para continuar</h3>
+      <ul><li><a href="#e1">Ingresá un email con el formato nombre@ejemplo.com</a></li><li><a href="#c3">Para enviar tenés que aceptar los términos y condiciones</a></li></ul>
+    </div>
+    <ul class="spec"><li>Borde Error 1px, borde izquierdo 4px, fondo Error / Background. Título 16 SemiBold en Error.</li><li>Los mensajes dicen cómo resolverlo, no solo que hay un error.</li></ul>
+  </section>
+
+  <!-- 8 -->
+  <section class="comp" id="c8">
+    <div class="comp-head"><h2>8. Revisá tus datos</h2><span class="comp-name">Form / Review summary</span></div>
+    <p class="comp-use">Último paso antes de enviar. Un bloque por sección del formulario, con “Cambiar” que lleva al paso correspondiente y vuelve acá al guardar. Reemplaza los campos “Confirmar email”.</p>
+    <div class="review">
+      <div class="review-head"><h3>Datos personales</h3><a class="link" href="#">Cambiar<span class="sr-only"> datos personales</span></a></div>
+      <dl><dt>Nombre y apellido</dt><dd>Ricardo Gómez</dd><dt>Documento</dt><dd>DNI 28.456.789</dd><dt>Email (domicilio electrónico)</dt><dd>ricardo.gomez@mail.com</dd><dt>Documento adjunto</dt><dd>dni-frente-dorso.pdf</dd></dl>
+    </div>
+    <ul class="spec"><li>Cabecera en Background / Subtle. Filas: etiqueta en Text / Secondary, valor en Text / Primary Medium 14.</li><li>Mobile: etiqueta arriba y valor abajo.</li><li>Los datos de ejemplo son ficticios.</li></ul>
+  </section>
+
+  <!-- 9 -->
+  <section class="comp" id="c9">
+    <div class="comp-head"><h2>9. Dato para copiar</h2><span class="comp-name">Form / Copy value</span></div>
+    <p class="comp-use">Para datos que la persona tiene que pasar a otra app, como la transferencia del paso Pago. Evita errores al tipear el CBU. El botón confirma “Copiado” durante 2 segundos.</p>
+    <div class="copy-list" style="max-width:560px">
+      <div class="copy-row"><div><div class="k">Banco</div><div class="v">Banco Provincia, Sucursal 5096 (San Isidro)</div></div></div>
+      <div class="copy-row"><div><div class="k">CBU</div><div class="v">0140028101509601283869</div></div><button type="button" class="btn-copy" data-copy="0140028101509601283869"><svg class="icon" style="width:16px;height:16px" aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span><span class="sr-only"> CBU</span></button></div>
+      <div class="copy-row"><div><div class="k">Cuenta corriente en pesos</div><div class="v">12838/6</div></div><button type="button" class="btn-copy" data-copy="12838/6"><svg class="icon" style="width:16px;height:16px" aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span><span class="sr-only"> número de cuenta</span></button></div>
+      <div class="copy-row"><div><div class="k">CUIT</div><div class="v">30544154709</div></div><button type="button" class="btn-copy" data-copy="30544154709"><svg class="icon" style="width:16px;height:16px" aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span><span class="sr-only"> CUIT</span></button></div>
+    </div>
+    <ul class="spec"><li>Valor en Medium 16 con números tabulares. Botón: Button / Secundario chico (36px).</li><li>Datos bancarios tomados del material del Colegio. Validar que estén vigentes antes de publicar.</li></ul>
+  </section>
+
+  <!-- 10 -->
+  <section class="comp" id="c10">
+    <div class="comp-head"><h2>10. Ayuda desplegable</h2><span class="comp-name">Form / Disclosure</span></div>
+    <p class="comp-use">Para textos legales o explicaciones largas que no todos necesitan leer. El campo muestra una ayuda corta y el texto completo queda a un clic, sin modificarlo.</p>
+    <div class="field" style="max-width:640px">
+      <label class="label" for="de">Email (domicilio electrónico) <span class="req">*</span></label>
+      <p class="help">El Colegio te va a enviar ahí las notificaciones oficiales.</p>
+      <input id="de" class="control" type="email" autocomplete="email">
+      <details class="disclose">
+        <summary><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg>¿Qué es el domicilio electrónico?</summary>
+        <div class="body">Por Resolución Nro. 018-19 del Honorable Consejo Superior de la Provincia de Bs. As. con fecha del 24/4/2019, desde el 1/7/2019 se encuentra en vigencia la obligatoriedad de constituir domicilio electrónico. Cabe destacar que el domicilio electrónico no sustituye a los domicilios que establece la ley, real y legal, sino que los complementa. Su uso se aplicará a toda comunicación con carácter de resolución o notificación que el colegio deba enviar a sus matriculados. La vía de comunicación estará habilitada exclusivamente para el envío de notificaciones desde el colegio hacia los matriculados, careciendo de validez su uso para notificaciones enviadas por los profesionales a la institución.</div>
+      </details>
+    </div>
+    <ul class="spec"><li>Elemento nativo details/summary: funciona con teclado y lector de pantalla sin código extra.</li><li>Texto legal sin cambios, salvo los guiones largos del original, reemplazados por comas.</li></ul>
+  </section>
+
+  <!-- 11 -->
+  <section class="comp" id="c11">
+    <div class="comp-head"><h2>11. Barra de acciones</h2><span class="comp-name">Form / Actions</span></div>
+    <p class="comp-use">Al pie de cada paso. <strong>Siguiente</strong> (Primario) a la derecha, <strong>Anterior</strong> (Secundario) a la izquierda y <strong>Guardar borrador</strong> (Terciario). Indica cuándo se guardó. En el último paso, Siguiente pasa a “Enviar solicitud”.</p>
+    <div class="actions">
+      <button type="button" class="btn btn-secondary">Anterior</button>
+      <button type="button" class="btn btn-tertiary">Guardar borrador</button>
+      <span class="saved"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Guardado a las 15:42</span>
+      <span class="spacer"></span>
+      <button type="button" class="btn btn-primary">Siguiente</button>
+    </div>
+    <ul class="spec"><li>Mobile: Siguiente arriba y a lo ancho, y debajo las otras dos acciones.</li><li>Guardar borrador necesita servidor. En el prototipo solo se simula.</li></ul>
+  </section>
+</main>
+
+<script>
+document.querySelectorAll('.btn-copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=b.dataset.copy,lbl=b.querySelector('span');
+    var done=function(){b.classList.add('copied');lbl.textContent='Copiado';setTimeout(function(){b.classList.remove('copied');lbl.textContent='Copiar';},2000);};
+    try{navigator.clipboard.writeText(t).then(done,done);}catch(e){done();}
+  });
+});
+var n=1;document.querySelector('[data-add="emails"]').addEventListener('click',function(e){
+  n++;var wrap=document.getElementById('emails');var d=document.createElement('div');d.className='repeat-item';
+  d.innerHTML='<div class="field"><label class="label" for="e'+n+'">Email '+n+' <span class="opt">(opcional)</span></label><input id="e'+n+'" class="control" type="email" autocomplete="email"></div><button type="button" class="btn-remove">Quitar<span class="sr-only"> email '+n+'</span></button>';
+  wrap.insertBefore(d,e.currentTarget);d.querySelector('input').focus();
+  d.querySelector('.btn-remove').addEventListener('click',function(){var prev=d.previousElementSibling;d.remove();(prev.querySelector('input')||prev).focus();});
+});
+document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+</script>
+</body>
+</html>

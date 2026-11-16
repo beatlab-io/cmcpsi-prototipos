@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Colegiación, prototipo CMCPSI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/cmcpsi.css">
+<style>
+.layout{display:grid;grid-template-columns:minmax(0,680px) minmax(0,1fr);gap:var(--sp-64);align-items:start}
+.facts{list-style:none;display:grid;gap:var(--sp-12);margin:var(--sp-24) 0 0}
+.facts li{display:flex;gap:var(--sp-12);align-items:center;font-size:15px;line-height:22px}
+.facts .icon{color:var(--icon-brand)}
+.need{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-32);display:flex;flex-direction:column;gap:var(--sp-24)}
+.need h2{font-size:20px;font-weight:600;line-height:28px}
+.need ul{list-style:none;display:grid;gap:var(--sp-16)}
+.need li{display:flex;gap:var(--sp-16);align-items:flex-start}
+.need li strong{display:block;font-size:16px;font-weight:600;line-height:24px}
+.need li .d{display:block;font-size:14px;line-height:20px;color:var(--text-secondary)}
+.need .ibox{width:40px;height:40px;border-radius:var(--r-medium);background:var(--bg-brand-soft);color:var(--icon-brand);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.need .ibox .icon{width:22px;height:22px}
+.start-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-16) var(--sp-24)}
+.form-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-32);display:flex;flex-direction:column;gap:var(--sp-24)}
+.form-card h2{font-size:20px;font-weight:600;line-height:28px}
+.form-card .intro{font-size:14px;line-height:20px;color:var(--text-secondary);margin-top:calc(-1*var(--sp-16))}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+.row-num{display:grid;grid-template-columns:2fr 1fr 1.2fr 1.2fr;gap:var(--sp-16);align-items:end}
+.row-num .label{white-space:nowrap}
+.reveal{border-left:3px solid var(--bg-brand-soft);padding-left:var(--sp-16);display:flex;flex-direction:column;gap:var(--sp-24)}
+.fixed{display:flex;flex-direction:column;gap:4px}
+.fixed .v{font-size:16px;line-height:24px}
+.select-wrap{position:relative}
+.select-wrap select{appearance:none;-webkit-appearance:none;padding-right:44px;cursor:pointer}
+.select-wrap .icon{position:absolute;right:14px;top:14px;color:var(--brand-primary);pointer-events:none}
+select.control:invalid{color:var(--text-muted)}
+.file-pick{position:relative}
+.file-pick input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.file-pick input[type=file]:focus-visible + .file{outline:2px solid var(--focus-ring);outline-offset:3px}
+.file-pick:hover .file{border-color:var(--border-input-hover)}
+.aside{background:var(--bg-institutional-panel);border-radius:var(--r-large);padding:var(--sp-24);display:flex;flex-direction:column;gap:var(--sp-16);position:sticky;top:var(--sp-24)}
+.aside h2{font-size:16px;font-weight:600;line-height:24px}
+.aside ol{padding-left:20px;display:grid;gap:var(--sp-8);font-size:14px;line-height:20px;color:var(--text-secondary)}
+.aside p{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.aside a{color:var(--brand-primary);font-weight:500}
+.step-wrap{margin-bottom:var(--sp-32)}
+.stepper-mobile{display:none}
+.review-stack{display:flex;flex-direction:column;gap:var(--sp-16)}
+.done-card{background:var(--bg-default);border:var(--bw-default) solid var(--border-default);border-radius:var(--r-large);padding:var(--sp-40);display:flex;flex-direction:column;gap:var(--sp-16);max-width:680px}
+.done-icon{width:56px;height:56px;border-radius:var(--r-full);background:var(--success-bg);color:var(--success);display:inline-flex;align-items:center;justify-content:center}
+.done-icon .icon{width:30px;height:30px}
+.done-card h1{font-size:32px;line-height:40px;font-weight:600}
+.done-card p{font-size:16px;line-height:24px;color:var(--text-secondary)}
+.done-card .sign{color:var(--text-primary)}
+.done-card .next{background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:14px;line-height:20px;color:var(--text-secondary)}
+@media (max-width:960px){.layout{grid-template-columns:1fr;gap:var(--sp-32)}.aside{position:static}}
+@media (max-width:760px){.stepper{display:none}.stepper-mobile{display:flex}}
+@media (max-width:640px){.row2{grid-template-columns:1fr}.row-num{grid-template-columns:1fr 1fr}.form-card,.need{padding:var(--sp-24) var(--sp-16)}.done-card{padding:var(--sp-24)}.start-actions .btn{width:100%}}
+</style>
+<style>
+.stepbar{display:flex;flex-direction:column;gap:var(--sp-8);margin-bottom:var(--sp-24)}
+.stepbar .top{display:flex;justify-content:space-between;gap:var(--sp-16);font-size:14px;line-height:20px}
+.stepbar .top span:first-child{font-weight:600}
+.stepbar .top span:last-child{color:var(--text-secondary);white-space:nowrap}
+.stepbar .track{height:4px;border-radius:var(--r-full);background:var(--border-default);overflow:hidden}
+.stepbar .track i{display:block;height:100%;background:var(--brand-primary);border-radius:var(--r-full)}
+.stepbar .next{font-size:12px;line-height:16px;color:var(--text-muted)}
+.sub{font-size:16px;font-weight:600;line-height:24px;padding-top:var(--sp-24);border-top:var(--bw-default) solid var(--border-subtle)}
+.sub.first{border-top:0;padding-top:0}
+.prefill{display:flex;gap:var(--sp-12);background:var(--success-bg);border-radius:var(--r-input);padding:var(--sp-12) var(--sp-16);font-size:14px;line-height:20px}
+.prefill .icon{color:var(--success);flex:none;margin-top:1px}
+.date{display:flex;gap:var(--sp-12)}
+.date .part{display:flex;flex-direction:column;gap:4px}
+.date .part span{font-size:14px;line-height:20px;color:var(--text-secondary)}
+.date .d .control,.date .m .control{width:64px;text-align:center;padding:0 8px}
+.date .y .control{width:88px;text-align:center;padding:0 8px}
+.yesno{display:flex;gap:var(--sp-12)}
+.yesno .option{flex:1;max-width:160px}
+.rep{display:flex;flex-direction:column;gap:var(--sp-12)}
+.rep-item{display:flex;gap:var(--sp-12);align-items:flex-end}
+.rep-item > .field{flex:1}
+.rep-card{border:var(--bw-default) solid var(--border-default);border-radius:var(--r-input);padding:var(--sp-16);display:flex;flex-direction:column;gap:var(--sp-16)}
+.rep-card .card-head{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;line-height:20px}
+.btn-remove{background:none;border:0;color:var(--brand-primary);font-size:14px;font-weight:600;height:48px;padding:0 var(--sp-8);border-radius:var(--r-medium);cursor:pointer}
+.rep-card .btn-remove{height:32px}
+.btn-remove:hover{background:var(--bg-brand-soft)}
+.btn-add{align-self:flex-start;display:inline-flex;align-items:center;gap:var(--sp-8);height:44px;padding:0 var(--sp-12);border-radius:var(--r-full);border:0;background:none;color:var(--brand-primary);font-size:15px;font-weight:600;cursor:pointer}
+.btn-add:hover{background:var(--bg-brand-soft)}
+.phone-row{display:grid;grid-template-columns:110px 1fr;gap:var(--sp-12);align-items:end}
+.doc-progress{display:flex;align-items:center;gap:var(--sp-12);font-size:14px;line-height:20px;color:var(--text-secondary)}
+.doc-progress .track{flex:1;height:6px;background:var(--border-default);border-radius:var(--r-full);overflow:hidden}
+.doc-progress .track i{display:block;height:100%;background:var(--success);width:0;transition:width .2s}
+.doc-progress strong{color:var(--text-primary);font-weight:600}
+.copy-list{border:1px solid var(--border-default);border-radius:var(--r-large);background:#fff}
+.copy-row{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-12);padding:var(--sp-12) var(--sp-16);border-bottom:1px solid var(--border-subtle)}
+.copy-row:last-child{border-bottom:0}
+.copy-row .k{font-size:12px;font-weight:500;letter-spacing:.2px;text-transform:uppercase;color:var(--text-muted)}
+.copy-row .v{font-size:16px;font-weight:500;font-variant-numeric:tabular-nums;word-break:break-all}
+.btn-copy{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 var(--sp-12);border-radius:var(--r-full);border:1px solid var(--brand-primary);background:#fff;color:var(--brand-primary);font-size:14px;font-weight:600;cursor:pointer;flex:none}
+.btn-copy:hover{background:var(--bg-brand-soft)}
+.btn-copy.copied{border-color:var(--success);color:var(--success);background:var(--success-bg)}
+.btn-copy .icon{width:16px;height:16px}
+.disclose{border-left:3px solid var(--border-default);padding-left:var(--sp-16)}
+.disclose summary{cursor:pointer;color:var(--brand-primary);font-size:14px;font-weight:600;line-height:20px;list-style:none;display:inline-flex;align-items:center;gap:6px}
+.disclose summary::-webkit-details-marker{display:none}
+.disclose summary .icon{width:16px;height:16px;transition:transform .15s}
+.disclose[open] summary .icon{transform:rotate(90deg)}
+.disclose .body{margin-top:var(--sp-8);font-size:14px;line-height:22px;color:var(--text-secondary)}
+.help a{color:var(--brand-primary);font-weight:500}
+.saved{font-size:13px;color:var(--text-muted);display:inline-flex;align-items:center;gap:6px}
+.saved .icon{width:16px;height:16px;color:var(--success)}
+.total{display:flex;gap:var(--sp-12);background:var(--bg-institutional-panel);border-radius:var(--r-input);padding:var(--sp-16);font-size:15px;line-height:22px}
+.total .icon{color:var(--icon-brand);flex:none;margin-top:1px}
+.total a{color:var(--brand-primary);font-weight:600}
+@media (max-width:640px){.yesno .option{max-width:none}.phone-row{grid-template-columns:96px 1fr}.date .d .control,.date .m .control{width:56px}.date .y .control{width:80px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0"/><path d="M21 21l-6-6"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol><symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></symbol><symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M5 12l6 6"/><path d="M5 12l6-6"/></symbol><symbol id="i-instagram" viewBox="0 0 24 24"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M16.5 7.5v.01"/></symbol><symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M9 12l2 2l4-4"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7l9 6l9-6"/></symbol><symbol id="i-id" viewBox="0 0 24 24"><path d="M3 7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><path d="M7 9l5-5l5 5"/><path d="M12 4v12"/></symbol><symbol id="i-chev-down" viewBox="0 0 24 24"><path d="M6 9l6 6l6-6"/></symbol><symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"/><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-3-2l-2 2l-2-2l-2 2l-2-2l-3 2"/><path d="M14 8H9.5a1.5 1.5 0 0 0 0 3h3a1.5 1.5 0 0 1 0 3H8"/><path d="M12 17v1m0-12v1"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"/><path d="M12 7v5l3 3"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol></defs></svg><div class="proto-bar" role="note">
+  <div class="container">
+    <span><strong>Prototipo de diseño, Colegiación (etapa 3) v0.1.</strong> No es el sitio publicado. Textos y datos pendientes de validación.</span>
+    <button type="button" id="toggle-notes" aria-pressed="false">Ver notas de diseño</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <div class="hdr-top">
+      <a href="#" class="logo" aria-label="CMCPSI, ir al inicio"><img src="../../_shared/logo-cmcpsi.png" alt="CMCPSI, Colegio de Martilleros y Corredores Públicos de San Isidro"></a>
+      <label class="hdr-search">
+        <svg class="icon icon-sm" aria-hidden="true"><use href="#i-search"/></svg>
+        <span class="sr-only">Buscar en el sitio</span>
+        <input type="search" placeholder="Buscar trámites, valores, noticias o recursos">
+      </label>
+      <div class="hdr-actions">
+        <a href="#" class="link link-inline">Iniciar sesión</a>
+        <a href="#" class="btn btn-primary">Consultar padrón</a>
+      </div>
+      <div class="hdr-mobile-actions mobile-only">
+        <button class="icon-btn" type="button" aria-label="Buscar"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+        <button class="icon-btn menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="../../tramites/" aria-current="page">Trámites</a>
+      <a href="#">Colegiados</a>
+      <a href="#">Comunidad</a>
+      <a href="#">Actualidad</a>
+      <a href="#">El Colegio</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="#">Inicio</a></li><li><a href="../">Trámites</a></li><li aria-current="page" id="bc-current">Colegiación</li></ol></nav>
+    <div class="layout">
+      <div>
+        <section class="view" id="v-start" aria-labelledby="t-start">
+          <div class="page-head" style="margin-bottom:var(--sp-32)">
+            <p class="t-label" style="color:var(--brand-primary);margin-bottom:var(--sp-8)" id="eyebrow">Etapa 3 de 3</p>
+            <h1 class="t-h1" id="t-start" tabindex="-1"><span id="tr-name">Solicitud de colegiación</span>: formulario completo</h1>
+            <p class="t-lead">Ya aprobamos tu solicitud. Para terminar, completá tus datos, subí la documentación y el comprobante de pago.<span class="note-pin">1</span></p>
+            <ul class="facts">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Son 6 pasos y una revisión final.</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Podés guardar el borrador y seguir después.</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>Vas a subir 15 archivos, entre fotos, documentos y el comprobante.</li>
+            </ul>
+          </div>
+          <div class="need">
+            <h2>Antes de empezar, tené a mano</h2>
+            <ul>
+              <li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-id"/></svg></span><div><strong>Tu DNI, una foto 4x4 y tu firma</strong><span class="d">Escaneados o en foto, bien legibles.</span></div></li>
+              <li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span><div><strong>11 documentos</strong><span class="d">Servicio, certificado de domicilio, fianza, antecedentes penales, nacimiento, informes de anotaciones personales, revisión psicofísica y 2 avales. <a class="link link-inline" href="https://cmcpsi.org.ar/content/requisitos-de-altas-de-pasividad-y-suspension-documentacion" target="_blank" rel="noopener">Ver requisitos</a>.</span></div></li>
+              <li><span class="ibox"><svg class="icon" aria-hidden="true"><use href="#i-receipt"/></svg></span><div><strong>El comprobante de la transferencia</strong><span class="d">Los datos bancarios están en el paso 6.</span></div></li>
+            </ul>
+            <div class="start-actions">
+              <button type="button" class="btn btn-primary" id="start">Empezar <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="v-1" aria-labelledby="t-1" hidden>
+          <div class="stepbar"><div class="top"><span>Datos personales</span><span>Paso 1 de 7</span></div><div class="track" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="7" aria-label="Paso 1 de 7"><i style="width:14%"></i></div><div class="next">Sigue: Contacto y domicilio</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="1" novalidate>
+            <h1 class="t-h2" id="t-1" tabindex="-1" style="font-size:24px;line-height:32px">Datos personales</h1>
+            <p class="intro">Los campos sin la aclaración “opcional” son obligatorios.</p>
+            <div class="prefill" id="prefill" hidden><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg><span>Completamos algunos datos con los de tu solicitud anterior. Revisalos y corregí lo que haga falta.</span></div>
+            <h2 class="sub first">Matrículas</h2>
+            <div class="row2">
+            <div class="field" id="f-mat_corredor">
+              <label class="label" for="mat_corredor">Número de corredor <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="mat_corredor-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="mat_corredor" name="mat_corredor" type="text" autocomplete="off" aria-describedby="mat_corredor-err">
+            </div>
+            <div class="field" id="f-mat_martillero">
+              <label class="label" for="mat_martillero">Número de martillero <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="mat_martillero-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="mat_martillero" name="mat_martillero" type="text" autocomplete="off" aria-describedby="mat_martillero-err">
+            </div>
+            </div>
+            <h2 class="sub">Información personal</h2>
+            <div class="row2">
+            <div class="field" id="f-apellido">
+              <label class="label" for="apellido">Apellido</label>
+              <p class="error-msg" id="apellido-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="apellido" name="apellido" type="text" autocomplete="family-name" aria-describedby="apellido-err" required>
+            </div>
+            <div class="field" id="f-nombres">
+              <label class="label" for="nombres">Nombres</label>
+              <p class="error-msg" id="nombres-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="nombres" name="nombres" type="text" autocomplete="given-name" aria-describedby="nombres-err" required>
+            </div>
+            </div>
+            <div class="row2">
+            <div class="field" id="f-tipodoc">
+              <label class="label" for="tipodoc">Tipo de documento</label>
+              <p class="error-msg" id="tipodoc-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="tipodoc" name="tipodoc" required aria-describedby="tipodoc-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>DNI</option><option>Pasaporte</option><option>LC</option><option>LE</option><option>CI</option><option>CIP</option><option>CIF</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <div class="field" id="f-dni">
+              <label class="label" for="dni">Número de documento</label>
+              <p class="help" id="dni-help">Sin puntos.</p><p class="error-msg" id="dni-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="dni" name="dni" type="text" autocomplete="off" inputmode="numeric" aria-describedby="dni-help dni-err" required>
+            </div>
+            </div>
+            <fieldset class="field" id="f-fn">
+              <legend>Fecha de nacimiento</legend>
+              <p class="help" id="fn-help">Por ejemplo, 27 3 1985</p>
+              <p class="error-msg" id="fn-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="date" aria-describedby="fn-help fn-err">
+                <label class="part d"><span>Día</span><input class="control" id="fn" name="fn_d" inputmode="numeric" maxlength="2" autocomplete="bday-day"></label>
+                <label class="part m"><span>Mes</span><input class="control" name="fn_m" inputmode="numeric" maxlength="2" autocomplete="bday-month"></label>
+                <label class="part y"><span>Año</span><input class="control" name="fn_y" inputmode="numeric" maxlength="4" autocomplete="bday-year"></label>
+              </div>
+            </fieldset>
+            <div class="row2">
+            <div class="field" id="f-genero">
+              <label class="label" for="genero">Género</label>
+              <p class="error-msg" id="genero-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="genero" name="genero" required aria-describedby="genero-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>Masculino</option><option>Femenino</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <div class="field" id="f-nacionalidad">
+              <label class="label" for="nacionalidad">Nacionalidad</label>
+              <p class="error-msg" id="nacionalidad-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="nacionalidad" name="nacionalidad" required aria-describedby="nacionalidad-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>Argentina</option><option>Boliviana</option><option>Brasileña</option><option>Chilena</option><option>Colombiana</option><option>Paraguaya</option><option>Peruana</option><option>Uruguaya</option><option>Venezolana</option><option>Española</option><option>Italiana</option><option>Otra</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            </div>
+            <div class="field" id="f-ciudad_nac">
+              <label class="label" for="ciudad_nac">Ciudad de nacimiento</label>
+              <p class="error-msg" id="ciudad_nac-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="ciudad_nac" name="ciudad_nac" type="text" autocomplete="off" aria-describedby="ciudad_nac-err" required>
+            </div>
+            <h2 class="sub">Fotos y firma</h2>
+            <div class="field" id="f-doc_file">
+              <span class="label" id="doc_file-lbl">Documento, frente y dorso</span>
+              <p class="help" id="doc_file-help">Las dos caras en un mismo archivo. Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="doc_file-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="doc_file-pick">
+                <input type="file" id="doc_file" name="doc_file" accept="image/*,application/pdf" aria-labelledby="doc_file-lbl" aria-describedby="doc_file-help doc_file-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="doc_file-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="doc_file-fname"></strong><span class="ok" id="doc_file-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="doc_file">Reemplazar<span class="sr-only"> documento, frente y dorso</span></button><button type="button" data-remove="doc_file">Quitar<span class="sr-only"> documento, frente y dorso</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-foto">
+              <span class="label" id="foto-lbl">Foto tipo 4x4</span>
+              <p class="help" id="foto-help">De frente, con fondo blanco.</p>
+              <p class="error-msg" id="foto-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="foto-pick">
+                <input type="file" id="foto" name="foto" accept="image/*,application/pdf" aria-labelledby="foto-lbl" aria-describedby="foto-help foto-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="foto-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="foto-fname"></strong><span class="ok" id="foto-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="foto">Reemplazar<span class="sr-only"> foto tipo 4x4</span></button><button type="button" data-remove="foto">Quitar<span class="sr-only"> foto tipo 4x4</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-firma">
+              <span class="label" id="firma-lbl">Firma</span>
+              <p class="help" id="firma-help">Firmá sobre papel blanco y subila derecha (vertical) y legible. Si no está derecha, no se acepta.</p>
+              <p class="error-msg" id="firma-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="firma-pick">
+                <input type="file" id="firma" name="firma" accept="image/*,application/pdf" aria-labelledby="firma-lbl" aria-describedby="firma-help firma-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="firma-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="firma-fname"></strong><span class="ok" id="firma-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="firma">Reemplazar<span class="sr-only"> firma</span></button><button type="button" data-remove="firma">Quitar<span class="sr-only"> firma</span></button></div>
+              </div>
+            </div>
+            <div class="actions">
+              
+              <button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button>
+              <span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span>
+              <span class="spacer"></span>
+              <button type="submit" class="btn btn-primary" data-main>Continuar</button>
+            </div>
+          </form>
+        </section>
+        <section class="view" id="v-2" aria-labelledby="t-2" hidden>
+          <div class="stepbar"><div class="top"><span>Contacto y domicilio</span><span>Paso 2 de 7</span></div><div class="track" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="7" aria-label="Paso 2 de 7"><i style="width:29%"></i></div><div class="next">Sigue: Familia</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="2" novalidate>
+            <h1 class="t-h2" id="t-2" tabindex="-1" style="font-size:24px;line-height:32px">Contacto y domicilio</h1>
+            <p class="intro">Los campos sin la aclaración “opcional” son obligatorios.</p>
+            <h2 class="sub first">Email</h2>
+            <div class="field" id="f-email">
+              <label class="label" for="email">Email (domicilio electrónico)</label>
+              <p class="help" id="email-help">El Colegio te va a enviar ahí las notificaciones oficiales.</p>
+              <p class="error-msg" id="email-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="email" name="email" type="email" autocomplete="email" aria-describedby="email-help email-err">
+              <details class="disclose"><summary><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg>¿Qué es el domicilio electrónico?</summary><div class="body">Por Resolución Nro. 018-19 del Honorable Consejo Superior de la Provincia de Bs. As. con fecha del 24/4/2019, desde el 1/7/2019 se encuentra en vigencia la obligatoriedad de constituir domicilio electrónico. Cabe destacar que el domicilio electrónico no sustituye a los domicilios que establece la ley, real y legal, sino que los complementa. Su uso se aplicará a toda comunicación con carácter de resolución o notificación que el colegio deba enviar a sus matriculados. La vía de comunicación estará habilitada exclusivamente para el envío de notificaciones desde el colegio hacia los matriculados, careciendo de validez su uso para notificaciones enviadas por los profesionales a la institución.</div></details>
+            </div>
+            <div class="rep" id="rep-emailp" data-rep="emailp">
+              <div class="rep-item" data-idx="1" hidden data-empty>
+                <div class="field" id="f-emailp_1"><label class="label" for="emailp_1">Otro email personal <span class="opt">(opcional)</span></label><p class="error-msg" id="emailp_1-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p><input class="control" type="email" id="emailp_1" name="emailp_1" autocomplete="email" aria-describedby="emailp_1-err"></div>
+              </div>
+              <button type="button" class="btn-add" data-add="emailp"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg>Agregar otro email</button>
+            </div>
+            <h2 class="sub">Teléfonos personales</h2>
+            <div class="rep" id="rep-telp" data-rep="telp">
+              <div class="rep-card" data-idx="1">
+                <div class="card-head"><span>Teléfono 1</span></div>
+                <fieldset class="field" id="f-telp_tipo_1"><legend>Tipo</legend><p class="error-msg" id="telp_tipo_1-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p><div class="yesno"><label class="option"><input type="radio" id="telp_tipo_1" name="telp_tipo_1" value="Celular"><span class="dot"></span><span class="txt">Celular</span></label><label class="option"><input type="radio" name="telp_tipo_1" value="Fijo"><span class="dot"></span><span class="txt">Fijo</span></label></div></fieldset>
+                <div class="phone-row">
+                  <div class="field" id="f-telp_area_1"><label class="label" for="telp_area_1">Cód. de área</label><input class="control" id="telp_area_1" name="telp_area_1" inputmode="numeric" placeholder="11"></div>
+                  <div class="field" id="f-telp_num_1"><label class="label" for="telp_num_1">Número</label><p class="error-msg" id="telp_num_1-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p><input class="control" id="telp_num_1" name="telp_num_1" inputmode="numeric" autocomplete="tel-local" aria-describedby="telp_num_1-err"></div>
+                </div>
+              </div>
+              <button type="button" class="btn-add" data-add="telp"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg>Agregar otro teléfono</button>
+            </div>
+            <h2 class="sub">Domicilio particular (real)</h2>
+            <div class="row-num">
+            <div class="field" id="f-p_calle">
+              <label class="label" for="p_calle">Calle</label>
+              <p class="error-msg" id="p_calle-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_calle" name="p_calle" type="text" autocomplete="address-line1" aria-describedby="p_calle-err" required>
+            </div>
+            <div class="field" id="f-p_numero">
+              <label class="label" for="p_numero">Número <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="p_numero-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_numero" name="p_numero" type="text" autocomplete="off" inputmode="numeric" aria-describedby="p_numero-err">
+            </div>
+            <div class="field" id="f-p_piso">
+              <label class="label" for="p_piso">Piso <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="p_piso-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_piso" name="p_piso" type="text" autocomplete="off" aria-describedby="p_piso-err">
+            </div>
+            <div class="field" id="f-p_depto">
+              <label class="label" for="p_depto">Depto <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="p_depto-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_depto" name="p_depto" type="text" autocomplete="off" aria-describedby="p_depto-err">
+            </div>
+            </div>
+            <fieldset class="field" id="f-p_tipo">
+              <legend>¿Está en un edificio o en un barrio cerrado?</legend>
+              <p class="error-msg" id="p_tipo-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="options">
+                <label class="option"><input type="radio" name="p_tipo" value="No" id="p_tipo"><span class="dot"></span><span class="txt">No</span></label>
+                <label class="option"><input type="radio" name="p_tipo" value="Edificio"><span class="dot"></span><span class="txt">Sí, en un edificio</span></label>
+                <label class="option"><input type="radio" name="p_tipo" value="Barrio cerrado"><span class="dot"></span><span class="txt">Sí, en un barrio cerrado</span></label>
+              </div>
+            </fieldset>
+            <div class="reveal" id="p_r-edificio" hidden><div class="field" id="f-p_edificio">
+              <label class="label" for="p_edificio">Nombre del edificio <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="p_edificio-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_edificio" name="p_edificio" type="text" autocomplete="off" aria-describedby="p_edificio-err">
+            </div></div>
+            <div class="reveal" id="p_r-barrio" hidden><div class="field" id="f-p_barrio">
+              <label class="label" for="p_barrio">Nombre del barrio cerrado</label>
+              <p class="error-msg" id="p_barrio-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_barrio" name="p_barrio" type="text" autocomplete="off" aria-describedby="p_barrio-err" required>
+            </div><div class="field" id="f-p_uf">
+              <label class="label" for="p_uf">Unidad funcional <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="p_uf-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_uf" name="p_uf" type="text" autocomplete="off" aria-describedby="p_uf-err">
+            </div></div>
+            <div class="row2">
+            <div class="field" id="f-p_localidad">
+              <label class="label" for="p_localidad">Localidad</label>
+              <p class="error-msg" id="p_localidad-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_localidad" name="p_localidad" type="text" autocomplete="address-level2" aria-describedby="p_localidad-err" required>
+            </div>
+            <div class="field" id="f-p_cp">
+              <label class="label" for="p_cp">Código postal</label>
+              <p class="help" id="p_cp-help">Por ejemplo, 1642 o B1642DSD.</p><p class="error-msg" id="p_cp-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="p_cp" name="p_cp" type="text" autocomplete="postal-code" aria-describedby="p_cp-help p_cp-err" required>
+            </div>
+            </div>
+            <div class="field" id="f-p_partido">
+              <label class="label" for="p_partido">Partido</label>
+              <p class="error-msg" id="p_partido-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="p_partido" name="p_partido" required aria-describedby="p_partido-err">
+                  <option value="" selected disabled>Seleccioná un partido</option><option>San Isidro</option><option>Pilar</option><option>Vicente López</option><option>San Fernando</option><option>Tigre</option><option>Otra ubicación</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <div class="fixed" id="p_prov-fixed"><span class="label">Provincia</span><span class="v">Buenos Aires</span></div>
+            <div id="p_prov-wrap" hidden><div class="field" id="f-p_provincia">
+              <label class="label" for="p_provincia">Provincia</label>
+              <p class="error-msg" id="p_provincia-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="p_provincia" name="p_provincia" required aria-describedby="p_provincia-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>Buenos Aires</option><option>Ciudad Autónoma de Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div></div>
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button>
+              <button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button>
+              <span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span>
+              <span class="spacer"></span>
+              <button type="submit" class="btn btn-primary" data-main>Continuar</button>
+            </div>
+          </form>
+        </section>
+        <section class="view" id="v-3" aria-labelledby="t-3" hidden>
+          <div class="stepbar"><div class="top"><span>Familia</span><span>Paso 3 de 7</span></div><div class="track" role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="7" aria-label="Paso 3 de 7"><i style="width:43%"></i></div><div class="next">Sigue: Datos profesionales</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="3" novalidate>
+            <h1 class="t-h2" id="t-3" tabindex="-1" style="font-size:24px;line-height:32px">Familia</h1>
+            <p class="intro">Todos los campos son obligatorios.</p>
+            <h2 class="sub first">Madre</h2>
+            <div class="field" id="f-madre">
+              <label class="label" for="madre">Nombre y apellido de la madre</label>
+              <p class="error-msg" id="madre-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="madre" name="madre" type="text" autocomplete="off" aria-describedby="madre-err" required>
+            </div>
+            <fieldset class="field" id="f-madre_vive">
+              <legend>¿Vive?</legend>
+              <p class="error-msg" id="madre_vive-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="yesno">
+                <label class="option"><input type="radio" name="madre_vive" value="Sí" id="madre_vive"><span class="dot"></span><span class="txt">Sí</span></label>
+                <label class="option"><input type="radio" name="madre_vive" value="No"><span class="dot"></span><span class="txt">No</span></label>
+              </div>
+            </fieldset>
+            <h2 class="sub">Padre</h2>
+            <div class="field" id="f-padre">
+              <label class="label" for="padre">Nombre y apellido del padre</label>
+              <p class="error-msg" id="padre-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="padre" name="padre" type="text" autocomplete="off" aria-describedby="padre-err" required>
+            </div>
+            <fieldset class="field" id="f-padre_vive">
+              <legend>¿Vive?</legend>
+              <p class="error-msg" id="padre_vive-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="yesno">
+                <label class="option"><input type="radio" name="padre_vive" value="Sí" id="padre_vive"><span class="dot"></span><span class="txt">Sí</span></label>
+                <label class="option"><input type="radio" name="padre_vive" value="No"><span class="dot"></span><span class="txt">No</span></label>
+              </div>
+            </fieldset>
+            <h2 class="sub">Estado civil e hijos</h2>
+            <div class="field" id="f-civil">
+              <label class="label" for="civil">Estado civil</label>
+              <p class="error-msg" id="civil-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="civil" name="civil" required aria-describedby="civil-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>Soltero/a</option><option>Casado/a</option><option>Unión convivencial</option><option>Divorciado/a</option><option>Viudo/a</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <fieldset class="field" id="f-hijos">
+              <legend>¿Tenés hijos?</legend>
+              <p class="error-msg" id="hijos-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="yesno">
+                <label class="option"><input type="radio" name="hijos" value="Sí" id="hijos"><span class="dot"></span><span class="txt">Sí</span></label>
+                <label class="option"><input type="radio" name="hijos" value="No"><span class="dot"></span><span class="txt">No</span></label>
+              </div>
+            </fieldset>
+            <div class="reveal" id="r-hijos" hidden>
+              <div class="rep" id="rep-hijo" data-rep="hijo">
+              <div class="rep-card" data-idx="1">
+                <div class="card-head"><span>Hijo o hija 1</span></div>
+                <div class="field" id="f-hijo_1_nombre">
+              <label class="label" for="hijo_1_nombre">Nombre y apellido</label>
+              <p class="error-msg" id="hijo_1_nombre-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="hijo_1_nombre" name="hijo_1_nombre" type="text" autocomplete="off" aria-describedby="hijo_1_nombre-err" required>
+            </div>
+                <fieldset class="field" id="f-hijo_1_fn">
+              <legend>Fecha de nacimiento</legend>
+              <p class="help" id="hijo_1_fn-help">Por ejemplo, 27 3 1985</p>
+              <p class="error-msg" id="hijo_1_fn-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="date" aria-describedby="hijo_1_fn-help hijo_1_fn-err">
+                <label class="part d"><span>Día</span><input class="control" id="hijo_1_fn" name="hijo_1_fn_d" inputmode="numeric" maxlength="2"></label>
+                <label class="part m"><span>Mes</span><input class="control" name="hijo_1_fn_m" inputmode="numeric" maxlength="2"></label>
+                <label class="part y"><span>Año</span><input class="control" name="hijo_1_fn_y" inputmode="numeric" maxlength="4"></label>
+              </div>
+            </fieldset>
+                <div class="row2"><div class="field" id="f-hijo_1_tipodoc">
+              <label class="label" for="hijo_1_tipodoc">Tipo de documento</label>
+              <p class="error-msg" id="hijo_1_tipodoc-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="hijo_1_tipodoc" name="hijo_1_tipodoc" required aria-describedby="hijo_1_tipodoc-err">
+                  <option value="" selected disabled>Seleccioná una opción</option><option>DNI</option><option>Pasaporte</option><option>LC</option><option>LE</option><option>CI</option><option>CIP</option><option>CIF</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div><div class="field" id="f-hijo_1_doc">
+              <label class="label" for="hijo_1_doc">Número de documento</label>
+              <p class="error-msg" id="hijo_1_doc-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="hijo_1_doc" name="hijo_1_doc" type="text" autocomplete="off" inputmode="numeric" aria-describedby="hijo_1_doc-err" required>
+            </div></div>
+              </div>
+              <button type="button" class="btn-add" data-add="hijo"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg>Agregar otro hijo o hija</button>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button>
+              <button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button>
+              <span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span>
+              <span class="spacer"></span>
+              <button type="submit" class="btn btn-primary" data-main>Continuar</button>
+            </div>
+          </form>
+        </section>
+        <section class="view" id="v-4" aria-labelledby="t-4" hidden>
+          <div class="stepbar"><div class="top"><span>Datos profesionales</span><span>Paso 4 de 7</span></div><div class="track" role="progressbar" aria-valuenow="4" aria-valuemin="1" aria-valuemax="7" aria-label="Paso 4 de 7"><i style="width:57%"></i></div><div class="next">Sigue: Documentación</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="4" novalidate>
+            <h1 class="t-h2" id="t-4" tabindex="-1" style="font-size:24px;line-height:32px">Datos profesionales</h1>
+            <p class="intro">Los campos sin la aclaración “opcional” son obligatorios.</p>
+            <h2 class="sub first">Información profesional</h2>
+            <div class="row2">
+            <div class="field" id="f-cuit">
+              <label class="label" for="cuit">CUIL / CUIT</label>
+              <p class="help" id="cuit-help">11 números, sin guiones.</p><p class="error-msg" id="cuit-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="cuit" name="cuit" type="text" autocomplete="off" inputmode="numeric" aria-describedby="cuit-help cuit-err" required>
+            </div>
+            <div class="field" id="f-web">
+              <label class="label" for="web">Sitio web <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="web-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="web" name="web" type="url" autocomplete="url" aria-describedby="web-err">
+            </div>
+            </div>
+            <div class="field" id="f-denominacion">
+              <label class="label" for="denominacion">Denominación profesional</label>
+              <p class="help" id="denominacion-help">Tiene que incluir tu nombre y apellido. Por ejemplo, “Ricardo Gómez Propiedades”.</p>
+              <p class="error-msg" id="denominacion-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="denominacion" name="denominacion" aria-describedby="denominacion-help denominacion-err">
+              <details class="disclose"><summary><svg class="icon" aria-hidden="true"><use href="#i-chev-r"/></svg>Qué dice la Ley 10.973</summary><div class="body">El art. 53 inc. L de la Ley 10.973, Capítulo III, Prohibiciones, establece que les está prohibido a los Martilleros y Corredores Públicos: “Actuar bajo otra denominación que no corresponda al nombre y apellido de los Colegiados, salvo en los casos de Sociedades legalmente constituidas en un todo de acuerdo a lo normado en la Ley Nacional 20.266 y sus modificatorias, debe consignarse en toda publicación el nombre, apellido y datos profesionales de al menos un Colegiado en actividad que la integra”.</div></details>
+            </div>
+            <h2 class="sub">Domicilio profesional (legal)</h2>
+            <div class="field" id="f-mismo_dom"><label class="check"><input type="checkbox" name="mismo_dom" id="mismo_dom"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Es el mismo que mi domicilio particular</span></label><p class="error-msg" id="mismo_dom-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div id="r-domprof"><div class="row-num">
+            <div class="field" id="f-l_calle">
+              <label class="label" for="l_calle">Calle</label>
+              <p class="error-msg" id="l_calle-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_calle" name="l_calle" type="text" autocomplete="off" aria-describedby="l_calle-err" required>
+            </div>
+            <div class="field" id="f-l_numero">
+              <label class="label" for="l_numero">Número <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="l_numero-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_numero" name="l_numero" type="text" autocomplete="off" inputmode="numeric" aria-describedby="l_numero-err">
+            </div>
+            <div class="field" id="f-l_piso">
+              <label class="label" for="l_piso">Piso <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="l_piso-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_piso" name="l_piso" type="text" autocomplete="off" aria-describedby="l_piso-err">
+            </div>
+            <div class="field" id="f-l_depto">
+              <label class="label" for="l_depto">Depto <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="l_depto-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_depto" name="l_depto" type="text" autocomplete="off" aria-describedby="l_depto-err">
+            </div>
+            </div>
+            <fieldset class="field" id="f-l_tipo">
+              <legend>¿Está en un edificio o en un barrio cerrado?</legend>
+              <p class="error-msg" id="l_tipo-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="options">
+                <label class="option"><input type="radio" name="l_tipo" value="No" id="l_tipo"><span class="dot"></span><span class="txt">No</span></label>
+                <label class="option"><input type="radio" name="l_tipo" value="Edificio"><span class="dot"></span><span class="txt">Sí, en un edificio</span></label>
+                <label class="option"><input type="radio" name="l_tipo" value="Barrio cerrado"><span class="dot"></span><span class="txt">Sí, en un barrio cerrado</span></label>
+              </div>
+            </fieldset>
+            <div class="reveal" id="l_r-edificio" hidden><div class="field" id="f-l_edificio">
+              <label class="label" for="l_edificio">Nombre del edificio <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="l_edificio-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_edificio" name="l_edificio" type="text" autocomplete="off" aria-describedby="l_edificio-err">
+            </div></div>
+            <div class="reveal" id="l_r-barrio" hidden><div class="field" id="f-l_barrio">
+              <label class="label" for="l_barrio">Nombre del barrio cerrado</label>
+              <p class="error-msg" id="l_barrio-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_barrio" name="l_barrio" type="text" autocomplete="off" aria-describedby="l_barrio-err" required>
+            </div><div class="field" id="f-l_uf">
+              <label class="label" for="l_uf">Unidad funcional <span class="opt">(opcional)</span></label>
+              <p class="error-msg" id="l_uf-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_uf" name="l_uf" type="text" autocomplete="off" aria-describedby="l_uf-err">
+            </div></div>
+            <div class="row2">
+            <div class="field" id="f-l_localidad">
+              <label class="label" for="l_localidad">Localidad</label>
+              <p class="error-msg" id="l_localidad-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_localidad" name="l_localidad" type="text" autocomplete="off" aria-describedby="l_localidad-err" required>
+            </div>
+            <div class="field" id="f-l_cp">
+              <label class="label" for="l_cp">Código postal</label>
+              <p class="help" id="l_cp-help">Por ejemplo, 1642 o B1642DSD.</p><p class="error-msg" id="l_cp-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="l_cp" name="l_cp" type="text" autocomplete="off" aria-describedby="l_cp-help l_cp-err" required>
+            </div>
+            </div>
+            <div class="field" id="f-l_partido">
+              <label class="label" for="l_partido">Partido</label>
+              <p class="error-msg" id="l_partido-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="select-wrap">
+                <select class="control" id="l_partido" name="l_partido" required aria-describedby="l_partido-err">
+                  <option value="" selected disabled>Seleccioná un partido</option><option>San Isidro</option><option>Pilar</option><option>Vicente López</option><option>San Fernando</option><option>Tigre</option>
+                </select>
+                <svg class="icon" aria-hidden="true"><use href="#i-chev-down"/></svg>
+              </div>
+            </div>
+            <div class="fixed"><span class="label">Provincia</span><span class="v">Buenos Aires</span></div></div>
+            <h2 class="sub">Emails y teléfonos profesionales</h2>
+            <div class="field" id="f-mismo_contacto"><label class="check"><input type="checkbox" name="mismo_contacto" id="mismo_contacto"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Uso los mismos emails y teléfonos que cargué como personales</span></label><p class="error-msg" id="mismo_contacto-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div id="r-contprof" style="display:flex;flex-direction:column;gap:var(--sp-24)">
+            <div class="rep" id="rep-emaill" data-rep="emaill">
+              <div class="rep-item" data-idx="1">
+                <div class="field" id="f-emaill_1"><label class="label" for="emaill_1">Email profesional</label><p class="error-msg" id="emaill_1-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p><input class="control" type="email" id="emaill_1" name="emaill_1" autocomplete="email" aria-describedby="emaill_1-err"></div>
+              </div>
+              <button type="button" class="btn-add" data-add="emaill"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg>Agregar otro email</button>
+            </div>
+            <div class="rep" id="rep-tell" data-rep="tell">
+              <div class="rep-card" data-idx="1">
+                <div class="card-head"><span>Teléfono 1</span></div>
+                <fieldset class="field" id="f-tell_tipo_1"><legend>Tipo</legend><p class="error-msg" id="tell_tipo_1-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p><div class="yesno"><label class="option"><input type="radio" id="tell_tipo_1" name="tell_tipo_1" value="Celular"><span class="dot"></span><span class="txt">Celular</span></label><label class="option"><input type="radio" name="tell_tipo_1" value="Fijo"><span class="dot"></span><span class="txt">Fijo</span></label></div></fieldset>
+                <div class="phone-row">
+                  <div class="field" id="f-tell_area_1"><label class="label" for="tell_area_1">Cód. de área</label><input class="control" id="tell_area_1" name="tell_area_1" inputmode="numeric" placeholder="11"></div>
+                  <div class="field" id="f-tell_num_1"><label class="label" for="tell_num_1">Número</label><p class="error-msg" id="tell_num_1-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p><input class="control" id="tell_num_1" name="tell_num_1" inputmode="numeric" autocomplete="tel-local" aria-describedby="tell_num_1-err"></div>
+                </div>
+              </div>
+              <button type="button" class="btn-add" data-add="tell"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg>Agregar otro teléfono</button>
+            </div>
+            </div>
+            <h2 class="sub">Otros datos</h2>
+            <div class="field" id="f-titulo"><label class="check"><input type="checkbox" name="titulo" id="titulo"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Tengo título universitario</span></label><p class="error-msg" id="titulo-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div class="reveal" id="r-titulo" hidden>
+              <div class="field" id="f-universidad">
+              <label class="label" for="universidad">Universidad que lo otorgó</label>
+              <p class="error-msg" id="universidad-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="universidad" name="universidad" type="text" autocomplete="off" aria-describedby="universidad-err" required>
+            </div>
+              <div class="field" id="f-titulo_nombre">
+              <label class="label" for="titulo_nombre">Título obtenido</label>
+              <p class="help" id="titulo_nombre-help">Por ejemplo, “Martillero y Corredor Público”.</p><p class="error-msg" id="titulo_nombre-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="titulo_nombre" name="titulo_nombre" type="text" autocomplete="off" aria-describedby="titulo_nombre-help titulo_nombre-err" required>
+            </div>
+              <fieldset class="field" id="f-titulo_fecha">
+              <legend>Fecha de emisión del título</legend>
+              <p class="help" id="titulo_fecha-help">Por ejemplo, 27 3 1985</p>
+              <p class="error-msg" id="titulo_fecha-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="date" aria-describedby="titulo_fecha-help titulo_fecha-err">
+                <label class="part d"><span>Día</span><input class="control" id="titulo_fecha" name="titulo_fecha_d" inputmode="numeric" maxlength="2"></label>
+                <label class="part m"><span>Mes</span><input class="control" name="titulo_fecha_m" inputmode="numeric" maxlength="2"></label>
+                <label class="part y"><span>Año</span><input class="control" name="titulo_fecha_y" inputmode="numeric" maxlength="4"></label>
+              </div>
+            </fieldset>
+            </div>
+            <div class="field" id="f-judicial"><label class="check"><input type="checkbox" name="judicial" id="judicial"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Soy martillero judicial</span></label><p class="error-msg" id="judicial-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div class="reveal" id="r-judicial" hidden><fieldset class="field" id="f-judicial_fecha">
+              <legend>¿Desde cuándo?</legend>
+              <p class="help" id="judicial_fecha-help">Por ejemplo, 27 3 1985</p>
+              <p class="error-msg" id="judicial_fecha-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="date" aria-describedby="judicial_fecha-help judicial_fecha-err">
+                <label class="part d"><span>Día</span><input class="control" id="judicial_fecha" name="judicial_fecha_d" inputmode="numeric" maxlength="2"></label>
+                <label class="part m"><span>Mes</span><input class="control" name="judicial_fecha_m" inputmode="numeric" maxlength="2"></label>
+                <label class="part y"><span>Año</span><input class="control" name="judicial_fecha_y" inputmode="numeric" maxlength="4"></label>
+              </div>
+            </fieldset></div>
+            <div class="field" id="f-caja"><label class="check"><input type="checkbox" name="caja" id="caja"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Aporto a otra caja previsional</span></label><p class="error-msg" id="caja-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div class="reveal" id="r-caja" hidden>
+              <div class="field" id="f-caja_nombre">
+              <label class="label" for="caja_nombre">Nombre de la caja</label>
+              <p class="error-msg" id="caja_nombre-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <input class="control" id="caja_nombre" name="caja_nombre" type="text" autocomplete="off" aria-describedby="caja_nombre-err" required>
+            </div>
+              <fieldset class="field" id="f-caja_fecha">
+              <legend>¿Desde cuándo aportás?</legend>
+              <p class="help" id="caja_fecha-help">Por ejemplo, 27 3 1985</p>
+              <p class="error-msg" id="caja_fecha-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="date" aria-describedby="caja_fecha-help caja_fecha-err">
+                <label class="part d"><span>Día</span><input class="control" id="caja_fecha" name="caja_fecha_d" inputmode="numeric" maxlength="2"></label>
+                <label class="part m"><span>Mes</span><input class="control" name="caja_fecha_m" inputmode="numeric" maxlength="2"></label>
+                <label class="part y"><span>Año</span><input class="control" name="caja_fecha_y" inputmode="numeric" maxlength="4"></label>
+              </div>
+            </fieldset>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button>
+              <button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button>
+              <span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span>
+              <span class="spacer"></span>
+              <button type="submit" class="btn btn-primary" data-main>Continuar</button>
+            </div>
+          </form>
+        </section>
+        <section class="view" id="v-5" aria-labelledby="t-5" hidden>
+          <div class="stepbar"><div class="top"><span>Documentación</span><span>Paso 5 de 7</span></div><div class="track" role="progressbar" aria-valuenow="5" aria-valuemin="1" aria-valuemax="7" aria-label="Paso 5 de 7"><i style="width:71%"></i></div><div class="next">Sigue: Pago</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="5" novalidate>
+            <h1 class="t-h2" id="t-5" tabindex="-1" style="font-size:24px;line-height:32px">Documentación</h1>
+            <p class="intro">Subí cada documento por separado. Todos son obligatorios.</p>
+            <p class="help" style="margin-top:calc(-1*var(--sp-8))"><a href="https://cmcpsi.org.ar/content/requisitos-de-altas-de-pasividad-y-suspension-documentacion" target="_blank" rel="noopener">Ver los requisitos de cada documento</a> (se abre en una pestaña nueva).</p>
+            <div class="doc-progress" aria-live="polite"><span><strong id="doc-count">0</strong> de <span id="doc-total">11</span> cargados</span><span class="track"><i id="doc-bar"></i></span></div>
+            <div class="field" id="f-d_servicio">
+              <span class="label" id="d_servicio-lbl">Servicio o impuesto</span>
+              <p class="help" id="d_servicio-help">A tu nombre, con la misma dirección que tu domicilio profesional (legal).</p>
+              <p class="error-msg" id="d_servicio-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_servicio-pick">
+                <input type="file" id="d_servicio" name="d_servicio" accept="image/*,application/pdf" aria-labelledby="d_servicio-lbl" aria-describedby="d_servicio-help d_servicio-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_servicio-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_servicio-fname"></strong><span class="ok" id="d_servicio-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_servicio">Reemplazar<span class="sr-only"> servicio o impuesto</span></button><button type="button" data-remove="d_servicio">Quitar<span class="sr-only"> servicio o impuesto</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_domicilio">
+              <span class="label" id="d_domicilio-lbl">Certificado de domicilio</span>
+              <p class="help" id="d_domicilio-help">Lo expide el Registro Civil del partido y vale por 48 horas. Tiene que coincidir con la dirección del servicio.</p>
+              <p class="error-msg" id="d_domicilio-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_domicilio-pick">
+                <input type="file" id="d_domicilio" name="d_domicilio" accept="image/*,application/pdf" aria-labelledby="d_domicilio-lbl" aria-describedby="d_domicilio-help d_domicilio-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_domicilio-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_domicilio-fname"></strong><span class="ok" id="d_domicilio-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_domicilio">Reemplazar<span class="sr-only"> certificado de domicilio</span></button><button type="button" data-remove="d_domicilio">Quitar<span class="sr-only"> certificado de domicilio</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_fianza">
+              <span class="label" id="d_fianza-lbl">Seguro de caución (fianza)</span>
+              <p class="help" id="d_fianza-help"><a href="../fianza/" target="_blank" rel="noopener">Cómo conseguir la póliza</a>.</p>
+              <p class="error-msg" id="d_fianza-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_fianza-pick">
+                <input type="file" id="d_fianza" name="d_fianza" accept="image/*,application/pdf" aria-labelledby="d_fianza-lbl" aria-describedby="d_fianza-help d_fianza-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_fianza-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_fianza-fname"></strong><span class="ok" id="d_fianza-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_fianza">Reemplazar<span class="sr-only"> seguro de caución (fianza)</span></button><button type="button" data-remove="d_fianza">Quitar<span class="sr-only"> seguro de caución (fianza)</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_penales">
+              <span class="label" id="d_penales-lbl">Certificado de antecedentes penales</span>
+              <p class="help" id="d_penales-help">Se pide online en <a href="https://www.argentina.gob.ar/justicia/reincidencia/antecedentespenales" target="_blank" rel="noopener">argentina.gob.ar</a> o en el Registro Nacional de Reincidencia: Tucumán 1353 (CABA) o 25 de Mayo 574 (San Isidro).</p>
+              <p class="error-msg" id="d_penales-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_penales-pick">
+                <input type="file" id="d_penales" name="d_penales" accept="image/*,application/pdf" aria-labelledby="d_penales-lbl" aria-describedby="d_penales-help d_penales-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_penales-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_penales-fname"></strong><span class="ok" id="d_penales-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_penales">Reemplazar<span class="sr-only"> certificado de antecedentes penales</span></button><button type="button" data-remove="d_penales">Quitar<span class="sr-only"> certificado de antecedentes penales</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_nacimiento">
+              <span class="label" id="d_nacimiento-lbl">Certificado de nacimiento</span>
+              <p class="help" id="d_nacimiento-help">Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="d_nacimiento-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_nacimiento-pick">
+                <input type="file" id="d_nacimiento" name="d_nacimiento" accept="image/*,application/pdf" aria-labelledby="d_nacimiento-lbl" aria-describedby="d_nacimiento-help d_nacimiento-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_nacimiento-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_nacimiento-fname"></strong><span class="ok" id="d_nacimiento-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_nacimiento">Reemplazar<span class="sr-only"> certificado de nacimiento</span></button><button type="button" data-remove="d_nacimiento">Quitar<span class="sr-only"> certificado de nacimiento</span></button></div>
+              </div>
+            </div>
+<div id="r-solteria"><div class="field" id="f-d_solteria">
+              <span class="label" id="d_solteria-lbl">Certificado de soltería</span>
+              <p class="help" id="d_solteria-help">Solo si tu estado civil es soltero o soltera.</p>
+              <p class="error-msg" id="d_solteria-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_solteria-pick">
+                <input type="file" id="d_solteria" name="d_solteria" accept="image/*,application/pdf" aria-labelledby="d_solteria-lbl" aria-describedby="d_solteria-help d_solteria-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_solteria-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_solteria-fname"></strong><span class="ok" id="d_solteria-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_solteria">Reemplazar<span class="sr-only"> certificado de soltería</span></button><button type="button" data-remove="d_solteria">Quitar<span class="sr-only"> certificado de soltería</span></button></div>
+              </div>
+            </div></div>
+<div class="field" id="f-d_rpi">
+              <span class="label" id="d_rpi-lbl">Informe de anotaciones personales, Registro de la Propiedad Inmueble (PBA)</span>
+              <p class="help" id="d_rpi-help">Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="d_rpi-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_rpi-pick">
+                <input type="file" id="d_rpi" name="d_rpi" accept="image/*,application/pdf" aria-labelledby="d_rpi-lbl" aria-describedby="d_rpi-help d_rpi-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_rpi-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_rpi-fname"></strong><span class="ok" id="d_rpi-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_rpi">Reemplazar<span class="sr-only"> informe de anotaciones personales, registro de la propiedad inmueble (pba)</span></button><button type="button" data-remove="d_rpi">Quitar<span class="sr-only"> informe de anotaciones personales, registro de la propiedad inmueble (pba)</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_automotor">
+              <span class="label" id="d_automotor-lbl">Informe de anotaciones personales, Registro Nacional del Automotor</span>
+              <p class="help" id="d_automotor-help">Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="d_automotor-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_automotor-pick">
+                <input type="file" id="d_automotor" name="d_automotor" accept="image/*,application/pdf" aria-labelledby="d_automotor-lbl" aria-describedby="d_automotor-help d_automotor-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_automotor-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_automotor-fname"></strong><span class="ok" id="d_automotor-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_automotor">Reemplazar<span class="sr-only"> informe de anotaciones personales, registro nacional del automotor</span></button><button type="button" data-remove="d_automotor">Quitar<span class="sr-only"> informe de anotaciones personales, registro nacional del automotor</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_psico">
+              <span class="label" id="d_psico-lbl">Certificado de revisión psicofísica</span>
+              <p class="help" id="d_psico-help">Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="d_psico-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_psico-pick">
+                <input type="file" id="d_psico" name="d_psico" accept="image/*,application/pdf" aria-labelledby="d_psico-lbl" aria-describedby="d_psico-help d_psico-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_psico-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_psico-fname"></strong><span class="ok" id="d_psico-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_psico">Reemplazar<span class="sr-only"> certificado de revisión psicofísica</span></button><button type="button" data-remove="d_psico">Quitar<span class="sr-only"> certificado de revisión psicofísica</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_aval1">
+              <span class="label" id="d_aval1-lbl">Aval 1</span>
+              <p class="help" id="d_aval1-help">Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="d_aval1-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_aval1-pick">
+                <input type="file" id="d_aval1" name="d_aval1" accept="image/*,application/pdf" aria-labelledby="d_aval1-lbl" aria-describedby="d_aval1-help d_aval1-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_aval1-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_aval1-fname"></strong><span class="ok" id="d_aval1-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_aval1">Reemplazar<span class="sr-only"> aval 1</span></button><button type="button" data-remove="d_aval1">Quitar<span class="sr-only"> aval 1</span></button></div>
+              </div>
+            </div>
+<div class="field" id="f-d_aval2">
+              <span class="label" id="d_aval2-lbl">Aval 2</span>
+              <p class="help" id="d_aval2-help">Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="d_aval2-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="d_aval2-pick">
+                <input type="file" id="d_aval2" name="d_aval2" accept="image/*,application/pdf" aria-labelledby="d_aval2-lbl" aria-describedby="d_aval2-help d_aval2-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="d_aval2-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="d_aval2-fname"></strong><span class="ok" id="d_aval2-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="d_aval2">Reemplazar<span class="sr-only"> aval 2</span></button><button type="button" data-remove="d_aval2">Quitar<span class="sr-only"> aval 2</span></button></div>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button>
+              <button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button>
+              <span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span>
+              <span class="spacer"></span>
+              <button type="submit" class="btn btn-primary" data-main>Continuar</button>
+            </div>
+          </form>
+        </section>
+        <section class="view" id="v-6" aria-labelledby="t-6" hidden>
+          <div class="stepbar"><div class="top"><span>Pago</span><span>Paso 6 de 7</span></div><div class="track" role="progressbar" aria-valuenow="6" aria-valuemin="1" aria-valuemax="7" aria-label="Paso 6 de 7"><i style="width:86%"></i></div><div class="next">Sigue: Revisión</div></div>
+          <div class="err-summary" role="alert" tabindex="-1" hidden><h3>Revisá <span class="err-count"></span> para continuar</h3><ul class="err-list"></ul></div>
+          <form class="form-card" data-step="6" novalidate>
+            <h1 class="t-h2" id="t-6" tabindex="-1" style="font-size:24px;line-height:32px">Pago</h1>
+            <p class="intro">Transferí el total y subí el comprobante.</p>
+            <div class="copy-list">
+              <div class="copy-row"><div><div class="k">Banco</div><div class="v">Banco Provincia, Sucursal 5096 (San Isidro)</div></div></div><div class="copy-row"><div><div class="k">Cuenta corriente en pesos</div><div class="v">12838/6</div></div><button type="button" class="btn-copy" data-copy="12838/6"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span><span class="sr-only"> Cuenta corriente en pesos</span></button></div><div class="copy-row"><div><div class="k">CBU</div><div class="v">0140028101509601283869</div></div><button type="button" class="btn-copy" data-copy="0140028101509601283869"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span><span class="sr-only"> CBU</span></button></div><div class="copy-row"><div><div class="k">CUIT</div><div class="v">30544154709</div></div><button type="button" class="btn-copy" data-copy="30544154709"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span><span class="sr-only"> CUIT</span></button></div>
+            </div>
+            <div class="total"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span>El total a transferir está en <a href="#">Valores vigentes</a>.<span class="note-pin">6</span></span></div>
+            <div class="field" id="f-comprobante">
+              <span class="label" id="comprobante-lbl">Comprobante de pago</span>
+              <p class="help" id="comprobante-help">La constancia de la transferencia. Formatos y peso máximo: <em>a confirmar</em>.</p>
+              <p class="error-msg" id="comprobante-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+              <div class="file-pick" id="comprobante-pick">
+                <input type="file" id="comprobante" name="comprobante" accept="image/*,application/pdf" aria-labelledby="comprobante-lbl" aria-describedby="comprobante-help comprobante-err">
+                <div class="file" aria-hidden="true"><span class="pick"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>Seleccionar archivo</span><span class="name">Sin archivos seleccionados</span></div>
+              </div>
+              <div class="file-done" id="comprobante-done" hidden>
+                <span class="thumb"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>
+                <div class="info"><strong id="comprobante-fname"></strong><span class="ok" id="comprobante-fsize"></span></div>
+                <div class="acts"><button type="button" data-replace="comprobante">Reemplazar<span class="sr-only"> comprobante de pago</span></button><button type="button" data-remove="comprobante">Quitar<span class="sr-only"> comprobante de pago</span></button></div>
+              </div>
+            </div>
+            <div class="field" id="f-terminos"><label class="check"><input type="checkbox" name="terminos" id="terminos"><span class="box"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><span>Leí y acepto los <a href="#" class="link link-inline">términos y condiciones</a></span></label><p class="error-msg" id="terminos-err" hidden><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span></span></p></div>
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-prev><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button>
+              <button type="button" class="btn btn-tertiary" data-draft>Guardar borrador</button>
+              <span class="saved" data-saved hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></span>
+              <span class="spacer"></span>
+              <button type="submit" class="btn btn-primary" data-main>Continuar</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="view" id="v-7" aria-labelledby="t-7" hidden>
+          <div class="stepbar"><div class="top"><span>Revisión</span><span>Paso 7 de 7</span></div><div class="track" role="progressbar" aria-valuenow="7" aria-valuemin="1" aria-valuemax="7" aria-label="Paso 7 de 7"><i style="width:100%"></i></div></div>
+          <div class="page-head" style="margin-bottom:var(--sp-24)">
+            <h1 class="t-h2" id="t-7" tabindex="-1">Revisá tus datos</h1>
+            <p class="t-lead" style="font-size:16px;line-height:24px">Si algo no está bien, cambialo antes de enviar.</p>
+          </div>
+          <div class="review-stack">
+            <div class="review"><div class="review-head"><h3>Datos personales</h3><a class="link" href="#" data-go="1">Cambiar<span class="sr-only"> datos personales</span></a></div><dl id="rv-1"></dl></div><div class="review"><div class="review-head"><h3>Contacto y domicilio</h3><a class="link" href="#" data-go="2">Cambiar<span class="sr-only"> contacto y domicilio</span></a></div><dl id="rv-2"></dl></div><div class="review"><div class="review-head"><h3>Familia</h3><a class="link" href="#" data-go="3">Cambiar<span class="sr-only"> familia</span></a></div><dl id="rv-3"></dl></div><div class="review"><div class="review-head"><h3>Datos profesionales</h3><a class="link" href="#" data-go="4">Cambiar<span class="sr-only"> datos profesionales</span></a></div><dl id="rv-4"></dl></div><div class="review"><div class="review-head"><h3>Documentación</h3><a class="link" href="#" data-go="5">Cambiar<span class="sr-only"> documentación</span></a></div><dl id="rv-5"></dl></div><div class="review"><div class="review-head"><h3>Pago</h3><a class="link" href="#" data-go="6">Cambiar<span class="sr-only"> pago</span></a></div><dl id="rv-6"></dl></div>
+          </div>
+          <div class="actions" style="border-top:0">
+            <button type="button" class="btn btn-secondary" data-go="6"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-l"/></svg>Anterior</button>
+            <span class="spacer"></span>
+            <button type="button" class="btn btn-primary" id="send">Enviar solicitud</button>
+          </div>
+        </section>
+
+        <section class="view" id="v-done" aria-labelledby="t-done" hidden>
+          <div class="done-card">
+            <span class="done-icon"><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg></span>
+            <h1 id="t-done" tabindex="-1">Recibimos tu solicitud</h1>
+            <p>El personal del Colegio va a revisar los datos y te vamos a contactar a la brevedad.<span class="note-pin">7</span></p>
+            <div class="next"><strong>Importante:</strong> iniciar el trámite de matriculación no habilita el ejercicio profesional. Vas a quedar habilitado o habilitada para ejercer en la Provincia de Buenos Aires después de prestar juramento ante las autoridades del Colegio (art. 6, Ley 10.973, TO 14.085).</div>
+            <p>Te escribimos a <strong id="done-email"></strong>. Muchas gracias.</p>
+            <div><a class="btn btn-secondary" href="../">Volver a Trámites</a></div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="aside" aria-label="Ayuda" id="aside">
+        <h2>Tu trámite</h2>
+        <ol>
+          <li>Solicitud online (etapa 1).</li>
+          <li>Reunión presencial (etapa 2).</li>
+          <li><strong>Formulario completo (etapa 3).</strong></li>
+        </ol>
+        <p>¿Dudas? Escribí a <a href="mailto:fiscalizacion@cmcpsi.org.ar">fiscalizacion@cmcpsi.org.ar</a>.<span class="note-pin">8</span></p>
+      </aside>
+    </div>
+  </div>
+<footer class="site-footer after-content">
+  <div class="container">
+    <div class="ftr-grid">
+      <div class="ftr-brand">
+        <img src="../../_shared/logo-cmcpsi.png" alt="CMCPSI">
+        <p>Colegio de Martilleros y Corredores Públicos del Departamento Judicial de San Isidro.</p>
+        <p>Rivadavia 573 - San Isidro, Buenos Aires<br><a href="mailto:colegio@cmcpsi.org.ar">colegio@cmcpsi.org.ar</a></p>
+      </div>
+      <div class="ftr-col"><h2>Accesos rápidos</h2><ul><li><a href="#">Consultar padrón</a></li><li><a href="../../tramites/">Trámites</a></li><li><a href="#">Valores y vencimientos</a></li><li><a href="#">Beneficios</a></li><li><a href="#">Calculadora</a></li></ul></div>
+      <div class="ftr-col"><h2>Información</h2><ul><li><a href="#">El Colegio</a></li><li><a href="#">Consejo Directivo</a></li><li><a href="#">Actualidad</a></li><li><a href="#">Capacitaciones</a></li><li><a href="#">Contacto</a></li></ul></div>
+      <div class="ftr-col ftr-legal"><h2>Legal</h2><ul><li><a href="#">Ley 10.973</a></li><li><a href="#">Código de Ética</a></li><li><a href="#">Términos y privacidad</a></li></ul>
+        <h2 style="margin-top:var(--sp-24)">Redes sociales</h2>
+        <div class="ftr-social"><a href="#" aria-label="Instagram del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a><a href="#" aria-label="WhatsApp del Colegio"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"/></svg></a></div>
+      </div>
+    </div>
+    <p class="ftr-bottom">© 2026 Colegio de Martilleros y Corredores Públicos de San Isidro.</p>
+  </div>
+</footer>
+</main>
+<aside class="notes-panel" aria-label="Notas de diseño">
+  <header>Notas de diseño, Colegiación v0.1</header>
+  <ol>
+    <li><em>Un solo formulario para 4 trámites:</em> Solicitud de colegiación, Alta de pasividad, Alta de suspensión y Traslado comparten esta etapa 3 (link individual). El título cambia según el trámite: probá agregando <code>?tramite=pasividad</code>, <code>suspension</code> o <code>traslado</code> a la dirección.</li>
+    <li><em>Pasos:</em> el formulario actual tiene 4 páginas y la primera junta unos 30 campos. Se dividió en 6 pasos de un tema cada uno, más la revisión.</li>
+    <li><em>Precarga:</em> como el link es individual, apellido, nombres, documento, email y CUIT llegan completos desde la etapa 1 (datos ficticios en el prototipo). Evita volver a pedir datos (WCAG 3.3.7).</li>
+    <li><em>Matrículas:</em> se marcaron como opcionales porque una solicitud de colegiación nueva todavía no tiene número. Confirmar.</li>
+    <li><em>Género:</em> Masculino y Femenino, como hoy. Pendiente: el Colegio confirma si se agrega X. Nacionalidad: lista corta de ejemplo; en el sitio final va la lista completa.</li>
+    <li><em>Pago:</em> falta el enlace a Valores vigentes y confirmar si se puede mostrar el importe. Datos bancarios del material del Colegio: validar vigencia.</li>
+    <li><em>Confirmación:</em> texto del Colegio adaptado al voseo. La aclaración legal (art. 6, Ley 10.973) se mantiene completa.</li>
+    <li><em>Contacto:</em> el material pide usar fiscalizacion@cmcpsi.org.ar en vez de colegio@ para este trámite.</li>
+    <li><em>Certificado de soltería:</em> se muestra solo si en Familia elegís “Soltero/a”. Confirmar con el Colegio.</li>
+    <li><em>Guardar borrador:</em> simulado. En el sitio real necesita servidor (ver el cuadro sinóptico del panel admin).</li>
+  </ol>
+</aside>
+<script src="../../_shared/forms.js"></script>
+<script>
+(function(){
+  var t=document.getElementById('toggle-notes');
+  t.addEventListener('click',function(){var on=document.body.classList.toggle('show-notes');t.setAttribute('aria-pressed',on);t.textContent=on?'Ocultar notas':'Ver notas de diseño';});
+  var m=document.querySelector('.menu-btn'),n=document.getElementById('nav');
+  m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o);m.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
+  document.querySelectorAll('a[href="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
+})();
+var TR={colegiacion:'Solicitud de colegiación',pasividad:'Alta de pasividad',suspension:'Alta de suspensión',traslado:'Traslado de otro Colegio'};
+var tr=(new URLSearchParams(location.search).get('tramite')||'colegiacion').toLowerCase(); if(!TR[tr])tr='colegiacion';
+document.getElementById('tr-name').textContent=TR[tr];document.getElementById('bc-current').textContent=TR[tr];
+document.title=TR[tr]+', prototipo CMCPSI';
+
+/* Grupos repetibles */
+var counters={};
+function bindRemove(item){var b=item.querySelector('[data-remove-item]');if(b)b.addEventListener('click',function(){var prev=item.previousElementSibling;item.remove();var t=prev&&prev.querySelector('input,select');if(t)t.focus();});}
+document.querySelectorAll('[data-add]').forEach(function(btn){
+  var key=btn.dataset.add,rep=document.getElementById('rep-'+key);
+  btn.addEventListener('click',function(){
+    var empty=rep.querySelector('[data-empty]');
+    if(empty){empty.hidden=false;empty.removeAttribute('data-empty');empty.querySelector('input').focus();return;}
+    var items=rep.querySelectorAll('[data-idx]'),last=items[items.length-1];
+    counters[key]=(counters[key]||items.length)+1;var n=counters[key];
+    var clone=last.cloneNode(true);clone.dataset.idx=n;
+    clone.querySelectorAll('[id],[name],[for],[aria-describedby]').forEach(function(el){
+      ['id','name','for','aria-describedby'].forEach(function(a){var v=el.getAttribute(a);if(v)el.setAttribute(a,v.replace(new RegExp('_'+last.dataset.idx+'(?=_|-|$|\\b)','g'),'_'+n));});
+    });
+    clone.querySelectorAll('input').forEach(function(i){if(i.type==='radio'||i.type==='checkbox')i.checked=false;else i.value='';});
+    clone.querySelectorAll('select').forEach(function(s){s.selectedIndex=0;});
+    clone.querySelectorAll('.is-error').forEach(function(e){e.classList.remove('is-error');});
+    clone.querySelectorAll('.error-msg').forEach(function(e){e.hidden=true;});
+    var head=clone.querySelector('.card-head span');if(head)head.textContent=head.textContent.replace(/\d+$/,n);
+    var lab=clone.querySelector('.label');if(lab&&key.indexOf('email')===0)lab.innerHTML='Otro email <span class="opt">(opcional)</span>';
+    if(!clone.querySelector('[data-remove-item]')){var b=document.createElement('button');b.type='button';b.className='btn-remove';b.setAttribute('data-remove-item','');b.innerHTML='Quitar<span class="sr-only"> '+n+'</span>';(clone.querySelector('.card-head')||clone).appendChild(b);}
+    rep.insertBefore(clone,btn);bindRemove(clone);var f=clone.querySelector('input:not([type=radio]),input');f.focus();
+  });
+});
+
+/* Copiar datos bancarios */
+document.querySelectorAll('.btn-copy').forEach(function(b){b.addEventListener('click',function(){var l=b.querySelector('span');var done=function(){b.classList.add('copied');l.textContent='Copiado';setTimeout(function(){b.classList.remove('copied');l.textContent='Copiar';},2000);};try{navigator.clipboard.writeText(b.dataset.copy).then(done,done);}catch(e){done();}});});
+
+/* Guardar borrador (simulado) */
+document.querySelectorAll('[data-draft]').forEach(function(b){b.addEventListener('click',function(){var s=b.parentNode.querySelector('[data-saved]'),d=new Date();s.querySelector('span').textContent='Borrador guardado a las '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');s.hidden=false;});});
+
+/* Contador de documentos */
+function docCount(){var ids=['d_servicio','d_domicilio','d_fianza','d_penales','d_nacimiento','d_rpi','d_automotor','d_psico','d_aval1','d_aval2'];if(!document.getElementById('r-solteria').hidden)ids.push('d_solteria');var c=ids.filter(function(i){return !document.getElementById(i+'-done').hidden;}).length;document.getElementById('doc-count').textContent=c;document.getElementById('doc-total').textContent=ids.length;document.getElementById('doc-bar').style.width=(c*100/ids.length)+'%';}
+document.querySelectorAll('#v-5 input[type=file]').forEach(function(i){i.addEventListener('change',function(){setTimeout(docCount,0);});});
+document.querySelectorAll('#v-5 [data-remove]').forEach(function(b){b.addEventListener('click',function(){setTimeout(docCount,0);});});
+
+/* Partido "Otra ubicación" → Provincia */
+var pp=document.getElementById('p_partido');pp.addEventListener('change',function(){var o=pp.value==='Otra ubicación';document.getElementById('p_prov-wrap').hidden=!o;document.getElementById('p_prov-fixed').hidden=o;});
+
+function dateErr(v,id,label,req){var d=v(id+'_d'),m=v(id+'_m'),y=v(id+'_y');if(!d&&!m&&!y)return req?'Ingresá '+label:'';if(!d)return label.charAt(0).toUpperCase()+label.slice(1)+' tiene que incluir el día';if(!m)return label.charAt(0).toUpperCase()+label.slice(1)+' tiene que incluir el mes';if(!/^\d{4}$/.test(y))return label.charAt(0).toUpperCase()+label.slice(1)+' tiene que incluir el año con 4 números';var dt=new Date(+y,+m-1,+d);if(dt.getDate()!=+d||dt.getMonth()!=+m-1)return label.charAt(0).toUpperCase()+label.slice(1)+' tiene que ser una fecha real';if(dt>new Date())return label.charAt(0).toUpperCase()+label.slice(1)+' tiene que ser en el pasado';return '';}
+function fmtDate(v,id){return v(id+'_d')?v(id+'_d')+'/'+v(id+'_m')+'/'+v(id+'_y'):'';}
+function req(msg){return function(x){return x?'':msg;};}
+function addrRules(p,on){return {
+  [p+'calle']:function(x,v){return on(v)&&!x?'Ingresá la calle':'';},
+  [p+'tipo']:function(x,v){return on(v)&&!x?'Elegí si está en un edificio o en un barrio cerrado':'';},
+  [p+'barrio']:function(x,v){return on(v)&&v(p+'tipo')==='Barrio cerrado'&&!x?'Ingresá el nombre del barrio cerrado':'';},
+  [p+'localidad']:function(x,v){return on(v)&&!x?'Ingresá la localidad':'';},
+  [p+'cp']:function(x,v){if(!on(v))return'';if(!x)return'Ingresá el código postal';return/^\d{4}$|^[A-Za-z]\d{4}[A-Za-z]{3}$/.test(x.replace(/\s/g,''))?'':'Ingresá el código postal con 4 números (1642) o el formato completo (B1642DSD)';},
+  [p+'partido']:function(x,v){return on(v)&&!x?'Seleccioná el partido':'';},
+  [p+'provincia']:function(x,v){return on(v)&&v(p+'partido')==='Otra ubicación'&&!x?'Seleccioná la provincia':'';}
+};}
+function always(){return true;}
+function addr(v,p){var t=v(p+'tipo'),extra=t==='Edificio'?(v(p+'edificio')?', edificio '+v(p+'edificio'):''):t==='Barrio cerrado'?', '+v(p+'barrio')+(v(p+'uf')?', UF '+v(p+'uf'):''):'';return v(p+'calle')+(v(p+'numero')?' '+v(p+'numero'):' s/n')+(v(p+'piso')?', piso '+v(p+'piso'):'')+(v(p+'depto')?', depto. '+v(p+'depto'):'')+extra+'. '+v(p+'localidad')+' ('+v(p+'cp')+'), '+(v(p+'partido')==='Otra ubicación'?v(p+'provincia'):v(p+'partido')+', Buenos Aires');}
+function listVals(prefix){return Array.prototype.map.call(document.querySelectorAll('[name^="'+prefix+'"]'),function(i){return i.value.trim();}).filter(Boolean).join(', ');}
+function phones(key){return Array.prototype.map.call(document.querySelectorAll('#rep-'+key+' [data-idx]'),function(c){var n=c.dataset.idx,t=c.querySelector('[name="'+key+'_tipo_'+n+'"]:checked'),a=c.querySelector('[name="'+key+'_area_'+n+'"]').value,num=c.querySelector('[name="'+key+'_num_'+n+'"]').value;return num?(t?t.value+' ':'')+(a?'('+a+') ':'')+num:'';}).filter(Boolean).join(', ');}
+var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+var rules={
+ 1:{apellido:req('Ingresá tu apellido'),nombres:req('Ingresá tus nombres'),tipodoc:req('Seleccioná el tipo de documento'),
+    dni:function(x){return x?'':'Ingresá tu número de documento';},
+    fn:function(x,v){return dateErr(v,'fn','tu fecha de nacimiento',true).replace('Tu fecha','La fecha');},
+    genero:req('Seleccioná tu género'),nacionalidad:req('Seleccioná tu nacionalidad'),ciudad_nac:req('Ingresá tu ciudad de nacimiento'),
+    doc_file:req('Subí el frente y dorso de tu documento'),foto:req('Subí tu foto tipo 4x4'),firma:req('Subí tu firma')},
+ 2:Object.assign({email:function(x){if(!x)return'Ingresá tu email (domicilio electrónico)';return emailRe.test(x)?'':'Ingresá un email con el formato nombre@ejemplo.com';},
+    telp_tipo_1:req('Elegí si el teléfono es celular o fijo'),telp_num_1:req('Ingresá el número de teléfono')},addrRules('p_',always)),
+ 3:{madre:req('Ingresá el nombre y apellido de tu madre'),madre_vive:req('Indicá si tu madre vive'),padre:req('Ingresá el nombre y apellido de tu padre'),padre_vive:req('Indicá si tu padre vive'),
+    civil:req('Seleccioná tu estado civil'),hijos:req('Indicá si tenés hijos'),
+    hijo_1_nombre:function(x,v){return v('hijos')==='Sí'&&!x?'Ingresá el nombre y apellido de tu hijo o hija':'';},
+    hijo_1_fn:function(x,v){return v('hijos')==='Sí'?dateErr(v,'hijo_1_fn','la fecha de nacimiento de tu hijo o hija',true):'';},
+    hijo_1_tipodoc:function(x,v){return v('hijos')==='Sí'&&!x?'Seleccioná el tipo de documento de tu hijo o hija':'';},
+    hijo_1_doc:function(x,v){return v('hijos')==='Sí'&&!x?'Ingresá el número de documento de tu hijo o hija':'';}},
+ 4:Object.assign({cuit:function(x,v){if(!x)return'Ingresá tu CUIL o CUIT';return v.digits(x).length!==11?'El CUIL o CUIT tiene que tener 11 números':'';},
+    denominacion:req('Ingresá tu denominación profesional'),
+    emaill_1:function(x,v){if(v('mismo_contacto'))return'';if(!x)return'Ingresá un email profesional';return emailRe.test(x)?'':'Ingresá un email con el formato nombre@ejemplo.com';},
+    tell_num_1:function(x,v){return !v('mismo_contacto')&&!x?'Ingresá un teléfono profesional':'';},
+    universidad:function(x,v){return v('titulo')&&!x?'Ingresá la universidad que otorgó el título':'';},
+    titulo_nombre:function(x,v){return v('titulo')&&!x?'Ingresá el título obtenido':'';},
+    titulo_fecha:function(x,v){return v('titulo')?dateErr(v,'titulo_fecha','la fecha de emisión del título',true):'';},
+    judicial_fecha:function(x,v){return v('judicial')?dateErr(v,'judicial_fecha','la fecha desde la que sos martillero judicial',true):'';},
+    caja_nombre:function(x,v){return v('caja')&&!x?'Ingresá el nombre de la caja previsional':'';},
+    caja_fecha:function(x,v){return v('caja')?dateErr(v,'caja_fecha','la fecha desde la que aportás',true):'';}},
+    addrRules('l_',function(v){return !v('mismo_dom');})),
+ 5:{d_servicio:req('Subí el servicio o impuesto'),d_domicilio:req('Subí el certificado de domicilio'),d_fianza:req('Subí el seguro de caución (fianza)'),
+    d_penales:req('Subí el certificado de antecedentes penales'),d_nacimiento:req('Subí el certificado de nacimiento'),
+    d_solteria:function(x,v){return v('civil')==='Soltero/a'&&!x?'Subí el certificado de soltería':'';},
+    d_rpi:req('Subí el informe del Registro de la Propiedad Inmueble'),d_automotor:req('Subí el informe del Registro Nacional del Automotor'),
+    d_psico:req('Subí el certificado de revisión psicofísica'),d_aval1:req('Subí el aval 1'),d_aval2:req('Subí el aval 2')},
+ 6:{comprobante:req('Subí el comprobante de pago'),terminos:req('Para enviar tenés que aceptar los términos y condiciones')}
+};
+
+var form=CMCPSIForm({steps:6,doneEmail:'email',rules:rules,
+  reveals:{p_tipo:{'Edificio':'p_r-edificio','Barrio cerrado':'p_r-barrio'},l_tipo:{'Edificio':'l_r-edificio','Barrio cerrado':'l_r-barrio'},
+           hijos:{'Sí':'r-hijos'},titulo:{'checked':'r-titulo'},judicial:{'checked':'r-judicial'},caja:{'checked':'r-caja'}},
+  review:function(v,rows){
+    rows('rv-1',[['Matrícula de corredor',v('mat_corredor')],['Matrícula de martillero',v('mat_martillero')],['Apellido y nombres',v('apellido')+', '+v('nombres')],['Documento',v('tipodoc')+' '+v('dni')],['Fecha de nacimiento',fmtDate(v,'fn')],['Género',v('genero')],['Nacionalidad',v('nacionalidad')],['Ciudad de nacimiento',v('ciudad_nac')],['Archivos',[v('doc_file'),v('foto'),v('firma')].filter(Boolean).join(', ')]]);
+    rows('rv-2',[['Email (domicilio electrónico)',v('email')],['Otros emails',listVals('emailp_')],['Teléfonos',phones('telp')],['Domicilio particular',addr(v,'p_')]]);
+    rows('rv-3',[['Madre',v('madre')+(v('madre_vive')?' (vive: '+v('madre_vive').toLowerCase()+')':'')],['Padre',v('padre')+(v('padre_vive')?' (vive: '+v('padre_vive').toLowerCase()+')':'')],['Estado civil',v('civil')],['Hijos',v('hijos')==='Sí'?Array.prototype.map.call(document.querySelectorAll('#rep-hijo [data-idx]'),function(c){var i=c.querySelector('input');return i.value;}).filter(Boolean).join(', '):'No']]);
+    rows('rv-4',[['CUIL / CUIT',v('cuit')],['Sitio web',v('web')],['Denominación profesional',v('denominacion')],['Domicilio profesional',v('mismo_dom')?'El mismo que el particular':addr(v,'l_')],['Emails profesionales',v('mismo_contacto')?'Los mismos que los personales':listVals('emaill_')],['Teléfonos profesionales',v('mismo_contacto')?'Los mismos que los personales':phones('tell')],['Título universitario',v('titulo')?v('titulo_nombre')+', '+v('universidad')+' ('+fmtDate(v,'titulo_fecha')+')':'No'],['Martillero judicial',v('judicial')?'Sí, desde '+fmtDate(v,'judicial_fecha'):'No'],['Otra caja previsional',v('caja')?v('caja_nombre')+', desde '+fmtDate(v,'caja_fecha'):'No']]);
+    var docs=Array.prototype.filter.call(document.querySelectorAll('#v-5 .file-done'),function(d){return !d.hidden;}).length;
+    rows('rv-5',[['Documentos cargados',docs+' de '+document.getElementById('doc-total').textContent]]);
+    rows('rv-6',[['Comprobante de pago',v('comprobante')],['Términos y condiciones',v('terminos')?'Aceptados':'']]);
+  }
+});
+
+/* Domicilio y contacto profesional: ocultar si usa los mismos */
+function sync(){document.getElementById('r-domprof').hidden=!!form.v('mismo_dom');document.getElementById('r-contprof').style.display=form.v('mismo_contacto')?'none':'flex';document.getElementById('r-solteria').hidden=form.v('civil')!=='Soltero/a';docCount();}
+['mismo_dom','mismo_contacto','civil'].forEach(function(n){document.querySelector('[name='+n+']').addEventListener('change',sync);});sync();
+
+/* Link individual: precarga de la etapa 1 (datos ficticios del prototipo) */
+(function(){var pre={apellido:'Gómez',nombres:'Ricardo',dni:'28456789',email:'ricardo.gomez@mail.com',cuit:'20284567893'};
+  Object.keys(pre).forEach(function(k){var el=document.querySelector('[name='+k+']');if(el)el.value=pre[k];});
+  document.getElementById('tipodoc').value='DNI';document.getElementById('prefill').hidden=false;})();
+</script>
+</body>
+</html>

@@ -75,6 +75,6 @@
     var send=$('send');if(send)send.addEventListener('click',function(){var de=$('done-email');if(de)de.textContent=v(cfg.doneEmail||'email');go('done');});
     // Flecha en los "Continuar" iniciales
     document.querySelectorAll('[data-main]').forEach(function(b){if(!b.dataset.final)b.innerHTML='Continuar '+ARROW;});
-    return {go:go,v:v};
+    var api={go:go,v:v,fill:fill};window.__cmcpsiForm=api;return api;
   };
 })();
